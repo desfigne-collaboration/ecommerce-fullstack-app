@@ -8,10 +8,7 @@ import { ProductDetail } from './pages/ProductDetail.jsx';
 import { Cart } from './pages/Cart.jsx';
 import { CheckoutInfo } from './pages/CheckoutInfo.jsx';
 import { Support } from './pages/Support.jsx';
-import { CartProvider } from './context/CartContext.js';
-import { AuthProvider } from './context/AuthContext.js';
-import { ProductProvider } from './context/ProductContext.js';
-import { ProectedPageRoute } from './pages/ProectedPageRoute.js';
+import { ProtectedPageRoute } from './pages/ProtectedPageRoute.js';
 
 import './styles/cgvSignup.css';
 import './styles/cgv.css';
@@ -20,9 +17,6 @@ import './styles/ecommerce.css';
 
 export default function App() {
   return (
-    <AuthProvider>
-    <ProductProvider>
-    <CartProvider>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
@@ -30,33 +24,23 @@ export default function App() {
           <Route path="/all" element={<Products/>} />
           <Route path="/login" element={<Login/>} />
           <Route path="/signup" element={<Signup/>} />
-          <Route path="/cart" 
-                  element={  <ProectedPageRoute>
+          <Route path="/cart"
+                  element={  <ProtectedPageRoute>
                                 <Cart />
-                            </ProectedPageRoute>  } />
+                            </ProtectedPageRoute>  } />
           <Route path="/products/:pid" element={<ProductDetail />} />
-          <Route path="/checkout" 
-                 element={  <ProectedPageRoute>
+          <Route path="/checkout"
+                 element={  <ProtectedPageRoute>
                                 <CheckoutInfo />
-                            </ProectedPageRoute>  } />
-                
+                            </ProtectedPageRoute>  } />
+
           <Route path="/support" element={
-            <ProectedPageRoute>
+            <ProtectedPageRoute>
               <Support />
-            </ProectedPageRoute>
+            </ProtectedPageRoute>
             } />
         </Route>
       </Routes>
     </BrowserRouter>
-    </CartProvider>
-    </ProductProvider>
-    </AuthProvider>
   );
 }
-
-
-
-
-
-
-

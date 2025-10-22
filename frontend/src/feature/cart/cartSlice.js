@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { cartItemsCheck, cartItemsAddInfo } from '../../utils/cart.js';
+import { cartItemsCheck } from '../../utils/cart.js';
 
 const initialState = {
   cartCount: 0,
@@ -17,7 +17,8 @@ export const cartSlice = createSlice({
     },
     showCartItem (state, action) {
         const { items } = action.payload;
-        state.cartList = cartItemsAddInfo(items, state.cartList);
+        // Backend already includes product info (image, name, price)
+        state.cartList = items;
     },
     updateCartCount (state) {          
         state.cartCount = state.cartList.reduce((total, item) => total + item.qty, 0);
@@ -44,6 +45,6 @@ export const cartSlice = createSlice({
 
 export const {  addCartItem, updateCartCount, showCartItem, updateTotalPrice,
                 updateCartItem, removeCartItem
-             } = cartSlice.actions   //API 함수 또는 컴포넌트에서 dispatch(액션함수)
+             } = cartSlice.actions
 
-export default cartSlice.reducer  //store  import
+export default cartSlice.reducer

@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.util.List;
 
 @Repository
 public class JdbcTemplateCartRepository implements CartRepository{
@@ -52,5 +53,30 @@ public class JdbcTemplateCartRepository implements CartRepository{
                 cartItem.getId()
         };
         return jdbcTemplate.update(sql, params);
+    }
+
+    @Override
+    public List<CartItem> findByUserId(String id) {
+        String sql = """
+                SELECT c.cid, c.size, c.qty, c.pid, c.id, c.cdate,
+                       p.image, p.name, p.price
+                FROM cart c
+                INNER JOIN product p ON c.pid = p.pid
+                WHERE c.id = ?
+                ORDER BY c.cdate DESC
+                """;
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(CartItem.class), id);
+    }
+
+    @Override
+    public int remove(String cid) {
+        String sql = "DELETE FROM cart WHERE cid = ?";
+        return jdbcTemplate.update(sql, cid);
+    }
+
+    @Override
+    public int countByUserId(String id) {
+        String sql = "SELECT IFNULL(SUM(qty), 0) FROM cart WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, Integer.class, id);
     }
 }

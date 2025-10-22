@@ -2,17 +2,25 @@ import React from 'react';
 import { addCartItem, updateCartCount, 
          showCartItem, updateTotalPrice,
          updateCartItem, removeCartItem } from './cartSlice.js';
-import { axiosData, axiosPost } from '../../utils/dataFetch.js';
+import { axiosPost } from '../../utils/dataFetch.js';
 
 export const removeCart = (cid) => async(dispatch) => {
+    const url = "/cart/remove";
+    const data = {"cid": cid};
+    await axiosPost(url, data);
+    
     dispatch(removeCartItem({"cid": cid}));
     dispatch(updateTotalPrice());
     dispatch(updateCartCount()); 
 }
 
 export const showCart = () => async (dispatch) => {
-    const jsonData = await axiosData("/data/products.json");
-    dispatch(showCartItem({"items": jsonData}));
+    const { userId } = JSON.parse(localStorage.getItem("loginInfo"));
+    const url = "/cart/list";
+    const data = {"id": userId};
+    const cartList = await axiosPost(url, data);
+    
+    dispatch(showCartItem({"items": cartList}));
     dispatch(updateTotalPrice());
 }
 
@@ -22,13 +30,9 @@ export const updateCart = async(cid, type) =>  {
     const rows = await axiosPost(url, data);
     console.log('updateCart rows => ', rows);
     return rows;
-//    dispatch(updateCartItem({"cid":cid, "type":type})); //수량변경
-//    dispatch(updateTotalPrice());
-//    dispatch(updateCartCount());
 }
 
 export const checkQty = async(pid, size, id) => {
-    //쇼핑백 추가한 상품과 사이즈가 DB 테이블에 있는지 유무 확인
     const url = "/cart/checkQty";
     const data = {"pid": pid, "size": size, "id": id};
     const jsonData = await axiosPost(url, data);
@@ -51,8 +55,4 @@ export const addCart = (pid, size) => async (dispatch) => {
       }
 
     return 1;
-
-//    dispatch(addCartItem({"cartItem":{"pid":pid, "size":size, "qty":1}}));
-//    dispatch(updateCartCount());
 }
-
