@@ -24,7 +24,7 @@ export function Header() {
             <div className="header">
                 <Link to="/" className='header-left'>
                     <FiShoppingBag />
-                    <span>Shoppy-redux(toolkit)::fullstack</span>
+                    <span>E-commerce Fullstack App</span>
                 </Link>
                 <nav className='header-right'>
                     <Link to="/all">Products</Link>

@@ -1,70 +1,74 @@
-# Getting Started with Create React App
+# E-commerce Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+React 19 + Redux Toolkit 기반의 이커머스 프론트엔드 애플리케이션입니다.
 
-## Available Scripts
+## 기술 스택
 
-In the project directory, you can run:
+- **React** 19.1.1
+- **Redux Toolkit** 2.9.0
+- **React Router** 7.9.1
+- **Axios** 1.12.2
+- **React Icons** 5.5.0
 
-### `npm start`
+## 프로젝트 구조
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```
+src/
+├── app/                    # Redux Store 설정
+│   └── store.js
+├── feature/                # Redux Toolkit 기능별 slice
+│   ├── auth/              # 인증 관련
+│   ├── cart/              # 장바구니 관련
+│   └── product/           # 상품 관련
+├── components/            # 재사용 가능한 컴포넌트
+│   ├── commons/          # 공통 컴포넌트 (Header, Footer 등)
+│   ├── detailTabs/       # 상품 상세 탭
+│   └── product/          # 상품 관련 컴포넌트
+├── pages/                # 페이지 컴포넌트
+├── styles/               # CSS 파일
+└── utils/                # 유틸리티 함수
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 주요 기능
 
-### `npm test`
+- 상품 목록 및 상세 조회
+- 장바구니 관리
+- 회원 인증 (로그인/회원가입)
+- 주문/결제
+- 고객 지원
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 설치 및 실행
 
-### `npm run build`
+```bash
+# 의존성 설치
+npm install
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# 개발 서버 실행
+npm start
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# 프로덕션 빌드
+npm run build
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 환경 설정
 
-### `npm run eject`
+- **Backend API Proxy**: `http://localhost:8080`
+- **개발 서버 포트**: `3000`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 상태 관리
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Redux Toolkit을 사용하여 전역 상태를 관리합니다:
+- **auth**: 로그인 상태 관리
+- **cart**: 장바구니 상태 관리
+- **product**: 상품 목록 및 상세 정보 관리
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 라우팅
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- `/` - 홈
+- `/all` - 전체 상품
+- `/products/:pid` - 상품 상세
+- `/cart` - 장바구니 (로그인 필요)
+- `/checkout` - 주문/결제 (로그인 필요)
+- `/login` - 로그인
+- `/signup` - 회원가입
+- `/support` - 고객 지원 (로그인 필요)
