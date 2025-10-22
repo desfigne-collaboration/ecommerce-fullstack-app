@@ -6,7 +6,7 @@ plugins {
 
 group = 'com.springboot'
 version = '0.0.1-SNAPSHOT'
-description = 'Shoppy project for Spring Boot'
+description = 'E-commerce Fullstack App Backend'
 
 java {
 	toolchain {
@@ -14,24 +14,23 @@ java {
 	}
 }
 
-//repositories {
-//	mavenCentral()
-//}
-
 dependencies {
-    //spring security
+    // Spring Security
     implementation 'org.springframework.boot:spring-boot-starter-security'
 
-    //Lombok
+    // Lombok
     compileOnly 'org.projectlombok:lombok:1.18.34'
     annotationProcessor 'org.projectlombok:lombok:1.18.34'
 
-    //MySQL JDBC driver
+    // MySQL JDBC driver
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     runtimeOnly 'mysql:mysql-connector-java:8.0.31'
 
+    // Spring Boot Web
     implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter'
+	
+	// Test dependencies
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }

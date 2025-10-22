@@ -1,10 +1,9 @@
-import { useState, useRef, useContext } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaRegUser } from "react-icons/fa6";
 import { FaLock } from "react-icons/fa";
 import { validateFormCheck } from '../utils/validate.js';
-import { AuthContext } from '../context/AuthContext.js';
-import { useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getLogin } from '../feature/auth/authAPI.js';
 
 export function Login() {
@@ -83,7 +82,7 @@ export function Login() {
                     <li>
                         <div>
                             <input type="checkbox" name="status" />
-                            <label for="">아이디 저장</label>
+                            <label htmlFor="">아이디 저장</label>
                         </div>
                         <div>
                             <a href="#">아이디 찾기</a> 
