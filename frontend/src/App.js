@@ -2,95 +2,95 @@
 import React from "react";
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
 
-import { AuthProvider } from "./context/AuthContext";
-import PrivateRoute from "./routes/PrivateRoute";
+import { AuthProvider } from "./context/AuthContext.js";
+import PrivateRoute from "./routes/PrivateRoute.jsx";
 
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import Header from "./components/Header.jsx";
+import Footer from "./components/Footer.jsx";
 
-import Home from "./pages/home/Home";
-import Menu from "./pages/menu/Menu";
+import Home from "./pages/home/Home.jsx";
+import Menu from "./pages/menu/Menu.jsx";
 
-import Login from "./pages/auth/Login";
-import Signup from "./pages/auth/Signup";
-import AccountRecovery from "./pages/auth/AccountRecovery";
-import NaverCallback from "./pages/auth/NaverCallback";
-import KakaoCallback from "./pages/auth/KakaoCallback";
-import OrderSuccess from "./pages/order/OrderSuccess";
+import Login from "./pages/auth/Login.jsx";
+import Signup from "./pages/auth/Signup.jsx";
+import AccountRecovery from "./pages/auth/AccountRecovery.jsx";
+import NaverCallback from "./pages/auth/NaverCallback.jsx";
+import KakaoCallback from "./pages/auth/KakaoCallback.jsx";
+import OrderSuccess from "./pages/order/OrderSuccess.jsx";
 
 // 관리자
-import AdminDashboard from "./pages/admin/AdminDashboard";
-import AdminOrders from "./pages/admin/AdminOrders";
+import AdminDashboard from "./pages/admin/AdminDashboard.jsx";
+import AdminOrders from "./pages/admin/AdminOrders.jsx";
 
 // 상품
-import ProductDetail from "./pages/ProductDetail";
-import ProductList from "./pages/ProductList";
-import Search from "./pages/Search";
+import ProductDetail from "./pages/ProductDetail.jsx";
+import ProductList from "./pages/ProductList.jsx";
+import Search from "./pages/Search.jsx";
 
 // ✅ 결제 라우트(이 두 개만 사용!)
-import PaySelect from "./pages/order/PaySelect";
-import PayConfirm from "./pages/order/PayConfirm";
+import PaySelect from "./pages/order/PaySelect.jsx";
+import PayConfirm from "./pages/order/PayConfirm.jsx";
 
 // 주문/장바구니
-import Checkout from "./pages/order/Checkout";
-import MyOrders from "./pages/order/MyOrders";
-import CartPage from "./pages/cart/CartPage";
+import Checkout from "./pages/order/Checkout.jsx";
+import MyOrders from "./pages/order/MyOrders.jsx";
+import CartPage from "./pages/cart/CartPage.jsx";
 
 // 카테고리
-import CategoryPage from "./pages/CategoryPage";
+import CategoryPage from "./pages/CategoryPage.jsx";
 
 // 골프
-import GolfMain from "./pages/golf/GolfMain";
-import GolfNew from "./pages/golf/GolfNew";
-import GolfWomen from "./pages/golf/GolfWomen";
-import GolfMen from "./pages/golf/GolfMen";
+import GolfMain from "./pages/golf/GolfMain.jsx";
+import GolfNew from "./pages/golf/GolfNew.jsx";
+import GolfWomen from "./pages/golf/GolfWomen.jsx";
+import GolfMen from "./pages/golf/GolfMen.jsx";
 
 // 럭셔리
-import LuxuryMain from "./pages/luxury/LuxuryMain";
-import LuxuryNew from "./pages/luxury/LuxuryNew";
-import LuxuryWomen from "./pages/luxury/LuxuryWomen";
-import LuxuryMen from "./pages/luxury/LuxuryMen";
+import LuxuryMain from "./pages/luxury/LuxuryMain.jsx";
+import LuxuryNew from "./pages/luxury/LuxuryNew.jsx";
+import LuxuryWomen from "./pages/luxury/LuxuryWomen.jsx";
+import LuxuryMen from "./pages/luxury/LuxuryMen.jsx";
 
 // 신발
-import ShoesMain from "./pages/shoes/ShoesMain";
-import ShoesNew from "./pages/shoes/ShoesNew";
-import ShoesWomen from "./pages/shoes/ShoesWomen";
-import ShoesMen from "./pages/shoes/ShoesMen";
+import ShoesMain from "./pages/shoes/ShoesMain.jsx";
+import ShoesNew from "./pages/shoes/ShoesNew.jsx";
+import ShoesWomen from "./pages/shoes/ShoesWomen.jsx";
+import ShoesMen from "./pages/shoes/ShoesMen.jsx";
 
 // 라이프
-import LifeMain from "./pages/life/LifeMain";
-import LifeNew from "./pages/life/LifeNew";
-import LifeFurniture from "./pages/life/LifeFurniture";
-import LifePet from "./pages/life/LifePet";
-import LifeCar from "./pages/life/LifeCar";
+import LifeMain from "./pages/life/LifeMain.jsx";
+import LifeNew from "./pages/life/LifeNew.jsx";
+import LifeFurniture from "./pages/life/LifeFurniture.jsx";
+import LifePet from "./pages/life/LifePet.jsx";
+import LifeCar from "./pages/life/LifeCar.jsx";
 
 // 아울렛
-import OutletMain from "./pages/outlet/OutletMain";
-import OutletWomen from "./pages/outlet/OutletWomen";
-import OutletMen from "./pages/outlet/OutletMen";
-import OutletKids from "./pages/outlet/OutletKids";
-import OutletLuxury from "./pages/outlet/OutletLuxury";
-import OutletShoes from "./pages/outlet/OutletShoes";
-import OutletSports from "./pages/outlet/OutletSports";
-import OutletGolf from "./pages/outlet/OutletGolf";
-import OutletLife from "./pages/outlet/OutletLife";
+import OutletMain from "./pages/outlet/OutletMain.jsx";
+import OutletWomen from "./pages/outlet/OutletWomen.jsx";
+import OutletMen from "./pages/outlet/OutletMen.jsx";
+import OutletKids from "./pages/outlet/OutletKids.jsx";
+import OutletLuxury from "./pages/outlet/OutletLuxury.jsx";
+import OutletShoes from "./pages/outlet/OutletShoes.jsx";
+import OutletSports from "./pages/outlet/OutletSports.jsx";
+import OutletGolf from "./pages/outlet/OutletGolf.jsx";
+import OutletLife from "./pages/outlet/OutletLife.jsx";
 
 // 마이페이지
-import MyPage from "./pages/mypage/MyPage";
-import MyCoupons from "./pages/mypage/MyCoupons";
+import MyPage from "./pages/mypage/MyPage.jsx";
+import MyCoupons from "./pages/mypage/MyCoupons.jsx";
 
 // 고객센터/회사/정책
-import HelpPage from "./pages/help/HelpPage";
-import CompanyPage from "./pages/company/CompanyPage";
-import Terms from "./pages/policy/Terms";
-import Privacy from "./pages/policy/Privacy";
-import Membership from "./pages/membership/Membership";
-import StoreFinder from "./pages/store/StoreFinder";
-import NoticeEvents from "./pages/board/NoticeEvents";
-import BulkOrder from "./pages/help/BulkOrder";
+import HelpPage from "./pages/help/HelpPage.jsx";
+import CompanyPage from "./pages/company/CompanyPage.jsx";
+import Terms from "./pages/policy/Terms.jsx";
+import Privacy from "./pages/policy/Privacy.jsx";
+import Membership from "./pages/membership/Membership.jsx";
+import StoreFinder from "./pages/store/StoreFinder.jsx";
+import NoticeEvents from "./pages/board/NoticeEvents.jsx";
+import BulkOrder from "./pages/help/BulkOrder.jsx";
 
 // 위시리스트
-import Wishlist from "./pages/wish/Wishlist";
+import Wishlist from "./pages/wish/Wishlist.jsx";
 
 function App() {
   return (
