@@ -1,10 +1,10 @@
 // src/pages/cart/CartPage.jsx
 import React, { useEffect, useMemo, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./CartPage.css";
 
 export default function CartPage() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [cart, setCart] = useState([]);
   const [selected, setSelected] = useState({});
 
@@ -13,7 +13,7 @@ export default function CartPage() {
     const isLogin = localStorage.getItem("isLogin") === "true";
     if (!isLogin) {
       alert("로그인이 필요합니다.");
-      history.push("/login");
+      navigate("/login");
       return;
     }
   }, [history]);
@@ -155,7 +155,7 @@ export default function CartPage() {
     }
 
     localStorage.setItem("cartCheckout", JSON.stringify(payload));
-    history.push("/checkout", { fromCart: true });
+    navigate("/checkout", { fromCart: true });
   };
 
   return (

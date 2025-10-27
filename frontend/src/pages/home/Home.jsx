@@ -2,6 +2,43 @@ import React, { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import "./Home.css";
 
+// 브랜드 로고 이미지 import
+import brand8Seconds from "../../assets/brands/brand_에잇세컨즈.webp";
+import brandBeanpole from "../../assets/brands/brand_빈폴.webp";
+import brandBeaker from "../../assets/brands/brand_비이커.webp";
+import brandKuho from "../../assets/brands/brand_구호.png";
+import brandIsseyMiyake from "../../assets/brands/brand_이세이미야케.webp";
+import brandMaisonKitsune from "../../assets/brands/brand_메종키츠네.webp";
+import brandTheory from "../../assets/brands/brand_띠어리.png";
+import brandKuhoPlus from "../../assets/brands/brand_구호플러스.webp";
+import brandCommeDesGarcons from "../../assets/brands/brand_꼼데가르송.webp";
+import brandPatagonia from "../../assets/brands/brand_파타고니아.webp";
+import brandSportyRich from "../../assets/brands/brand_스포티앤리치.webp";
+import brandSie from "../../assets/brands/brand_시에.webp";
+import brandInuGolf from "../../assets/brands/brand_이뉴골프.webp";
+import brandGeneralIdea from "../../assets/brands/brand_제너럴 아이디어.webp";
+import brandLeMouton from "../../assets/brands/brand_르무통.webp";
+import brandAmi from "../../assets/brands/brand_아미.png";
+import brandJuunJ from "../../assets/brands/brand_준지.png";
+import brandRokadis from "../../assets/brands/brand_로가디스.webp";
+import brandDanton from "../../assets/brands/brand_단톤.webp";
+import brand10CorsoComo from "../../assets/brands/brand_텐꼬르소꼬모.webp";
+import brandDiapter from "../../assets/brands/brand_디애퍼처.webp";
+import brandCos from "../../assets/brands/brand_코스.webp";
+import brandSaintJames from "../../assets/brands/brand_세인트제임스.webp";
+import brandTommyHilfiger from "../../assets/brands/brand_타미힐피거.png";
+import brandCanadaGoose from "../../assets/brands/brand_캐나다구스.webp";
+import brandHera from "../../assets/brands/brand_헤라.webp";
+import brandGalaxyLifestyle from "../../assets/brands/brand_갤럭시라이프스타일.webp";
+import brandRebaige from "../../assets/brands/brand_르베이지.png";
+import brandToryBurch from "../../assets/brands/brand_토리버치.webp";
+import brandGalaxy from "../../assets/brands/brand_갤럭시.webp";
+import brandLemaire from "../../assets/brands/brand_르메르.png";
+import brandFitflop from "../../assets/brands/brand_핏플랍.png";
+import brandGanni from "../../assets/brands/brand_가니.png";
+import brandRagBone from "../../assets/brands/brand_랙앤본.webp";
+import brandSandsound from "../../assets/brands/brand_샌드사운드.webp";
+
 export default function Home() {
   const [page, setPage] = useState(0);
   const [activeProductTab, setActiveProductTab] = useState(0);
@@ -133,45 +170,45 @@ export default function Home() {
   // 브랜드 데이터 (총 35개 브랜드)
   const brandData = [
     // Page 1 (1-12)
-    { logo: "/icons/brand_에잇세컨즈.webp", name: "에잇세컨즈", link: "/brand/8seconds", isImage: true },
-    { logo: "/icons/brand_빈폴.webp", name: "빈폴", link: "/brand/beanpole", isImage: true },
-    { logo: "/icons/brand_비이커.webp", name: "비이커", link: "/brand/beaker", isImage: true },
-    { logo: "/icons/brand_구호.png", name: "구호", link: "/brand/kuho", isImage: true },
-    { logo: "/icons/brand_이세이미야케.webp", name: "이세이미야케", link: "/brand/issey-miyake", isImage: true },
-    { logo: "/icons/brand_메종키츠네.webp", name: "메종키츠네", link: "/brand/maison-kitsune", isImage: true },
-    { logo: "/icons/brand_띠어리.png", name: "띠어리", link: "/brand/theory", isImage: true },
-    { logo: "/icons/brand_구호플러스.webp", name: "구호플러스", link: "/brand/kuho-plus", isImage: true },
-    { logo: "/icons/brand_꼼데가르송.webp", name: "꼼데가르송", link: "/brand/comme-des-garcons", isImage: true },
-    { logo: "/icons/brand_파타고니아.webp", name: "파타고니아", link: "/brand/patagonia", isImage: true },
-    { logo: "/icons/brand_스포티앤리치.webp", name: "스포티앤리치", link: "/brand/sporty-rich", isImage: true },
-    { logo: "/icons/brand_시에.webp", name: "시에", link: "/brand/sie", isImage: true },
+    { logo: brand8Seconds, name: "에잇세컨즈", link: "/brand/8seconds", isImage: true },
+    { logo: brandBeanpole, name: "빈폴", link: "/brand/beanpole", isImage: true },
+    { logo: brandBeaker, name: "비이커", link: "/brand/beaker", isImage: true },
+    { logo: brandKuho, name: "구호", link: "/brand/kuho", isImage: true },
+    { logo: brandIsseyMiyake, name: "이세이미야케", link: "/brand/issey-miyake", isImage: true },
+    { logo: brandMaisonKitsune, name: "메종키츠네", link: "/brand/maison-kitsune", isImage: true },
+    { logo: brandTheory, name: "띠어리", link: "/brand/theory", isImage: true },
+    { logo: brandKuhoPlus, name: "구호플러스", link: "/brand/kuho-plus", isImage: true },
+    { logo: brandCommeDesGarcons, name: "꼼데가르송", link: "/brand/comme-des-garcons", isImage: true },
+    { logo: brandPatagonia, name: "파타고니아", link: "/brand/patagonia", isImage: true },
+    { logo: brandSportyRich, name: "스포티앤리치", link: "/brand/sporty-rich", isImage: true },
+    { logo: brandSie, name: "시에", link: "/brand/sie", isImage: true },
 
     // Page 2 (13-24)
-    { logo: "/icons/brand_이뉴골프.webp", name: "이뉴골프", link: "/brand/inu-golf", isImage: true },
-    { logo: "/icons/brand_제너럴 아이디어.webp", name: "제너럴 아이디어", link: "/brand/general-idea", isImage: true },
-    { logo: "/icons/brand_르무통.webp", name: "르무통", link: "/brand/le-mouton", isImage: true },
-    { logo: "/icons/brand_아미.png", name: "아미", link: "/brand/ami", isImage: true },
-    { logo: "/icons/brand_준지.png", name: "준지", link: "/brand/juun-j", isImage: true },
-    { logo: "/icons/brand_로가디스.webp", name: "로가디스", link: "/brand/rokadis", isImage: true },
-    { logo: "/icons/brand_단톤.webp", name: "단톤", link: "/brand/danton", isImage: true },
-    { logo: "/icons/brand_텐꼬르소꼬모.webp", name: "텐꼬르소꼬모", link: "/brand/10-corso-como", isImage: true },
-    { logo: "/icons/brand_디애퍼처.webp", name: "디애퍼처", link: "/brand/diapter", isImage: true },
-    { logo: "/icons/brand_코스.webp", name: "코스", link: "/brand/cos", isImage: true },
-    { logo: "/icons/brand_세인트제임스.webp", name: "세인트제임스", link: "/brand/saint-james", isImage: true },
-    { logo: "/icons/brand_타미힐피거.png", name: "타미힐피거", link: "/brand/tommy-hilfiger", isImage: true },
+    { logo: brandInuGolf, name: "이뉴골프", link: "/brand/inu-golf", isImage: true },
+    { logo: brandGeneralIdea, name: "제너럴 아이디어", link: "/brand/general-idea", isImage: true },
+    { logo: brandLeMouton, name: "르무통", link: "/brand/le-mouton", isImage: true },
+    { logo: brandAmi, name: "아미", link: "/brand/ami", isImage: true },
+    { logo: brandJuunJ, name: "준지", link: "/brand/juun-j", isImage: true },
+    { logo: brandRokadis, name: "로가디스", link: "/brand/rokadis", isImage: true },
+    { logo: brandDanton, name: "단톤", link: "/brand/danton", isImage: true },
+    { logo: brand10CorsoComo, name: "텐꼬르소꼬모", link: "/brand/10-corso-como", isImage: true },
+    { logo: brandDiapter, name: "디애퍼처", link: "/brand/diapter", isImage: true },
+    { logo: brandCos, name: "코스", link: "/brand/cos", isImage: true },
+    { logo: brandSaintJames, name: "세인트제임스", link: "/brand/saint-james", isImage: true },
+    { logo: brandTommyHilfiger, name: "타미힐피거", link: "/brand/tommy-hilfiger", isImage: true },
 
     // Page 3 (25-35)
-    { logo: "/icons/brand_캐나다구스.webp", name: "캐나다구스", link: "/brand/canada-goose", isImage: true },
-    { logo: "/icons/brand_헤라.webp", name: "헤라", link: "/brand/hera", isImage: true },
-    { logo: "/icons/brand_갤럭시라이프스타일.webp", name: "갤럭시라이프스타일", link: "/brand/galaxy-lifestyle", isImage: true },
-    { logo: "/icons/brand_르베이지.png", name: "르베이지", link: "/brand/rebaige", isImage: true },
-    { logo: "/icons/brand_토리버치.webp", name: "토리버치", link: "/brand/tory-burch", isImage: true },
-    { logo: "/icons/brand_갤럭시.webp", name: "갤럭시", link: "/brand/galaxy", isImage: true },
-    { logo: "/icons/brand_르메르.png", name: "르메르", link: "/brand/lemaire", isImage: true },
-    { logo: "/icons/brand_핏플랍.png", name: "핏플랍", link: "/brand/fitflop", isImage: true },
-    { logo: "/icons/brand_가니.png", name: "가니", link: "/brand/ganni", isImage: true },
-    { logo: "/icons/brand_랙앤본.webp", name: "랙앤본", link: "/brand/rag-bone", isImage: true },
-    { logo: "/icons/brand_샌드사운드.webp", name: "샌드사운드", link: "/brand/sandsound", isImage: true }
+    { logo: brandCanadaGoose, name: "캐나다구스", link: "/brand/canada-goose", isImage: true },
+    { logo: brandHera, name: "헤라", link: "/brand/hera", isImage: true },
+    { logo: brandGalaxyLifestyle, name: "갤럭시라이프스타일", link: "/brand/galaxy-lifestyle", isImage: true },
+    { logo: brandRebaige, name: "르베이지", link: "/brand/rebaige", isImage: true },
+    { logo: brandToryBurch, name: "토리버치", link: "/brand/tory-burch", isImage: true },
+    { logo: brandGalaxy, name: "갤럭시", link: "/brand/galaxy", isImage: true },
+    { logo: brandLemaire, name: "르메르", link: "/brand/lemaire", isImage: true },
+    { logo: brandFitflop, name: "핏플랍", link: "/brand/fitflop", isImage: true },
+    { logo: brandGanni, name: "가니", link: "/brand/ganni", isImage: true },
+    { logo: brandRagBone, name: "랙앤본", link: "/brand/rag-bone", isImage: true },
+    { logo: brandSandsound, name: "샌드사운드", link: "/brand/sandsound", isImage: true }
   ];
 
   const brandsPerPage = 12;
