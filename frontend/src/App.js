@@ -1,6 +1,6 @@
 // src/App.js
 import React from "react";
-import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import { AuthProvider } from "./context/AuthContext.js";
 import PrivateRoute from "./routes/PrivateRoute.jsx";
@@ -95,105 +95,103 @@ import Wishlist from "./pages/wish/Wishlist.jsx";
 function App() {
   return (
     <AuthProvider>
-      <Router>
-        <Header />
-        <Switch>
+      <Header />
+      <Routes>
           {/* 홈/메뉴 */}
-          <Route exact path="/" component={Home} />
-          <Route path="/menu" component={Menu} />
+          <Route path="/" element={<Home />} />
+          <Route path="/menu" element={<Menu />} />
 
           {/* 로그인/회원가입 */}
-          <Route path="/login" component={Login} />
-          <Route path="/signup" component={Signup} />
-          <Route path="/account/recovery" component={AccountRecovery} />
-          <Route path="/naver-callback" component={NaverCallback} />
-          <Route path="/kakao-callback" component={KakaoCallback} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/account/recovery" element={<AccountRecovery />} />
+          <Route path="/naver-callback" element={<NaverCallback />} />
+          <Route path="/kakao-callback" element={<KakaoCallback />} />
 
           {/* 마이페이지 */}
-          <PrivateRoute exact path="/mypage" component={MyPage} />
-          <PrivateRoute path="/mypage/coupons" component={MyCoupons} />
+          <Route path="/mypage" element={<PrivateRoute><MyPage /></PrivateRoute>} />
+          <Route path="/mypage/coupons" element={<PrivateRoute><MyCoupons /></PrivateRoute>} />
 
           {/* 주문/장바구니/결제 */}
-          <PrivateRoute path="/orders" component={MyOrders} />
-          <PrivateRoute path="/cart" component={CartPage} />
-          <PrivateRoute path="/checkout" component={Checkout} />
-          <Route path="/order/success" component={OrderSuccess} />
-          <PrivateRoute path="/mypage/orders" component={MyOrders} />
+          <Route path="/orders" element={<PrivateRoute><MyOrders /></PrivateRoute>} />
+          <Route path="/cart" element={<PrivateRoute><CartPage /></PrivateRoute>} />
+          <Route path="/checkout" element={<PrivateRoute><Checkout /></PrivateRoute>} />
+          <Route path="/order/success" element={<OrderSuccess />} />
+          <Route path="/mypage/orders" element={<PrivateRoute><MyOrders /></PrivateRoute>} />
 
           {/* ✅ 결제: 'pay/confirm'이 'pay'보다 먼저! */}
-          <PrivateRoute exact path="/pay/confirm" component={PayConfirm} />
-          <PrivateRoute exact path="/pay" component={PaySelect} />
+          <Route path="/pay/confirm" element={<PrivateRoute><PayConfirm /></PrivateRoute>} />
+          <Route path="/pay" element={<PrivateRoute><PaySelect /></PrivateRoute>} />
 
           {/* 고객센터/회사/정책 */}
-          <Route path="/help" component={HelpPage} />
-          <Route path="/company" component={CompanyPage} />
-          <Route exact path="/terms" component={Terms} />
-          <Route exact path="/privacy" component={Privacy} />
-          <Route path="/membership" component={Membership} />
-          <Route exact path="/stores" component={StoreFinder} />
-          <Route exact path="/notice" component={NoticeEvents} />
-          <Route path="/bulk-order" component={BulkOrder} />
+          <Route path="/help" element={<HelpPage />} />
+          <Route path="/company" element={<CompanyPage />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/membership" element={<Membership />} />
+          <Route path="/stores" element={<StoreFinder />} />
+          <Route path="/notice" element={<NoticeEvents />} />
+          <Route path="/bulk-order" element={<BulkOrder />} />
 
           {/* 위시리스트 */}
-          <Route path="/wishlist" component={Wishlist} />
+          <Route path="/wishlist" element={<Wishlist />} />
 
           {/* 검색/리스트 */}
-          <Route path="/search/:keyword" component={Search} />
-          <Route path="/list" component={ProductList} />
+          <Route path="/search/:keyword" element={<Search />} />
+          <Route path="/list" element={<ProductList />} />
 
           {/* 상품 */}
-          <Route path="/product/:id" component={ProductDetail} />
-          <Route path="/product" component={ProductDetail} />
+          <Route path="/product/:id" element={<ProductDetail />} />
+          <Route path="/product" element={<ProductDetail />} />
 
           {/* 카테고리 */}
-          <Route path="/women/:subcategory?" component={CategoryPage} />
-          <Route path="/men/:subcategory?" component={CategoryPage} />
-          <Route path="/kids/:subcategory?" component={CategoryPage} />
-          <Route path="/sports/:subcategory?" component={CategoryPage} />
-          <Route path="/beauty/:subcategory?" component={CategoryPage} />
+          <Route path="/women/:subcategory?" element={<CategoryPage />} />
+          <Route path="/men/:subcategory?" element={<CategoryPage />} />
+          <Route path="/kids/:subcategory?" element={<CategoryPage />} />
+          <Route path="/sports/:subcategory?" element={<CategoryPage />} />
+          <Route path="/beauty/:subcategory?" element={<CategoryPage />} />
 
           {/* 골프 */}
-          <Route exact path="/golf" component={GolfMain} />
-          <Route path="/golf/new" component={GolfNew} />
-          <Route path="/golf/women" component={GolfWomen} />
-          <Route path="/golf/men" component={GolfMen} />
+          <Route path="/golf" element={<GolfMain />} />
+          <Route path="/golf/new" element={<GolfNew />} />
+          <Route path="/golf/women" element={<GolfWomen />} />
+          <Route path="/golf/men" element={<GolfMen />} />
 
           {/* 신발 */}
-          <Route exact path="/shoes" component={ShoesMain} />
-          <Route path="/shoes/new" component={ShoesNew} />
-          <Route path="/shoes/women" component={ShoesWomen} />
-          <Route path="/shoes/men" component={ShoesMen} />
+          <Route path="/shoes" element={<ShoesMain />} />
+          <Route path="/shoes/new" element={<ShoesNew />} />
+          <Route path="/shoes/women" element={<ShoesWomen />} />
+          <Route path="/shoes/men" element={<ShoesMen />} />
 
           {/* 라이프 */}
-          <Route exact path="/life" component={LifeMain} />
-          <Route path="/life/new" component={LifeNew} />
-          <Route path="/life/furniture" component={LifeFurniture} />
-          <Route path="/life/pet" component={LifePet} />
-          <Route path="/life/car" component={LifeCar} />
+          <Route path="/life" element={<LifeMain />} />
+          <Route path="/life/new" element={<LifeNew />} />
+          <Route path="/life/furniture" element={<LifeFurniture />} />
+          <Route path="/life/pet" element={<LifePet />} />
+          <Route path="/life/car" element={<LifeCar />} />
 
           {/* 럭셔리 */}
-          <Route exact path="/luxury" component={LuxuryMain} />
-          <Route path="/luxury/new" component={LuxuryNew} />
-          <Route path="/luxury/women" component={LuxuryWomen} />
-          <Route path="/luxury/men" component={LuxuryMen} />
+          <Route path="/luxury" element={<LuxuryMain />} />
+          <Route path="/luxury/new" element={<LuxuryNew />} />
+          <Route path="/luxury/women" element={<LuxuryWomen />} />
+          <Route path="/luxury/men" element={<LuxuryMen />} />
 
           {/* 아울렛 */}
-          <Route exact path="/outlet" component={OutletMain} />
-          <Route path="/outlet/women" component={OutletWomen} />
-          <Route path="/outlet/men" component={OutletMen} />
-          <Route path="/outlet/kids" component={OutletKids} />
-          <Route path="/outlet/luxury" component={OutletLuxury} />
-          <Route path="/outlet/shoes" component={OutletShoes} />
-          <Route path="/outlet/sports" component={OutletSports} />
-          <Route path="/outlet/golf" component={OutletGolf} />
-          <Route path="/outlet/life" component={OutletLife} />
+          <Route path="/outlet" element={<OutletMain />} />
+          <Route path="/outlet/women" element={<OutletWomen />} />
+          <Route path="/outlet/men" element={<OutletMen />} />
+          <Route path="/outlet/kids" element={<OutletKids />} />
+          <Route path="/outlet/luxury" element={<OutletLuxury />} />
+          <Route path="/outlet/shoes" element={<OutletShoes />} />
+          <Route path="/outlet/sports" element={<OutletSports />} />
+          <Route path="/outlet/golf" element={<OutletGolf />} />
+          <Route path="/outlet/life" element={<OutletLife />} />
 
           {/* 관리자 */}
-          <PrivateRoute path="/admin/orders" component={AdminOrders} />
-          <PrivateRoute path="/admin" component={AdminDashboard} />
-        </Switch>
-        <Footer />
-      </Router>
+          <Route path="/admin/orders" element={<PrivateRoute><AdminOrders /></PrivateRoute>} />
+          <Route path="/admin" element={<PrivateRoute><AdminDashboard /></PrivateRoute>} />
+      </Routes>
+      <Footer />
     </AuthProvider>
   );
 }

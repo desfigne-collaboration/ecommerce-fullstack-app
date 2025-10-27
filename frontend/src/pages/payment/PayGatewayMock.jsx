@@ -1,13 +1,13 @@
 // src/pages/payment/PayGatewayMock.jsx
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const toNum = (v) =>
   typeof v === "number" ? v : Number(String(v || 0).replace(/[^\d]/g, "")) || 0;
 const fmt = (n) => `₩${Number(n || 0).toLocaleString()}`;
 
 export default function PayGatewayMock() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
 
   // backup payload
@@ -49,7 +49,7 @@ export default function PayGatewayMock() {
   useEffect(() => {
     if (!payload.items.length) {
       alert("결제할 상품 정보가 없습니다. 장바구니로 이동합니다.");
-      history.replace("/cart");
+      navigate("/cart");
     }
   }, [payload.items.length, history]);
 
@@ -139,7 +139,7 @@ export default function PayGatewayMock() {
     } catch {}
 
     // 4) 성공 페이지로 이동 (재계산 값 포함해 넘김)
-    history.replace("/order/success", {
+    navigate("/order/success", {
       ...payload,
       subtotal,
       discount,

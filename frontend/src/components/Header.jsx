@@ -1,8 +1,10 @@
 import React, { useEffect, useState, useRef, useMemo } from "react";
-import { Link, useLocation, useHistory } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import "./Header.css";
 
 export default function Header() {
+  const { user: authUser, logout } = useAuth();
   const [isLogin, setIsLogin] = useState(localStorage.getItem("isLogin") === "true");
   const [user, setUser] = useState(() => {
     try { return JSON.parse(localStorage.getItem("loginUser")) || null; } catch { return null; }
@@ -23,7 +25,7 @@ export default function Header() {
 
   const headerRef = useRef(null);
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   /** 공용 MegaMenu 래퍼 */
   const MegaMenu = ({ id, active, top, cols = "2", children }) => (
@@ -121,12 +123,13 @@ export default function Header() {
 
   /** 인증/네비 핸들러 */
   const handleLogout = () => {
-    localStorage.removeItem("isLogin");
-    localStorage.removeItem("loginUser");
-    setIsLogin(false); setUser(null);
+    // ✅ AuthContext의 logout 함수 사용
+    logout();
+    setIsLogin(false);
+    setUser(null);
     try { window.dispatchEvent(new Event("auth:changed")); } catch {}
     alert("로그아웃 되었습니다.");
-    window.location.href = "/#/login";
+    navigate("/login");
   };
   const handleCartClick = (e) => {
     if (!isLogin) { e.preventDefault(); alert("로그인이 필요합니다."); window.location.href = "/#/login"; }
@@ -164,7 +167,7 @@ export default function Header() {
       localStorage.setItem("recentSearches", JSON.stringify(recent.slice(0, 10)));
       setRecentSearches(recent.slice(0, 10));
     } catch {}
-    history.push(`/search/${encodeURIComponent(raw)}`);
+    navigate(`/search/${encodeURIComponent(raw)}`);
     setSearchModalOpen(false);
   };
 
