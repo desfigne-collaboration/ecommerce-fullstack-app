@@ -1,87 +1,70 @@
-import { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { RiDeleteBin6Line } from 'react-icons/ri';
-import '../styles/cart.css';
+// src/pages/Cart.jsx
+import React, { useMemo, useState } from "react";
+import { useHistory } from "react-router-dom";
+import useRequireAuth from "../hooks/useRequireAuth";
+import { toNumber, formatKRW } from "../utils/money";
 
-import { useSelector, useDispatch } from 'react-redux';
-import { showCart, updateCart, removeCart } from '../feature/cart/cartAPI.js';
-
-export function Cart() {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const cartList = useSelector((state) => state.cart.cartList);
-    const totalPrice = useSelector((state) => state.cart.totalPrice);   
-      
-    useEffect(()=> {  dispatch(showCart());  }, []);    
-
-    return (
-        <div className='cart-container'>
-            <h2 className='cart-header'>장바구니</h2>
-            { cartList && cartList.map(item => 
-                <div key={item.pid}>
-                    <div className='cart-item'>
-                        <img src={item.image} alt="product img" />
-                        <div className='cart-item-details'>
-                            <p className='cart-item-title'>{item.name}</p>
-                            <p className='cart-item-title'>{item.size}</p>
-                            <p className='cart-item-price'>
-                                {parseInt(item.price).toLocaleString()}원</p>
-                        </div>
-                        <div className='cart-quantity'>
-                            <button type='button'
-                                    onClick={()=>{dispatch(updateCart(item.cid, '-'))}}>-</button> 
-                            <input type='text' value={item.qty} readOnly/>
-                            <button type='button'
-                                    onClick={()=>{dispatch(updateCart(item.cid, '+'))}}>+</button>
-                        </div>
-                        <button className='cart-remove'
-                                onClick={()=>{dispatch(removeCart(item.cid))}}> 
-                            <RiDeleteBin6Line />
-                        </button> 
-                    </div>
-                </div>    
-            )}
-
-            {/* 주문 버튼 출력 */}
-            { cartList && cartList.length > 0 ?
-                <>
-                    <div className='cart-summary'>
-                        <h3>주문 예상 금액</h3>
-                        <div className='cart-summary-sub'>
-                            <p className='cart-total'>
-                                <label>총 상품 가격 : </label>
-                                <span>{totalPrice.toLocaleString()}원</span>
-                            </p>
-                            <p className='cart-total'>
-                                <label>총 할인 가격 : </label>
-                                <span>0원</span>
-                            </p>
-                            <p className='cart-total'>
-                                <label>총 배송비 : </label>
-                                <span>0원</span>
-                            </p>
-                        </div>
-                        <p className='cart-total2'>
-                            <label>총 금액 : </label>
-                            <span>{totalPrice.toLocaleString()}원</span>
-                        </p>
-                    </div>
-                    <div className='cart-actions'>
-                        <button type='button'
-                                onClick={()=>{
-                                    navigate("/checkout");
-                                }}>주문하기</button>
-                    </div>
-                </>
-              :  <div>
-                    <p> 장바구니에 담은 상품이 없습니다. &nbsp;&nbsp;&nbsp;&nbsp;
-                        <Link to="/all">상품보러가기</Link>
-                    </p>
-                    <img src="/images/cart.jpg" 
-                         style={{width:"50%", marginTop:"20px"}} />
-                </div>
-            } 
-        </div>
-    );
+function getCart() {
+  try { return JSON.parse(localStorage.getItem("cart") || "[]"); } catch { return []; }
+}
+function setCart(items) {
+  localStorage.setItem("cart", JSON.stringify(items));
 }
 
+export default function Cart() {
+  const ok = useRequireAuth(); // 로그인 강제
+  const history = useHistory();
+  const [items, setItems] = useState(getCart());
+
+  const subtotal = useMemo(
+    () => items.reduce((sum, it) => sum + toNumber(it.price) * (it.qty || 1), 0),
+    [items]
+  );
+
+  if (!ok) return null;
+
+  const updateQty = (id, qty) => {
+    const next = items.map((it) => (it.id === id ? { ...it, qty } : it));
+    setItems(next); setCart(next);
+  };
+
+  const remove = (id) => {
+    const next = items.filter((it) => it.id !== id);
+    setItems(next); setCart(next);
+  };
+
+  return (
+    <div className="container" style={{ padding: 24 }}>
+      <h2>장바구니</h2>
+      {items.length === 0 ? (
+        <p>장바구니가 비었습니다.</p>
+      ) : (
+        <>
+          {items.map((it) => (
+            <div key={it.id} style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 0", borderBottom: "1px solid #eee" }}>
+              <img src={it.img} alt={it.name} style={{ width: 80, height: 100, objectFit: "cover", borderRadius: 8 }} />
+              <div style={{ flex: 1 }}>
+                <div>{it.name}</div>
+                <div style={{ color: "#666", fontSize: 13 }}>{formatKRW(it.price)}</div>
+              </div>
+              <input
+                type="number"
+                min={1}
+                value={it.qty || 1}
+                onChange={(e) => updateQty(it.id, Math.max(1, Number(e.target.value)))}
+                style={{ width: 64 }}
+              />
+              <button onClick={() => remove(it.id)}>삭제</button>
+            </div>
+          ))}
+          <div style={{ textAlign: "right", marginTop: 16 }}>
+            <div>상품금액: <b>{formatKRW(subtotal)}</b></div>
+            <button style={{ marginTop: 12 }} onClick={() => history.push("/checkout")}>
+              주문하기
+            </button>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
