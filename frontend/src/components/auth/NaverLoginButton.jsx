@@ -76,8 +76,10 @@ export default function NaverLoginButton() {
 
       {/* 실제 사용자에게 보이는 커스텀 버튼 */}
       <button type="button" className="sns-btn sns-naver" onClick={handleNaverLogin}>
-        <span className="sns-icon">N</span>
-        네이버 로그인
+        <div className="sns-icon-box">
+          <span className="sns-icon">N</span>
+        </div>
+        <span className="sns-text">네이버 로그인</span>
       </button>
     </>
   );

@@ -27,8 +27,10 @@ export default function KakaoLoginButton() {
 
   return (
     <button type="button" className="sns-btn sns-kakao" onClick={handleKakaoLogin}>
-      <span className="sns-icon">💬</span>
-      카카오 로그인
+      <div className="sns-icon-box">
+        <span className="sns-icon">💬</span>
+      </div>
+      <span className="sns-text">카카오 로그인</span>
     </button>
   );
 }

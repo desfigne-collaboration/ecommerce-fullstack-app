@@ -114,31 +114,61 @@ export default function Login() {
         </div>
 
         <form className="auth-form" onSubmit={onSubmit}>
-          <input
-            type="text"
-            name="id"
-            placeholder="이메일"
-            value={form.id}
-            onChange={onChange}
-            required
-          />
+          <div className="login-form-layout">
+            <div className="login-inputs-section">
+              <input
+                type="text"
+                name="id"
+                placeholder="아이디 또는 이메일"
+                value={form.id}
+                onChange={onChange}
+                required
+              />
 
-          <div className="password-input-wrapper">
-            <input
-              type={showPassword ? "text" : "password"}
-              name="pass"
-              placeholder="비밀번호"
-              value={form.pass}
-              onChange={onChange}
-              required
-            />
-            <button
-              type="button"
-              className="toggle-password"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              👁
-            </button>
+              <div className="password-input-wrapper">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="pass"
+                  placeholder="비밀번호"
+                  value={form.pass}
+                  onChange={onChange}
+                  required
+                />
+                <button
+                  type="button"
+                  className="toggle-password"
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? "비밀번호 숨기기" : "비밀번호 보기"}
+                >
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    {showPassword ? (
+                      <>
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                        <circle cx="12" cy="12" r="3" />
+                      </>
+                    ) : (
+                      <>
+                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                        <line x1="1" y1="1" x2="23" y2="23" />
+                      </>
+                    )}
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div className="login-button-section">
+              <button type="submit" className="auth-submit">
+                로그인
+              </button>
+            </div>
           </div>
 
           <div className="remember-me-section">
@@ -148,21 +178,15 @@ export default function Login() {
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
               />
-              <span>아이디 저장</span>
+              <span>자동 로그인</span>
             </label>
           </div>
-
-          <button type="submit" className="auth-submit">
-            로그인
-          </button>
         </form>
 
-        {/* 링크 섹션 */}
-        <div className="auth-links-section">
+        {/* 링크 섹션 - 회색 박스 */}
+        <div className="auth-links-box">
           <Link to="/find-id">아이디 찾기</Link>
-          <span className="divider">|</span>
           <Link to="/find-password">비밀번호 찾기</Link>
-          <span className="divider">|</span>
           <Link to="/signup">회원가입</Link>
         </div>
 
@@ -175,6 +199,15 @@ export default function Login() {
           <KakaoLoginButton />
           <NaverLoginButton />
         </div>
+
+        {/* 비회원 주문 조회 버튼 (모바일 전용) */}
+        <button
+          type="button"
+          className="non-member-order-btn"
+          onClick={() => navigate('/orders/guest')}
+        >
+          비회원 주문 조회
+        </button>
       </div>
     </div>
   );
