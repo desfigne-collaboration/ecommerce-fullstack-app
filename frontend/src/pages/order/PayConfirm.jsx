@@ -1,6 +1,6 @@
 // src/pages/order/PayConfirm.jsx
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./PayConfirm.css";
 
 const toNumber = (v) => (typeof v === "number" ? v : Number(String(v ?? "").replace(/[^\d]/g, "")) || 0);
@@ -33,7 +33,7 @@ const normalizeItem = (raw) => {
 };
 
 export default function PayConfirm() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const incoming = useMemo(() => {
     // 우선순위: (1) location.state (2) localStorage.payPayload
@@ -47,7 +47,7 @@ export default function PayConfirm() {
 
   useEffect(() => {
     if (!incoming || !incoming.items || incoming.items.length === 0) {
-      history.replace("/order/checkout");
+      navigate("/order/checkout");
     }
   }, [incoming, history]);
 
@@ -136,7 +136,7 @@ export default function PayConfirm() {
       markCouponUsed();
       saveOrders();
       clearTemp();
-      history.replace("/orders");
+      navigate("/orders");
     } catch (e) {
       console.error(e);
       alert("결제 처리에 실패했습니다. 다시 시도해주세요.");

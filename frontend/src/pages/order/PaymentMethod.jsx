@@ -1,6 +1,6 @@
 // src/pages/order/PaymentMethod.jsx
 import React, { useEffect, useMemo, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./Payment.css";
 
 /** 아이콘/QR 파일명(원하시면 여기만 바꾸세요) */
@@ -23,7 +23,7 @@ const ASSETS = {
 };
 
 export default function PaymentMethod() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const [method, setMethod] = useState("toss");
   const [seconds, setSeconds] = useState(5);
@@ -35,7 +35,7 @@ export default function PaymentMethod() {
   useEffect(() => {
     if (!amount || !items.length) {
       // 금액/아이템이 없으면 결제 진행 불가 → 장바구니/결제로 돌려보내기
-      history.replace("/checkout");
+      navigate("/checkout");
     }
   }, [amount, items, history]);
 
@@ -48,7 +48,7 @@ export default function PaymentMethod() {
   const selected = useMemo(() => ASSETS[method], [method]);
 
   const handleGo = () => {
-    history.push("/pay/gateway", {
+    navigate("/pay/gateway", {
       method,
       amount,
       items,
