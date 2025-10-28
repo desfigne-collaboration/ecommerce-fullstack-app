@@ -29,7 +29,7 @@ export default function PaySelect() {
       // 유효한 결제 대상 없으면 체크아웃으로 되돌림
       navigate("/order/checkout");
     }
-  }, [payload, history]);
+  }, [payload, navigate]);
 
   if (!payload) return null;
 

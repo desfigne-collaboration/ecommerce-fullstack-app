@@ -49,7 +49,7 @@ export default function PayConfirm() {
     if (!incoming || !incoming.items || incoming.items.length === 0) {
       navigate("/order/checkout");
     }
-  }, [incoming, history]);
+  }, [incoming, navigate]);
 
   const items = useMemo(() => (incoming?.items || []).map(normalizeItem).filter(Boolean), [incoming]);
 
@@ -162,7 +162,7 @@ export default function PayConfirm() {
           <button className="btn btn-primary" onClick={onClickPay} disabled={paying}>
             {paying ? "처리 중..." : "결제 완료"}
           </button>
-          <button className="ghost" onClick={() => history.goBack()} style={{ marginLeft: 8 }} disabled={paying}>
+          <button className="ghost" onClick={() => navigate(-1)} style={{ marginLeft: 8 }} disabled={paying}>
             이전으로
           </button>
         </div>
