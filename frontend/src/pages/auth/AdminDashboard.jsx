@@ -1,18 +1,18 @@
 import React from "react";
 import { getAuth, logoutApi } from "../../api/auth";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import "../Page.css";
 
 export default function AdminDashboard() {
   const auth = getAuth();
-  const navigate = useNavigate();
+  const history = useHistory();
   if (!auth || auth.role !== "admin") {
-    navigate("/login");
+    history.push("/login");
     return null;
   }
   const logout = () => {
     logoutApi();
-    navigate("/");
+    history.push("/");
   };
   return (
     <div className="auth-wrap">

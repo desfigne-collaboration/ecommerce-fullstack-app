@@ -1,6 +1,6 @@
 import React from "react";
 import "../Page.css";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import ProductThumb from "../../components/ProductThumb";
 
 function menTshirt() {

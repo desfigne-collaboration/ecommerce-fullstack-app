@@ -1,11 +1,11 @@
 // src/pages/auth/Signup.jsx
 import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { signupApi } from "../../api/auth";
 import "./Signup.css";
 
 export default function Signup() {
-  const navigate = useNavigate();
+  const history = useHistory();
   const location = useLocation();
 
   const [form, setForm] = useState({
@@ -314,7 +314,7 @@ export default function Signup() {
     }
 
     alert("회원가입이 완료되었습니다! 🎉");
-    navigate("/login");
+    history.push("/login");
   };
 
   const allRequired = agreements.age14 && agreements.termsOfUse && agreements.privacy && agreements.membership;

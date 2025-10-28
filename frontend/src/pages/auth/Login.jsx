@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../../styles/Auth.css";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import { loginApi } from "../../api/auth";
 import { useAuth } from "../../context/AuthContext";
 import NaverLoginButton from "../../components/auth/NaverLoginButton";
@@ -8,7 +8,7 @@ import KakaoLoginButton from "../../components/auth/KakaoLoginButton";
 
 export default function Login() {
   const location = useLocation();
-  const navigate = useNavigate();
+  const history = useHistory();
   const { login } = useAuth();
   const [form, setForm] = useState({ id: "", pass: "" });
   const [activeTab, setActiveTab] = useState("member");
@@ -86,9 +86,9 @@ export default function Login() {
     alert("로그인 성공!");
 
     if ((user.role || res.role) === "admin") {
-      navigate("/mypage", { replace: true, state: { activeTab: "admin-users" } });
+      history.replace("/mypage", { activeTab: "admin-users" });
     } else {
-      navigate("/", { replace: true });
+      history.replace("/");
     }
   };
 
@@ -204,7 +204,7 @@ export default function Login() {
         <button
           type="button"
           className="non-member-order-btn"
-          onClick={() => navigate('/orders/guest')}
+          onClick={() => history.push('/orders/guest')}
         >
           비회원 주문 조회
         </button>

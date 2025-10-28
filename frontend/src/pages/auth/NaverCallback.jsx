@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { naverLoginApi } from "../../api/auth";
 
 export default function NaverCallback() {
-  const navigate = useNavigate();
+  const history = useHistory();
 
   useEffect(() => {
     console.log("NaverCallback 페이지 로드됨");
@@ -17,7 +17,7 @@ export default function NaverCallback() {
     if (!tokenMatch) {
       console.error("Access token을 찾을 수 없음");
       alert("네이버 로그인에 실패했습니다.");
-      navigate("/login");
+      history.push("/login");
       return;
     }
 
@@ -76,11 +76,11 @@ export default function NaverCallback() {
                 window.location.href = "/";
               } else {
                 alert("로그인 처리 중 오류가 발생했습니다.");
-                navigate("/login");
+                history.push("/login");
               }
             } else {
               alert("사용자 정보를 가져올 수 없습니다.");
-              navigate("/login");
+              history.push("/login");
             }
           } else {
             console.error("SDK getLoginStatus failed, 수동으로 처리");
@@ -97,7 +97,7 @@ export default function NaverCallback() {
               window.location.href = "/#/";
             } else {
               alert("로그인 처리 중 오류가 발생했습니다.");
-              navigate("/login");
+              history.push("/login");
             }
           }
         });
@@ -117,10 +117,10 @@ export default function NaverCallback() {
         window.location.href = "/#/";
       } else {
         alert("로그인 처리 중 오류가 발생했습니다.");
-        navigate("/login");
+        history.push("/login");
       }
     }
-  }, [navigate]);
+  }, [history]);
 
   return (
     <div style={{

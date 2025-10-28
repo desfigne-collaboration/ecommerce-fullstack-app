@@ -1,10 +1,10 @@
 // src/components/ProductThumb.jsx
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { srcOf } from "../utils/srcOf";
 
 export default function ProductThumb({ product, image, src }) {
-  const navigate = useNavigate();
+  const history = useHistory();
   const raw = image || src || product?.image || product?.img || product?.src || "";
   const resolved = srcOf(raw);
 
@@ -20,7 +20,7 @@ export default function ProductThumb({ product, image, src }) {
       desc: product?.desc || "",
     };
     localStorage.setItem("lastProduct", JSON.stringify(normalized));
-    navigate(`/product/${normalized.id}`, { state: { product: normalized } });
+    history.push(`/product/${normalized.id}`, { product: normalized });
   };
 
   return (
