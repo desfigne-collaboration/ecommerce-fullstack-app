@@ -1,6 +1,7 @@
 package com.springboot.ecommerce_fullstack_app.repository;
 
 import com.springboot.ecommerce_fullstack_app.dto.CartItem;
+import com.springboot.ecommerce_fullstack_app.dto.CartListResponse;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -17,6 +18,32 @@ public class JdbcTemplateCartRepository implements CartRepository{
     }
 
     @Override
+    public List<CartListResponse> findList(CartItem cartItem) {
+        String sql = """
+                select id, mname, phone, email, pid, name, info, image, price, size, qty, cid, totalPrice
+                from view_cartlist
+                where id = ?
+                """;
+        Object[] params = { cartItem.getId() };
+        return jdbcTemplate.query(sql,
+                new BeanPropertyRowMapper<>(CartListResponse.class), params);
+    }
+
+    @Override
+    public int deleteItem(CartItem cartItem) {
+        String sql = """
+                delete from cart where cid = ?
+                """;
+        return jdbcTemplate.update(sql, cartItem.getCid());
+    }
+
+    @Override
+    public CartItem getCount(CartItem cartItem) {
+        String sql = "select ifnull(sum(qty), 0) as sumQty from cart where id = ?";
+        return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(CartItem.class), cartItem.getId());
+    }
+
+    @Override
     public int updateQty(CartItem cartItem) {
         String sql = "";
         if(cartItem.getType().equals("+")) {
@@ -24,27 +51,35 @@ public class JdbcTemplateCartRepository implements CartRepository{
         } else {
             sql = " update cart set qty = qty - 1 where cid =? ";
         }
+//        System.out.println("updateQty :: " + sql);
         return jdbcTemplate.update(sql, cartItem.getCid());
     }
 
     @Override
     public CartItem checkQty(CartItem cartItem) {
+//        System.out.println("CartRepository :: " + cartItem.getPid() + cartItem.getSize() + cartItem.getId());
         String sql = """
-                SELECT cid, sum(pid=? AND size=? and id=?) AS checkQty
-                	FROM cart
-                	GROUP BY cid, id
-                	order by checkQty desc
-                	limit 1
+                SELECT
+                   ifnull(MAX(cid), 0) AS cid,
+                   COUNT(*) AS checkQty
+                 FROM cart
+                 WHERE pid = ? AND size = ? AND id = ?
                 """;
-        Object[] params = { cartItem.getPid(), cartItem.getSize(), cartItem.getId() };
-        return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(CartItem.class), params);
+
+        Object[] params = {
+                cartItem.getPid(), cartItem.getSize(), cartItem.getId()
+        };
+        CartItem resultCartItem = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(CartItem.class), params);
+
+//        System.out.println("checkQty :: resultCartItem = " + resultCartItem);
+        return resultCartItem;
     }
 
     @Override
     public int add(CartItem cartItem) {
         String sql = """
                 insert into cart(size, qty, pid, id, cdate)
-                    values(?, ?, ?, ?, now())                
+                    values(?, ?, ?, ?, now())
                 """;
         Object [] params = {
                 cartItem.getSize(),
@@ -53,30 +88,5 @@ public class JdbcTemplateCartRepository implements CartRepository{
                 cartItem.getId()
         };
         return jdbcTemplate.update(sql, params);
-    }
-
-    @Override
-    public List<CartItem> findByUserId(String id) {
-        String sql = """
-                SELECT c.cid, c.size, c.qty, c.pid, c.id, c.cdate,
-                       p.image, p.name, p.price
-                FROM cart c
-                INNER JOIN product p ON c.pid = p.pid
-                WHERE c.id = ?
-                ORDER BY c.cdate DESC
-                """;
-        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(CartItem.class), id);
-    }
-
-    @Override
-    public int remove(String cid) {
-        String sql = "DELETE FROM cart WHERE cid = ?";
-        return jdbcTemplate.update(sql, cid);
-    }
-
-    @Override
-    public int countByUserId(String id) {
-        String sql = "SELECT IFNULL(SUM(qty), 0) FROM cart WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, Integer.class, id);
     }
 }

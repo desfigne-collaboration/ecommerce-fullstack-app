@@ -12,9 +12,5 @@ public class CartItem {
     private String cdate;
     private int checkQty;
     private String type;
-    
-    // Product information (from join)
-    private String image;
-    private String name;
-    private int price;
+    private int sumQty;
 }
