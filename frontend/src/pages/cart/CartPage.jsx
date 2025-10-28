@@ -16,7 +16,7 @@ export default function CartPage() {
       navigate("/login");
       return;
     }
-  }, [history]);
+  }, [navigate]);
 
   // ✅ 장바구니 불러오기
   useEffect(() => {

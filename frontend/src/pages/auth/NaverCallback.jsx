@@ -120,7 +120,7 @@ export default function NaverCallback() {
         navigate("/login");
       }
     }
-  }, [history]);
+  }, [navigate]);
 
   return (
     <div style={{

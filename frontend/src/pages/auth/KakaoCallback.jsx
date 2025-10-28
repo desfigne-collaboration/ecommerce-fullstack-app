@@ -145,7 +145,7 @@ export default function KakaoCallback() {
     };
 
     getKakaoToken();
-  }, [history, location]);
+  }, [navigate, location]);
 
   return (
     <div style={{
