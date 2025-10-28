@@ -1,6 +1,6 @@
 // src/pages/CategoryPage.jsx
 import React, { useEffect, useMemo, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import { CATEGORY_DATA } from "../data/categoryData";
 import { getProductsByCategory } from "../data/productData";
 import { productKey } from "../hooks/useWishlist";
@@ -41,7 +41,7 @@ const pidOf = (p, idx) => p?.id ?? p?.code ?? p?.pid ?? productKey(p) ?? `cat-${
 
 export default function CategoryPage() {
   const location = useLocation();
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const pathname = location.pathname;
   const pathParts = pathname.split("/").filter(Boolean);
@@ -105,7 +105,7 @@ export default function CategoryPage() {
       brand: p.brand || p.brandName || "",
     };
     localStorage.setItem("lastProduct", JSON.stringify(normalized));
-    navigate(`/product/${normalized.id}`, { product: normalized });
+    history.push(`/product/${normalized.id}`, { product: normalized });
   };
 
   if (!categoryData) {

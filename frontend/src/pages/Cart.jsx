@@ -1,6 +1,6 @@
 // src/pages/Cart.jsx
 import React, { useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import useRequireAuth from "../hooks/useRequireAuth";
 import { toNumber, formatKRW } from "../utils/money";
 
@@ -13,7 +13,7 @@ function setCart(items) {
 
 export default function Cart() {
   const ok = useRequireAuth(); // 로그인 강제
-  const navigate = useNavigate();
+  const history = useHistory();
   const [items, setItems] = useState(getCart());
 
   const subtotal = useMemo(
@@ -59,7 +59,7 @@ export default function Cart() {
           ))}
           <div style={{ textAlign: "right", marginTop: 16 }}>
             <div>상품금액: <b>{formatKRW(subtotal)}</b></div>
-            <button style={{ marginTop: 12 }} onClick={() => navigate("/checkout")}>
+            <button style={{ marginTop: 12 }} onClick={() => history.push("/checkout")}>
               주문하기
             </button>
           </div>

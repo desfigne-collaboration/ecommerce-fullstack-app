@@ -1,10 +1,10 @@
 // src/pages/cart/CartPage.jsx
 import React, { useEffect, useMemo, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import "./CartPage.css";
 
 export default function CartPage() {
-  const navigate = useNavigate();
+  const history = useHistory();
   const [cart, setCart] = useState([]);
   const [selected, setSelected] = useState({});
 
@@ -13,10 +13,10 @@ export default function CartPage() {
     const isLogin = localStorage.getItem("isLogin") === "true";
     if (!isLogin) {
       alert("로그인이 필요합니다.");
-      navigate("/login");
+      history.push("/login");
       return;
     }
-  }, [navigate]);
+  }, [history]);
 
   // ✅ 장바구니 불러오기
   useEffect(() => {
@@ -155,7 +155,7 @@ export default function CartPage() {
     }
 
     localStorage.setItem("cartCheckout", JSON.stringify(payload));
-    navigate("/checkout", { fromCart: true });
+    history.push("/checkout", { fromCart: true });
   };
 
   return (

@@ -1,10 +1,10 @@
 // src/pages/Signup.jsx
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 export default function Signup() {
-  const navigate = useNavigate();
+  const history = useHistory();
   const { login, issueWelcomeCouponIfNeeded } = useAuth();
   const [form, setForm] = useState({ name: "", email: "" });
 
@@ -20,7 +20,7 @@ export default function Signup() {
       issueWelcomeCouponIfNeeded();
     }, 0);
 
-    navigate("/mypage/coupons");
+    history.push("/mypage/coupons");
   };
 
   return (
