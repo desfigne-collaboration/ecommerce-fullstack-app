@@ -16,7 +16,7 @@ export default function AdminDashboard() {
     if (!auth || auth.role !== "admin") {
       window.location.href = "/#/login";
     }
-  }, [auth, history]);
+  }, [auth, navigate]);
 
   const refresh = () => {
     try { setUsers(JSON.parse(localStorage.getItem("users")) || []); } catch { setUsers([]); }
