@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { getAuth, logoutApi } from "../../api/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import "../../styles/AdminDashboard.css";
 
 export default function AdminDashboard() {
-  const navigate = useNavigate();
+  const history = useHistory();
   const [q, setQ] = useState("");
   const [users, setUsers] = useState(() => {
     try { return JSON.parse(localStorage.getItem("users")) || []; } catch { return []; }
@@ -16,7 +16,7 @@ export default function AdminDashboard() {
     if (!auth || auth.role !== "admin") {
       window.location.href = "/#/login";
     }
-  }, [auth, navigate]);
+  }, [auth, history]);
 
   const refresh = () => {
     try { setUsers(JSON.parse(localStorage.getItem("users")) || []); } catch { setUsers([]); }
@@ -36,7 +36,7 @@ export default function AdminDashboard() {
 
   const onLogout = () => {
     logoutApi();
-    navigate("/login");
+    history.push("/login");
   };
 
   const filtered = useMemo(() => {
