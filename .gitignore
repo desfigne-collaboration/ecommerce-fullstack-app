@@ -51,3 +51,9 @@ PRN
 AUX
 com[0-9]
 lpt[0-9]
+
+# Compressed files
+*.zip
+*.rar
+*.7z
+*.tar.gz
