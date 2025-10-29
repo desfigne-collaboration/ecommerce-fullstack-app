@@ -1,0 +1,165 @@
+/* =============== Sporty & Rich (브랜드 전용 CSS) =============== */
+.brand-sr .sr-hero .btn {
+  line-height: 1;
+  height: 40px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-weight: 800;
+  letter-spacing: .2px;
+  text-shadow: 0 1px 2px rgba(0,0,0,.25);  /* 밝은 배경에서도 선명 */
+}
+
+/* 기본 버튼이 흰색으로 덮이지 않도록 확실히 고정 */
+.brand-sr .sr-hero .btn.ghost {
+  background: transparent !important;
+  border: 1.5px solid rgba(255,255,255,.85) !important;
+  color: #fff !important;
+}
+
+/* hover 시도 또렷하게 */
+.brand-sr .sr-hero .btn.ghost:hover {
+  background: rgba(255,255,255,.12) !important;
+}
+
+.brand-sr .sr-hero .btn.primary {
+  background: #6c4cf5 !important;
+  border-color: #6c4cf5 !important;
+  color: #fff !important;
+  box-shadow: 0 6px 18px rgba(108,76,245,.35);
+}
+
+/* HERO 텍스트도 살짝 그림자 추가 (밝은 배경 대비) */
+.brand-sr .sr-hero-title,
+.brand-sr .sr-hero-desc,
+.brand-sr .sr-hero-stats li strong {
+  text-shadow: 0 1px 2px rgba(0,0,0,.22);
+}
+/* ---------- HERO with full background image ---------- */
+.sr-hero.with-image {
+  position: relative;
+  height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  color: #fff;
+  overflow: hidden;
+  border-bottom: 1px solid #eee;
+}
+.sr-hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform: scale(1.05);
+  z-index: 0;
+}
+.sr-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.2) 60%, rgba(0,0,0,0) 100%),
+    radial-gradient(800px 400px at 20% 0%, rgba(255, 190, 150, .15), transparent 60%);
+  z-index: 1;
+}
+.sr-hero-inner {
+  position: relative;
+  z-index: 2;
+  width: min(1240px, 94%);
+  margin: 0 auto;
+  color: #fff;
+}
+.sr-hero-badge {
+  display:inline-block; font-size:12px; font-weight:800; letter-spacing:.6px;
+  padding:6px 10px; border-radius:999px; background:rgba(255,255,255,.92); color:#111; margin-bottom:12px;
+}
+.sr-hero-title { margin: 0 0 10px; font-size: 32px; font-weight: 900; color: #fff; }
+.sr-hero-desc  { max-width: 600px; line-height: 1.6; font-size: 15px; color: #f0f0f0; margin-bottom: 20px; }
+.sr-hero-cta   { display:flex; gap:10px; margin-bottom:24px; }
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; padding:10px 14px;
+  border-radius:12px; font-weight:700; font-size:14px; cursor:pointer; border:1px solid #eaeaea; background:#fff;
+}
+.btn.primary{ background:#6c4cf5; border-color:#6c4cf5; color:#fff; }
+.btn.ghost{ background:transparent; border:1px solid rgba(255,255,255,.7); color:#fff; }
+.btn.ghost:hover{ background:rgba(255,255,255,.1); }
+.btn.green{ background:#1a7f4a; color:#fff; border-color:#1a7f4a; }
+
+.sr-hero-stats { display:flex; gap:20px; font-size:13px; color:#ddd; }
+.sr-hero-stats li strong{ display:block; font-size:18px; color:#fff; }
+
+/* 섹션 헤더 */
+.sr-head{ width:min(1240px,94%); margin:0 auto 12px; display:flex; align-items:center; justify-content:space-between; }
+.sr-head h2{ margin:0; font-size:20px; font-weight:900; }
+.link-more{ font-size:13px; color:#999; text-decoration:none; }
+
+/* 카드 그리드 */
+.sr-grid{
+  width:min(1240px,94%); margin:0 auto; display:grid;
+  grid-template-columns: repeat(4, 1fr); gap:16px;
+}
+.sr-card{
+  border:1px solid #efefef; border-radius:16px; overflow:hidden; background:#fff;
+  display:flex; flex-direction:column;
+}
+.sr-thumb{ position:relative; aspect-ratio: 4/3; background:#fafafa; overflow:hidden; }
+.sr-thumb img{ width:100%; height:100%; object-fit:cover; }
+.sr-badges{ position:absolute; top:10px; left:10px; display:flex; gap:6px; }
+.sr-badges .bdg{
+  padding:4px 8px; border-radius:999px; font-size:11px; font-weight:800; letter-spacing:.4px; background:#fff; border:1px solid #eee;
+}
+.sr-badges .bdg.new{  border-color:#52c41a; color:#2a7a0f; }
+.sr-badges .bdg.best{ border-color:#ff8a00; color:#a24a00; }
+.sr-badges .bdg.hot{  border-color:#e63946; color:#a11420; }
+
+.sr-meta{ padding:12px; display:grid; gap:6px; }
+.sr-name{ font-size:14px; font-weight:700; line-height:1.4; min-height:40px; }
+.sr-price{ font-size:15px; font-weight:900; }
+.sr-actions{ display:flex; gap:8px; }
+
+/* 신규 회원 혜택 */
+.sr-benefit{ background:#fbfdfb; border-top:1px solid #f1f1f1; border-bottom:1px solid #f1f1f1; padding:24px 0 28px; }
+.sr-benefit .inner{ width:min(1240px,94%); margin:0 auto; display:grid; gap:14px; }
+
+.signup-card{
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  border:1px solid #e8e8e8; border-radius:16px; padding:18px; background:#fff;
+}
+.signup-card .left .eyebrow{ font-size:12px; color:#6c4cf5; font-weight:800; margin-bottom:4px; }
+.signup-card .left h3{ margin:0 0 6px; font-size:18px; font-weight:900; }
+.signup-card .left p{ margin:0; color:#666; }
+.signup-card .right{ display:flex; gap:10px; }
+
+.benefit-grid.mini{ display:grid; grid-template-columns: repeat(3,1fr); gap:12px; }
+.benefit-card{ border:1px dashed #e6e6e6; border-radius:16px; padding:16px; background:#fff; }
+.benefit-card .tit{ font-size:15px; font-weight:900; margin-bottom:6px; }
+
+/* LOOKBOOK */
+.sr-lookbook{
+  width:min(1240px,94%); margin:0 auto; display:grid;
+  grid-template-columns: repeat(4, 1fr); gap:12px;
+}
+.lb-card{ border-radius:16px; overflow:hidden; border:1px solid #efefef; background:#fafafa; }
+.lb-card img{ width:100%; height:100%; object-fit:cover; aspect-ratio: 1/1; }
+
+/* 매장 안내 */
+.sr-store{
+  width:min(1240px,94%); margin:0 auto; display:grid;
+  grid-template-columns: repeat(2, 1fr); gap:12px;
+}
+.store-card{ border:1px solid #efefef; border-radius:16px; padding:18px; background:#fff; }
+.store-card .tit{ font-size:16px; font-weight:900; margin-bottom:6px; }
+
+/* 반응형 */
+@media (max-width: 1024px){
+  .sr-grid{ grid-template-columns: repeat(2, 1fr); }
+  .sr-lookbook{ grid-template-columns: repeat(2, 1fr); }
+  .sr-store{ grid-template-columns: 1fr; }
+}
+@media (max-width: 640px){
+  .sr-hero.with-image{ height: 360px; }
+  .sr-hero-title{ font-size:22px; }
+  .sr-grid{ grid-template-columns: 1fr; }
+  .signup-card{ flex-direction:column; align-items:flex-start; }
+  .benefit-grid.mini{ grid-template-columns: 1fr; }
+}

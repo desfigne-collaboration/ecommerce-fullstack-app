@@ -1,6 +1,6 @@
 // src/pages/order/PaymentGateway.jsx
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 // 금액 포맷/숫자화 유틸
 const formatKRW = (n) => `₩${Number(n || 0).toLocaleString()}`;
@@ -8,7 +8,7 @@ const toNumber = (v) =>
   typeof v === "number" ? v : Number(String(v || "").replace(/[^\d]/g, "")) || 0;
 
 export default function PaymentGateway() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const [method, setMethod] = useState(""); // toss / kakao / naver
   const [processing, setProcessing] = useState(false);
@@ -46,7 +46,7 @@ export default function PaymentGateway() {
   const requestPay = () => {
     if (!payment || items.length === 0) {
       alert("결제 데이터가 없습니다. 다시 시도해 주세요.");
-      history.push("/cart");
+      navigate("/cart");
       return;
     }
     if (!method) {
@@ -111,11 +111,11 @@ export default function PaymentGateway() {
       } catch {}
 
       // 4) 성공 페이지로 이동
-      history.push("/order/success", { order });
+      navigate("/order/success", { state: { order } });
     } catch (e) {
       console.error(e);
       alert("결제 처리 중 오류가 발생했습니다.");
-      history.push("/cart");
+      navigate("/cart");
     }
   };
 

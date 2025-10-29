@@ -1,6 +1,6 @@
 // src/pages/order/Checkout.jsx
 import React, { useEffect, useMemo, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./Checkout.css";
 
 /* ===========================
@@ -103,7 +103,7 @@ const getCheckoutPayload = (location) => {
    4) Checkout Component
    =========================== */
 export default function Checkout() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
 
   // 주문 상품
@@ -178,7 +178,7 @@ const goPaymentMethod = () => {
     console.error("Failed to save checkout data:", e);
   }
 
-  history.push("/pay", payloadData);
+  navigate("/pay", payloadData);
 };
 
   // 쿠폰 사용 처리(실 결제 성공 후에 처리하는 게 정석; 여기서는 데모용)
@@ -200,7 +200,7 @@ const goPaymentMethod = () => {
     localStorage.removeItem("cartCheckout");
     localStorage.removeItem("pendingOrder");
     alert(`결제가 완료되었습니다!\n총 ${items.length}개 상품\n결제 금액: ${formatKRW(total)}`);
-    history.push("/order/success");
+    navigate("/order/success");
   };
 
   if (!items || items.length === 0) {
