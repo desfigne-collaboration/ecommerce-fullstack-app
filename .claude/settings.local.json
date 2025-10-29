@@ -13,7 +13,11 @@
       "Bash(git log:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(git push)"
+      "Bash(git push)",
+      "Bash(git rm:*)",
+      "Bash(cat:*)",
+      "Bash(test:*)",
+      "Bash(git ls-tree:*)"
     ],
     "deny": [],
     "ask": []
