@@ -1,4 +1,4 @@
-import React from "react";import "../Page.css";import { useHistory } from "react-router-dom";import ProductThumb from "../../components/ProductThumb";function KidsNew() {
+import React from "react";import "../Page.css";import { useNavigate } from "react-router-dom";import ProductThumb from "../../components/ProductThumb";function KidsNew() {
   const products = [
     { id: 1, name: "", desc: "", price: "", img: "/images/kids/new/Kids_new1.webp" },
     { id: 2, name: "", desc: "", price: "", img: "/images/kids/new/Kids_new2.webp" },

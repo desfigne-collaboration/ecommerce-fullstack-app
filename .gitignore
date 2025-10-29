@@ -42,3 +42,12 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# Windows reserved filenames
+nul
+NUL
+CON
+PRN
+AUX
+com[0-9]
+lpt[0-9]

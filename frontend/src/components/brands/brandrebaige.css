@@ -1,0 +1,95 @@
+/* =============== RE;BAIGE (따뜻한 베이지 무드) =============== */
+:root{
+  --rb-beige:#d8c2a9;
+  --rb-sand:#bca78a;
+  --rb-ink:#40382f;
+}
+
+.brand-rb{ color:#111; background:#fff; }
+.brand-rb *{ box-sizing:border-box; }
+.brand-rb img{ display:block; max-width:100%; height:auto; }
+.rb-section{ padding:36px 0; }
+
+/* ---------- HERO ---------- */
+.rb-hero.with-image{
+  position:relative; height:430px; display:flex; align-items:center;
+  color:#fff; overflow:hidden;
+}
+.rb-hero-bg{
+  position:absolute; inset:0; background-size:cover; background-position:center;
+  filter:brightness(.86) contrast(1.04) saturate(1.1);
+  transform:scale(1.02);
+}
+.rb-hero-overlay{
+  position:absolute; inset:0;
+  background:
+    linear-gradient(120deg, rgba(64,56,47,.7) 0%, rgba(184,166,143,.6) 60%, rgba(216,194,169,.4) 100%);
+}
+.rb-hero-inner{ position:relative; z-index:2; width:min(1240px,94%); margin:0 auto; }
+.rb-hero-badge{
+  display:inline-block; font-size:12px; font-weight:900; letter-spacing:.6px;
+  background:#fff; color:#5b4b3a; padding:6px 12px; border-radius:999px; margin-bottom:10px;
+}
+.rb-hero-title{ font-size:32px; font-weight:900; margin-bottom:8px; color:#fff; }
+.rb-hero-desc{ color:#f5f1ed; font-size:15px; max-width:620px; margin-bottom:20px; }
+.rb-hero-cta{ display:flex; gap:10px; }
+
+/* ---------- BUTTONS ---------- */
+.btn{ padding:10px 14px; border-radius:12px; font-weight:800; font-size:14px; cursor:pointer; line-height:1; }
+.btn.primary{ background:var(--rb-sand); color:#fff; border:none; }
+.btn.ghost{ background:transparent; border:1.5px solid #fff; color:#fff; }
+.btn.outline{ background:transparent; border:1.5px solid var(--rb-sand); color:var(--rb-sand); }
+.btn.beige{ background:var(--rb-beige); color:#fff; border:none; }
+.btn.outline:hover{ background:rgba(216,194,169,.1); }
+
+/* ---------- SECTION HEAD ---------- */
+.rb-head{ width:min(1240px,94%); margin:0 auto 14px; display:flex; justify-content:space-between; align-items:center; }
+.rb-head h2{ margin:0; font-size:20px; font-weight:900; }
+.link-more{ font-size:13px; color:#8a8a8a; text-decoration:none; }
+
+/* ---------- CARDS ---------- */
+.rb-grid{ width:min(1240px,94%); margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+.rb-card{ border:1px solid #eee; border-radius:16px; overflow:hidden; background:#fffaf6; }
+.rb-thumb{ position:relative; aspect-ratio:4/3; overflow:hidden; background:#f9f6f3; }
+.rb-thumb img{ width:100%; height:100%; object-fit:cover; }
+.rb-badges{ position:absolute; top:10px; left:10px; display:flex; gap:6px; }
+.rb-badges .bdg{ padding:4px 8px; border-radius:999px; font-size:11px; font-weight:800; background:#fff; border:1px solid #ddd; }
+.rb-badges .bdg.new{ border-color:#c2a98d; color:#7a644b; }
+.rb-badges .bdg.best{ border-color:#a48b6c; color:#5b4b3a; }
+.rb-badges .bdg.hot{ border-color:#e48c6c; color:#9a3d1f; }
+
+.rb-meta{ padding:12px; display:grid; gap:6px; }
+.rb-name{ font-size:14px; font-weight:700; }
+.rb-price{ font-size:15px; font-weight:900; color:#5b4b3a; }
+.rb-actions{ display:flex; gap:8px; }
+
+/* ---------- BENEFIT ---------- */
+.rb-benefit{ padding:28px 0; background:#fff; border-top:1px solid #eee; border-bottom:1px solid #f1f1f4; }
+.rb-benefit-inner{ width:min(1240px,94%); margin:0 auto; }
+.glass{
+  background:#fff;
+  border:1px solid rgba(0,0,0,.06);
+  border-radius:16px;
+  padding:18px;
+  box-shadow:0 10px 24px rgba(0,0,0,.04);
+}
+.signup-card{ display:flex; align-items:center; justify-content:space-between; gap:16px; }
+.signup-card .left .eyebrow{ font-size:12px; color:var(--rb-sand); font-weight:900; margin-bottom:4px; }
+.signup-card .left h3{ margin:0 0 6px; font-size:18px; font-weight:900; color:#0f172a; }
+.signup-card .left p{ margin:0; color:#616a77; }
+
+/* ---------- LOOKBOOK ---------- */
+.rb-lookbook{ width:min(1240px,94%); margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+.lb-card{ border-radius:16px; overflow:hidden; border:1px solid #efefef; background:#fafafa; }
+.lb-card img{ width:100%; height:100%; object-fit:cover; aspect-ratio:1/1; }
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:1024px){
+  .rb-grid{ grid-template-columns:repeat(2,1fr); }
+  .rb-lookbook{ grid-template-columns:repeat(2,1fr); }
+}
+@media (max-width:640px){
+  .rb-hero.with-image{ height:370px; }
+  .rb-hero-title{ font-size:22px; }
+  .rb-grid{ grid-template-columns:1fr; }
+}
