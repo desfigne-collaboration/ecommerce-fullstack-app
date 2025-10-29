@@ -43,8 +43,29 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("isLogin", "false");
   };
 
+  // ✅ 신규 회원 웰컴 쿠폰 발급 (중복 방지)
+  const issueWelcomeCouponIfNeeded = () => {
+    const savedCoupons = JSON.parse(localStorage.getItem("coupons") || "[]");
+    const hasWelcomeCoupon = savedCoupons.some((c) => c.id === "welcome-10000");
+
+    if (!hasWelcomeCoupon) {
+      const newCoupon = {
+        id: "welcome-10000",
+        name: "신규가입 1만원 할인 쿠폰",
+        amount: 10000,
+        type: "fixed",
+        discount: "₩10,000",
+        used: false,
+        createdAt: new Date().toISOString(),
+      };
+
+      const updatedCoupons = [...savedCoupons, newCoupon];
+      localStorage.setItem("coupons", JSON.stringify(updatedCoupons));
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, ready, login, logout }}>
+    <AuthContext.Provider value={{ user, ready, login, logout, issueWelcomeCouponIfNeeded }}>
       {children}
     </AuthContext.Provider>
   );
