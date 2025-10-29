@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { logoutApi } from "../../api/auth";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Logout() {
-  const history = useHistory();
+  const navigate = useNavigate();
   useEffect(() => {
     logoutApi();
-    history.push("/");
-  }, [history]);
+    navigate("/");
+  }, [navigate]);
   return null;
 }

@@ -1,12 +1,12 @@
 // src/pages/order/MyOrders.jsx
 import React, { useEffect, useMemo, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./MyOrders.css";
 
 const formatKRW = (n) => `₩${Number(n || 0).toLocaleString()}`;
 
 export default function MyOrders() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [orders, setOrders] = useState(() => {
     try { return JSON.parse(localStorage.getItem("orders")) || []; } catch { return []; }
   });
@@ -40,7 +40,7 @@ export default function MyOrders() {
       <div className="my-orders-container">
         <h1 className="my-orders-title">주문내역</h1>
         <p>로그인이 필요합니다.</p>
-        <button onClick={() => history.push("/login")} className="login-button">로그인 하러가기</button>
+        <button onClick={() => navigate("/login")} className="login-button">로그인 하러가기</button>
       </div>
     );
   }

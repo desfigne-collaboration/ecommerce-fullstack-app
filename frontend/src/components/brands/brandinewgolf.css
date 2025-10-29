@@ -1,0 +1,110 @@
+/* =============== INYOU GOLF (브랜드 전용 CSS) =============== */
+.brand-ig { position:relative; z-index:1; color:#111; background:#fff; }
+.brand-ig * { box-sizing:border-box; }
+.brand-ig img { display:block; max-width:100%; height:auto; }
+.ig-section { padding:36px 0; }
+
+/* ---------- HERO with external image ---------- */
+.ig-hero.with-image{
+  position:relative; height:420px;
+  display:flex; align-items:center; justify-content:flex-start;
+  color:#fff; overflow:hidden; border-bottom:1px solid #eee;
+}
+.ig-hero-bg{
+  position:absolute; inset:0; z-index:0;
+  background-size:cover; background-position:center; background-repeat:no-repeat;
+  transform:scale(1.05);
+}
+.ig-hero-overlay{
+  position:absolute; inset:0; z-index:1;
+  /* INYOU GOLF 전용: 잔디 그린 + 해질녘 오렌지 살짝 */
+  background:
+    linear-gradient(100deg,
+      rgba(0,0,0,.60) 0%,
+      rgba(0,0,0,.35) 40%,
+      rgba(20,80,55,.28) 70%,
+      rgba(255,170,90,.15) 100%),
+    radial-gradient(120% 90% at 0% 50%, rgba(0,0,0,.38), transparent 60%);
+}
+.ig-hero-inner{
+  position:relative; z-index:2; width:min(1240px,94%); margin:0 auto; color:#fff;
+}
+.ig-hero-badge{
+  display:inline-block; font-size:12px; font-weight:800; letter-spacing:.6px;
+  padding:6px 10px; border-radius:999px; background:rgba(255,255,255,.92); color:#111; margin-bottom:12px;
+}
+.ig-hero-title{ margin:0 0 10px; font-size:32px; font-weight:900; color:#fff; }
+.ig-hero-desc{ max-width:600px; line-height:1.6; font-size:15px; color:#f0f0f0; margin-bottom:20px; }
+.ig-hero-cta{ display:flex; gap:10px; margin-bottom:24px; }
+
+/* 버튼 가독성 */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; padding:10px 14px;
+  border-radius:12px; font-weight:800; font-size:14px; cursor:pointer; border:1px solid #eaeaea;
+  line-height:1; height:40px; letter-spacing:.2px; text-shadow:0 1px 2px rgba(0,0,0,.25);
+}
+.btn.primary{ background:#1b8f5a; color:#fff; border-color:#1b8f5a; box-shadow:0 8px 20px rgba(27,143,90,.35); }
+.btn.ghost{ background:transparent !important; border:1.5px solid rgba(255,255,255,.85) !important; color:#fff !important; }
+.btn.ghost:hover{ background:rgba(255,255,255,.12) !important; }
+
+.ig-hero-stats{ display:flex; gap:20px; font-size:13px; color:#ddd; }
+.ig-hero-stats li strong{ display:block; font-size:18px; color:#fff; }
+
+/* 섹션 헤더 */
+.ig-head{ width:min(1240px,94%); margin:0 auto 12px; display:flex; align-items:center; justify-content:space-between; }
+.ig-head h2{ margin:0; font-size:20px; font-weight:900; }
+.link-more{ font-size:13px; color:#999; text-decoration:none; }
+
+/* 카드 그리드 */
+.ig-grid{ width:min(1240px,94%); margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+.ig-card{ border:1px solid #efefef; border-radius:16px; overflow:hidden; background:#fff; display:flex; flex-direction:column; }
+.ig-thumb{ position:relative; aspect-ratio:4/3; background:#fafafa; overflow:hidden; }
+.ig-thumb img{ width:100%; height:100%; object-fit:cover; }
+.ig-badges{ position:absolute; top:10px; left:10px; display:flex; gap:6px; }
+.ig-badges .bdg{ padding:4px 8px; border-radius:999px; font-size:11px; font-weight:800; background:#fff; border:1px solid #eee; }
+.ig-badges .bdg.new{ border-color:#52c41a; color:#2a7a0f; }
+.ig-badges .bdg.best{ border-color:#ff8a00; color:#a24a00; }
+.ig-badges .bdg.hot{ border-color:#e63946; color:#a11420; }
+
+.ig-meta{ padding:12px; display:grid; gap:6px; }
+.ig-name{ font-size:14px; font-weight:700; line-height:1.4; min-height:40px; }
+.ig-price{ font-size:15px; font-weight:900; }
+.ig-actions{ display:flex; gap:8px; }
+
+/* 혜택 */
+.ig-benefit{ background:#fbfdfb; border-top:1px solid #f1f1f1; border-bottom:1px solid #f1f1f1; padding:24px 0 28px; }
+.ig-benefit .inner{ width:min(1240px,94%); margin:0 auto; display:grid; gap:14px; }
+.signup-card{ display:flex; align-items:center; justify-content:space-between; gap:16px; border:1px solid #e8e8e8; border-radius:16px; padding:18px; background:#fff; }
+.signup-card .left .eyebrow{ font-size:12px; color:#1b8f5a; font-weight:800; margin-bottom:4px; }
+.signup-card .left h3{ margin:0 0 6px; font-size:18px; font-weight:900; }
+.signup-card .left p{ margin:0; color:#666; }
+.signup-card .right{ display:flex; gap:10px; }
+.btn.green{ background:#1a7f4a; color:#fff; border-color:#1a7f4a; }
+
+.benefit-grid.mini{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.benefit-card{ border:1px dashed #e6e6e6; border-radius:16px; padding:16px; background:#fff; }
+.benefit-card .tit{ font-size:15px; font-weight:900; margin-bottom:6px; }
+
+/* LOOKBOOK */
+.ig-lookbook{ width:min(1240px,94%); margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+.lb-card{ border-radius:16px; overflow:hidden; border:1px solid #efefef; background:#fafafa; }
+.lb-card img{ width:100%; height:100%; object-fit:cover; aspect-ratio:1/1; }
+
+/* 매장 안내 */
+.ig-store{ width:min(1240px,94%); margin:0 auto; display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+.store-card{ border:1px solid #efefef; border-radius:16px; padding:18px; background:#fff; }
+.store-card .tit{ font-size:16px; font-weight:900; margin-bottom:6px; }
+
+/* 반응형 */
+@media (max-width:1024px){
+  .ig-grid{ grid-template-columns:repeat(2,1fr); }
+  .ig-lookbook{ grid-template-columns:repeat(2,1fr); }
+  .ig-store{ grid-template-columns:1fr; }
+}
+@media (max-width:640px){
+  .ig-hero.with-image{ height:360px; }
+  .ig-hero-title{ font-size:22px; }
+  .ig-grid{ grid-template-columns:1fr; }
+  .signup-card{ flex-direction:column; align-items:flex-start; }
+  .benefit-grid.mini{ grid-template-columns:1fr; }
+}

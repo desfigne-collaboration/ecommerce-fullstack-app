@@ -1,10 +1,10 @@
 // src/pages/ProductDetail.jsx
 import React, { useEffect, useMemo, useState } from "react";
-import { Link, useHistory, useLocation, useParams } from "react-router-dom";
+import { Link, useNavigate, useLocation, useParams } from "react-router-dom";
 import "./ProductDetail.css";
 
 export default function ProductDetail() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const { id } = useParams();
   const fromState = location.state?.product || null;
@@ -133,7 +133,7 @@ export default function ProductDetail() {
     localStorage.setItem("lastProduct", JSON.stringify(product));
 
     // ✅ Checkout으로 state로도 함께 전달
-    history.push("/checkout", { order: payload });
+    navigate("/checkout", { state: { order: payload } });
   };
 
   if (!product) {

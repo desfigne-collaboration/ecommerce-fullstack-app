@@ -1,11 +1,11 @@
 // src/pages/Login.jsx
 import React, { useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 export default function Login() {
   const { login } = useAuth();
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const [email, setEmail] = useState("");
 
@@ -15,7 +15,7 @@ export default function Login() {
     e.preventDefault();
     // 데모용 간단 로그인
     login({ id: `u_${Date.now()}`, name: email.split("@")[0] || "사용자", email });
-    history.push(redirect);
+    navigate(redirect);
   };
 
   return (

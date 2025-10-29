@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/dev/springboot/shoppy-fullstack-app/frontend/**)",
+      "Bash(npm install:*)",
+      "Bash(for file in admin/AdminDashboard.jsx admin/AdminOrders.jsx Cart.jsx Login.jsx Signup.jsx ProductList.jsx ProductDetail.jsx CategoryPage.jsx)",
+      "Bash(do echo \"=== Processing: $file ===\")",
+      "Bash(done)",
+      "Bash(find:*)",
+      "Bash(pwsh:*)",
+      "Bash(bash convert-to-navigate.sh:*)",
+      "Bash(npm start)",
+      "Bash(git log:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

@@ -1,13 +1,13 @@
 // src/pages/admin/AdminOrders.jsx
 import React, { useEffect, useMemo, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { listOrders, updateOrderStatus, deleteOrder } from "../../api/orders";
 import { getAuth } from "../../api/auth";
 import "../../styles/AdminDashboard.css";
 import "../../styles/AdminOrders.css"; // 버튼/배지 등 스타일
 
 export default function AdminOrders() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [q, setQ] = useState("");
   const [orders, setOrders] = useState(listOrders());
   const auth = getAuth();
@@ -16,7 +16,7 @@ export default function AdminOrders() {
     if (!auth || auth.role !== "admin") {
       window.location.href = "/#/login";
     }
-  }, [auth, history]);
+  }, [auth, navigate]);
 
   const refresh = () => setOrders(listOrders());
 

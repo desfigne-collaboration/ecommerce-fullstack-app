@@ -1,0 +1,122 @@
+/* =============== APERTURE (브랜드 전용 CSS) =============== */
+:root{
+  --ap-teal:#14b8a6;      /* 포인트 컬러 */
+  --ap-deep:#0b1016;      /* 다크 베이스 */
+}
+.brand-ap{
+  color:#111;
+  background: linear-gradient(180deg,#f6f7f8 0%, #ffffff 220px);
+}
+.brand-ap *{ box-sizing:border-box; }
+.brand-ap img{ display:block; max-width:100%; height:auto; }
+.ap-section{ padding:36px 0; }
+
+/* ---------- HERO ---------- */
+.ap-hero.with-image{
+  position:relative; height:420px; display:flex; align-items:center;
+  color:#fff; overflow:hidden; border-bottom:1px solid #eceff1;
+}
+.ap-hero-bg{
+  position:absolute; inset:0; background-size:cover; background-position:center;
+  filter:brightness(.9) contrast(1.05); transform:scale(1.04);
+}
+/* 다중 그라데이션 + 빛샘 느낌 */
+.ap-hero-overlay{
+  position:absolute; inset:0;
+  background:
+    radial-gradient(140% 90% at 0% 70%, rgba(0,0,0,.55), transparent 60%),
+    linear-gradient(115deg, rgba(11,16,22,.92) 0%, rgba(11,16,22,.72) 50%, rgba(20,184,166,.18) 95%);
+}
+/* 얇은 그리드(센서/셔터 감성) */
+.ap-hero-grid{
+  position:absolute; inset:0; z-index:1;
+  background-image: linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+  background-size: 26px 26px, 26px 26px;
+  opacity:.25;
+}
+.ap-hero-inner{ position:relative; z-index:2; width:min(1240px,94%); margin:0 auto; }
+.ap-hero-badge{
+  display:inline-block; font-size:12px; font-weight:900;
+  background:#fff; color:#0b0b0b; padding:6px 12px; border-radius:999px; margin-bottom:10px;
+}
+.ap-hero-title{ font-size:32px; font-weight:900; margin-bottom:8px; color:#fff; }
+.ap-hero-desc{ color:#e6fbf8; font-size:15px; max-width:620px; margin-bottom:20px; }
+.ap-hero-cta{ display:flex; gap:10px; margin-bottom:24px; }
+.ap-hero-stats{ display:flex; gap:20px; font-size:13px; color:#cfe7e4; }
+.ap-hero-stats li strong{ display:block; font-size:18px; color:#fff; }
+
+/* ---------- Buttons ---------- */
+.btn{ padding:10px 14px; border-radius:12px; font-weight:800; font-size:14px; cursor:pointer; line-height:1; }
+.btn.primary{ background:#0f172a; color:#fff; border:none; box-shadow:0 8px 18px rgba(15,23,42,.35); }
+.btn.ghost{ background:transparent; border:1.5px solid rgba(255,255,255,.9); color:#fff; text-shadow:0 1px 2px rgba(0,0,0,.25); }
+.btn.ghost:hover{ background:rgba(255,255,255,.12); }
+.btn.teal{ background:var(--ap-teal); color:#061014; border:none; }
+.btn.outline{ background:transparent; border:1.5px solid #0f172a; color:#0f172a; }
+.btn.outline:hover{ background:rgba(15,23,42,.07); }
+
+/* ---------- Section head ---------- */
+.ap-head{ width:min(1240px,94%); margin:0 auto 14px; display:flex; justify-content:space-between; align-items:center; }
+.ap-head h2{ margin:0; font-size:20px; font-weight:900; }
+.link-more{ font-size:13px; color:#8a8a8a; text-decoration:none; }
+
+/* ---------- Cards ---------- */
+.ap-grid{ width:min(1240px,94%); margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+.ap-card{ border:1px solid #edf1f3; border-radius:16px; overflow:hidden; background:#fff; }
+.ap-thumb{ position:relative; aspect-ratio:4/3; overflow:hidden; background:#f7f9fa; }
+.ap-thumb img{ width:100%; height:100%; object-fit:cover; }
+.ap-badges{ position:absolute; top:10px; left:10px; display:flex; gap:6px; }
+.ap-badges .bdg{ padding:4px 8px; border-radius:999px; font-size:11px; font-weight:800; background:#fff; border:1px solid #eee; }
+.ap-badges .bdg.new{  border-color:#14b8a6; color:#087e73; }
+.ap-badges .bdg.best{ border-color:#0f172a; color:#0f172a; }
+.ap-badges .bdg.hot{  border-color:#e63946; color:#a11420; }
+
+.ap-meta{ padding:12px; display:grid; gap:6px; }
+.ap-name{ font-size:14px; font-weight:700; line-height:1.4; }
+.ap-price{ font-size:15px; font-weight:900; }
+.ap-actions{ display:flex; gap:8px; }
+
+/* ---------- Benefit ---------- */
+.ap-benefit{
+  padding:26px 0 30px;
+  background:
+    linear-gradient(180deg, #ffffff 0%, #f1fbf9 60%),
+    radial-gradient(80% 60% at 12% 0%, #e6faf6 0%, transparent 60%);
+  border-top:1px solid #e7efee; border-bottom:1px solid #e7efee;
+}
+.ap-benefit .inner{ width:min(1240px,94%); margin:0 auto; display:grid; gap:14px; }
+.signup-card{
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  border:1px solid #dff1ef; border-radius:16px; padding:18px;
+  background: linear-gradient(90deg,#fff 0%, #f6fffd 100%);
+  box-shadow: 0 6px 14px rgba(8,126,115,.06);
+}
+.signup-card .left .eyebrow{ font-size:12px; color:var(--ap-teal); font-weight:900; margin-bottom:4px; }
+.signup-card .left h3{ margin:0 0 6px; font-size:18px; font-weight:900; color:#0f172a; }
+.signup-card .left p{ margin:0; color:#526168; }
+.signup-card .right{ display:flex; gap:10px; }
+
+.benefit-grid.mini{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.benefit-card{
+  background:#fff; border:1px solid #eaf3f2; border-radius:14px; padding:14px;
+  box-shadow:0 4px 10px rgba(8,126,115,.04);
+}
+.benefit-card .tit{ font-size:14px; font-weight:900; margin-bottom:4px; color:#0f172a; }
+.benefit-card p{ margin:0; color:#6b7a81; font-size:13px; }
+
+/* ---------- Lookbook ---------- */
+.ap-lookbook{ width:min(1240px,94%); margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+.lb-card{ border-radius:16px; overflow:hidden; border:1px solid #efefef; background:#fafafa; }
+.lb-card img{ width:100%; height:100%; object-fit:cover; aspect-ratio:1/1; }
+
+/* ---------- Responsive ---------- */
+@media (max-width:1024px){
+  .ap-grid{ grid-template-columns:repeat(2,1fr); }
+  .ap-lookbook{ grid-template-columns:repeat(2,1fr); }
+  .benefit-grid.mini{ grid-template-columns:1fr; }
+}
+@media (max-width:640px){
+  .ap-hero.with-image{ height:360px; }
+  .ap-hero-title{ font-size:22px; }
+  .ap-grid{ grid-template-columns:1fr; }
+}

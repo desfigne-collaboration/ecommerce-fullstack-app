@@ -1,6 +1,6 @@
 // src/pages/wish/Wishlist.jsx
 import React, { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../../styles/Wishlist.css";
 
 const KEY = "wishlist";
@@ -14,7 +14,7 @@ const readWishlist = () => {
 };
 
 export default function Wishlist() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [items, setItems] = useState(() => readWishlist());
   const count = items.length;
 
@@ -32,7 +32,7 @@ export default function Wishlist() {
 
   const goDetail = (p) => {
     localStorage.setItem("lastProduct", JSON.stringify(p));
-    history.push(`/product/${p.id}`, { product: p });
+    navigate(`/product/${p.id}`, { product: p });
   };
 
   // ✅ 단건 삭제: 로컬스토리지 저장 + 두 이벤트 발행

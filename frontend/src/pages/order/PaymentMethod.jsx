@@ -1,6 +1,6 @@
 // src/pages/order/PaymentMethod.jsx
 import React, { useEffect, useMemo, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./Payment.css";
 
 /** 아이콘/QR 파일명(원하시면 여기만 바꾸세요) */
@@ -23,7 +23,7 @@ const ASSETS = {
 };
 
 export default function PaymentMethod() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const [method, setMethod] = useState("toss");
   const [seconds, setSeconds] = useState(5);
@@ -35,9 +35,9 @@ export default function PaymentMethod() {
   useEffect(() => {
     if (!amount || !items.length) {
       // 금액/아이템이 없으면 결제 진행 불가 → 장바구니/결제로 돌려보내기
-      history.push("/checkout");
+      navigate("/checkout");
     }
-  }, [amount, items, history]);
+  }, [amount, items, navigate]);
 
   // (옵션) 카운트다운(모의 UX)
   useEffect(() => {
@@ -48,7 +48,7 @@ export default function PaymentMethod() {
   const selected = useMemo(() => ASSETS[method], [method]);
 
   const handleGo = () => {
-    history.push("/pay/gateway", {
+    navigate("/pay/gateway", { state: {
       method,
       amount,
       items,
@@ -56,7 +56,7 @@ export default function PaymentMethod() {
       // QR 이미지 경로는 여기서 넘겨줘도 되고, gateway에서 다시 맵핑해도 됩니다.
       qr: selected ? `${process.env.PUBLIC_URL}${selected.qr}` : "",
       label: selected?.label || "",
-    });
+    }});
   };
 
   return (

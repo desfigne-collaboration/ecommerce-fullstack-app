@@ -1,13 +1,13 @@
 // src/pages/payment/PayGatewayMock.jsx
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const toNum = (v) =>
   typeof v === "number" ? v : Number(String(v || 0).replace(/[^\d]/g, "")) || 0;
 const fmt = (n) => `₩${Number(n || 0).toLocaleString()}`;
 
 export default function PayGatewayMock() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
 
   // backup payload
@@ -49,9 +49,9 @@ export default function PayGatewayMock() {
   useEffect(() => {
     if (!payload.items.length) {
       alert("결제할 상품 정보가 없습니다. 장바구니로 이동합니다.");
-      history.push("/cart");
+      navigate("/cart");
     }
-  }, [payload.items.length, history]);
+  }, [payload.items.length, navigate]);
 
   // ---- 금액 "재계산" (쿠폰/합계 일관성 보장) ----
   const subtotal = useMemo(() => {
@@ -139,13 +139,13 @@ export default function PayGatewayMock() {
     } catch {}
 
     // 4) 성공 페이지로 이동 (재계산 값 포함해 넘김)
-    history.push("/order/success", {
+    navigate("/order/success", { state: {
       ...payload,
       subtotal,
       discount,
       total,
       paidAt: new Date().toISOString(),
-    });
+    }});
   };
 
   // 자동 완료 타이머
@@ -245,7 +245,7 @@ export default function PayGatewayMock() {
 
           <div style={{ marginTop: 16, display: "flex", gap: 8 }}>
             <button
-              onClick={() => history.goBack()}
+              onClick={() => navigate(-1)}
               style={{ padding: "10px 14px", borderRadius: 10, border: "1px solid #ddd", background: "#fff", cursor: "pointer" }}
             >
               이전으로

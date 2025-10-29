@@ -1,12 +1,12 @@
 // src/pages/order/PaySelect.jsx
 import React, { useMemo, useState, useEffect } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./PaySelect.css";
 
 const formatKRW = (n) => `₩${Number(n || 0).toLocaleString()}`;
 
 export default function PaySelect() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const [method, setMethod] = useState("toss");
 
@@ -27,9 +27,9 @@ export default function PaySelect() {
   useEffect(() => {
     if (!payload || !payload.items || payload.items.length === 0) {
       // 유효한 결제 대상 없으면 체크아웃으로 되돌림
-      history.push("/order/checkout");
+      navigate("/order/checkout");
     }
-  }, [payload, history]);
+  }, [payload, navigate]);
 
   if (!payload) return null;
 
@@ -38,7 +38,7 @@ export default function PaySelect() {
     try {
       localStorage.setItem("payPayload", JSON.stringify(next));
     } catch {}
-    history.push("/pay/confirm", next);
+    navigate("/pay/confirm", next);
   };
 
   return (
