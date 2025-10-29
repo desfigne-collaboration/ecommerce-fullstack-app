@@ -1,6 +1,6 @@
 // src/pages/order/PayConfirm.jsx
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./PayConfirm.css";
 
 const toNumber = (v) => (typeof v === "number" ? v : Number(String(v ?? "").replace(/[^\d]/g, "")) || 0);
@@ -33,7 +33,7 @@ const normalizeItem = (raw) => {
 };
 
 export default function PayConfirm() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const incoming = useMemo(() => {
     // 우선순위: (1) location.state (2) localStorage.payPayload
@@ -47,9 +47,9 @@ export default function PayConfirm() {
 
   useEffect(() => {
     if (!incoming || !incoming.items || incoming.items.length === 0) {
-      history.push("/order/checkout");
+      navigate("/order/checkout");
     }
-  }, [incoming, history]);
+  }, [incoming, navigate]);
 
   const items = useMemo(() => (incoming?.items || []).map(normalizeItem).filter(Boolean), [incoming]);
 
@@ -136,7 +136,7 @@ export default function PayConfirm() {
       markCouponUsed();
       saveOrders();
       clearTemp();
-      history.push("/orders");
+      navigate("/orders");
     } catch (e) {
       console.error(e);
       alert("결제 처리에 실패했습니다. 다시 시도해주세요.");
@@ -162,7 +162,7 @@ export default function PayConfirm() {
           <button className="btn btn-primary" onClick={onClickPay} disabled={paying}>
             {paying ? "처리 중..." : "결제 완료"}
           </button>
-          <button className="ghost" onClick={() => history.goBack()} style={{ marginLeft: 8 }} disabled={paying}>
+          <button className="ghost" onClick={() => navigate(-1)} style={{ marginLeft: 8 }} disabled={paying}>
             이전으로
           </button>
         </div>

@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { kakaoLoginApi } from "../../api/auth";
 
 export default function KakaoCallback() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export default function KakaoCallback() {
     if (!code) {
       console.error("❌ 인가 코드를 찾을 수 없음");
       alert("카카오 로그인에 실패했습니다.");
-      history.push("/login");
+      navigate("/login");
       return;
     }
 
@@ -121,18 +121,18 @@ export default function KakaoCallback() {
             } else {
               console.error("❌ 로그인 API 응답 실패");
               alert("로그인 처리 중 오류가 발생했습니다.");
-              history.push("/login");
+              navigate("/login");
             }
           } else {
             console.error("❌ 사용자 ID 없음");
             alert("사용자 정보를 가져올 수 없습니다.");
-            history.push("/login");
+            navigate("/login");
           }
         } else {
           console.error("❌ 토큰 발급 실패");
           console.error("토큰 응답 데이터:", tokenData);
           alert("카카오 토큰 발급에 실패했습니다.");
-          history.push("/login");
+          navigate("/login");
         }
       } catch (error) {
         console.error("❌❌❌ 카카오 로그인 처리 중 오류 발생 ❌❌❌");
@@ -140,12 +140,12 @@ export default function KakaoCallback() {
         console.error("에러 메시지:", error.message);
         console.error("에러 스택:", error.stack);
         alert("카카오 로그인 처리 중 오류가 발생했습니다.");
-        history.push("/login");
+        navigate("/login");
       }
     };
 
     getKakaoToken();
-  }, [history, location]);
+  }, [navigate, location]);
 
   return (
     <div style={{

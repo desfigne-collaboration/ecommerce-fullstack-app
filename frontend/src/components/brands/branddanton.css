@@ -1,0 +1,117 @@
+/* =============== DANTON (브랜드 전용 CSS) =============== */
+.brand-dan{
+  color:#111;
+  /* 아이보리 베이스로 은은한 톤 유지 */
+  background: linear-gradient(180deg,#fbfaf7 0%, #ffffff 200px);
+}
+.brand-dan *{ box-sizing:border-box; }
+.brand-dan img{ display:block; max-width:100%; height:auto; }
+.dan-section{ padding:36px 0; }
+
+/* ---------- HERO (네이비 톤 + 레드 포인트) ---------- */
+.dan-hero.with-image{
+  position:relative; height:420px; display:flex; align-items:center;
+  color:#fff; overflow:hidden; border-bottom:1px solid #eee;
+}
+.dan-hero-bg{
+  position:absolute; inset:0; background-size:cover; background-position:center;
+  filter:brightness(.92) contrast(1.03); transform:scale(1.04);
+}
+/* 네이비 그라데이션 + 비네팅 */
+.dan-hero-overlay{
+  position:absolute; inset:0;
+  background:
+    radial-gradient(120% 90% at 0% 60%, rgba(0,0,0,.42), transparent 60%),
+    linear-gradient(110deg,
+      rgba(10,18,40,.82) 0%,
+      rgba(18,26,54,.58) 48%,
+      rgba(34,38,64,.30) 78%,
+      rgba(0,0,0,.12) 100%);
+}
+.dan-hero-inner{ position:relative; z-index:2; width:min(1240px,94%); margin:0 auto; }
+.dan-hero-badge{
+  display:inline-block; font-size:12px; font-weight:800;
+  background:#fff; color:#c3202f; /* DANTON 로고 레드 */
+  padding:6px 12px; border-radius:999px; margin-bottom:10px; border:1px solid #ffd5da;
+}
+.dan-hero-title{ font-size:32px; font-weight:900; margin-bottom:8px; color:#fff; }
+.dan-hero-desc{ color:#e9eef5; font-size:15px; max-width:620px; margin-bottom:20px; }
+.dan-hero-cta{ display:flex; gap:10px; margin-bottom:24px; }
+.dan-hero-stats{ display:flex; gap:20px; font-size:13px; color:#d8deea; }
+.dan-hero-stats li strong{ display:block; font-size:18px; color:#fff; }
+
+/* ---------- 버튼 ---------- */
+.btn{ padding:10px 14px; border-radius:12px; font-weight:800; font-size:14px; cursor:pointer; line-height:1; }
+.btn.primary{ background:#c3202f; color:#fff; border:none; box-shadow:0 8px 18px rgba(195,32,47,.35); }
+.btn.ghost{ background:transparent; border:1.5px solid rgba(255,255,255,.9); color:#fff; text-shadow:0 1px 2px rgba(0,0,0,.25); }
+.btn.ghost:hover{ background:rgba(255,255,255,.12); }
+.btn.green{ background:#1a7f4a; color:#fff; border:none; }
+.btn.outline{ background:transparent; border:1.5px solid #c3202f; color:#c3202f; }
+.btn.outline:hover{ background:rgba(195,32,47,.08); }
+
+/* ---------- 섹션 헤더 ---------- */
+.dan-head{ width:min(1240px,94%); margin:0 auto 14px; display:flex; justify-content:space-between; align-items:center; }
+.dan-head h2{ margin:0; font-size:20px; font-weight:900; }
+.link-more{ font-size:13px; color:#8a8a8a; text-decoration:none; }
+
+/* ---------- 카드 그리드 ---------- */
+.dan-grid{ width:min(1240px,94%); margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+.dan-card{ border:1px solid #eee; border-radius:16px; overflow:hidden; background:#fff; }
+.dan-thumb{ position:relative; aspect-ratio:4/3; overflow:hidden; background:#f7f7f7; }
+.dan-thumb img{ width:100%; height:100%; object-fit:cover; }
+.dan-badges{ position:absolute; top:10px; left:10px; display:flex; gap:6px; }
+.dan-badges .bdg{ padding:4px 8px; border-radius:999px; font-size:11px; font-weight:800; background:#fff; border:1px solid #eee; }
+.dan-badges .bdg.new{  border-color:#52c41a; color:#2a7a0f; }
+.dan-badges .bdg.best{ border-color:#ff8a00; color:#a24a00; }
+.dan-badges .bdg.hot{  border-color:#e63946; color:#a11420; }
+
+.dan-meta{ padding:12px; display:grid; gap:6px; }
+.dan-name{ font-size:14px; font-weight:700; line-height:1.4; }
+.dan-price{ font-size:15px; font-weight:900; }
+.dan-actions{ display:flex; gap:8px; }
+
+/* ---------- 혜택 영역 (아이보리톤) ---------- */
+.dan-benefit{
+  padding:26px 0 30px;
+  background:
+    linear-gradient(180deg, #fff 0%, #f7f5f1 60%),
+    radial-gradient(80% 60% at 12% 0%, #f2efe9 0%, transparent 60%);
+  border-top:1px solid #eee; border-bottom:1px solid #eee;
+}
+.dan-benefit .inner{ width:min(1240px,94%); margin:0 auto; display:grid; gap:14px; }
+
+.signup-card{
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  border:1px solid #efe9e2; border-radius:16px; padding:18px;
+  background: linear-gradient(90deg,#fff 0%, #fbf8f3 100%);
+  box-shadow: 0 6px 14px rgba(0,0,0,.04);
+}
+.signup-card .left .eyebrow{ font-size:12px; color:#c3202f; font-weight:800; margin-bottom:4px; }
+.signup-card .left h3{ margin:0 0 6px; font-size:18px; font-weight:900; color:#222; }
+.signup-card .left p{ margin:0; color:#666; }
+.signup-card .right{ display:flex; gap:10px; }
+
+.benefit-grid.mini{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.benefit-card{
+  background:#fff; border:1px solid #efe9e2; border-radius:14px; padding:14px;
+  box-shadow:0 4px 10px rgba(0,0,0,.04);
+}
+.benefit-card .tit{ font-size:14px; font-weight:900; margin-bottom:4px; color:#3a4a6a; }
+.benefit-card p{ margin:0; color:#6f6a65; font-size:13px; }
+
+/* ---------- LOOKBOOK ---------- */
+.dan-lookbook{ width:min(1240px,94%); margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+.lb-card{ border-radius:16px; overflow:hidden; border:1px solid #efefef; background:#fafafa; }
+.lb-card img{ width:100%; height:100%; object-fit:cover; aspect-ratio:1/1; }
+
+/* ---------- 반응형 ---------- */
+@media (max-width:1024px){
+  .dan-grid{ grid-template-columns:repeat(2,1fr); }
+  .dan-lookbook{ grid-template-columns:repeat(2,1fr); }
+  .benefit-grid.mini{ grid-template-columns:1fr; }
+}
+@media (max-width:640px){
+  .dan-hero.with-image{ height:360px; }
+  .dan-hero-title{ font-size:22px; }
+  .dan-grid{ grid-template-columns:1fr; }
+}

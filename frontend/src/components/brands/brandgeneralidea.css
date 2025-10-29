@@ -1,0 +1,97 @@
+/* =============== GENERAL IDEA (브랜드 전용 CSS) =============== */
+.brand-gi { position:relative; z-index:1; color:#111; background:#fff; }
+.brand-gi * { box-sizing:border-box; }
+.brand-gi img { display:block; max-width:100%; height:auto; }
+.gi-section { padding:36px 0; }
+
+/* ---------- HERO with external image ---------- */
+.gi-hero.with-image{
+  position:relative; height:420px; display:flex; align-items:center; justify-content:flex-start;
+  color:#fff; overflow:hidden; border-bottom:1px solid #eee;
+}
+.gi-hero-bg{
+  position:absolute; inset:0; z-index:0; background-size:cover; background-position:center; background-repeat:no-repeat; transform:scale(1.05);
+}
+/* GENERAL IDEA 전용 무드: 네이비/일렉트릭 블루 + 퍼플 라인, 스트릿 감성 */
+.gi-hero-overlay{
+  position:absolute; inset:0; z-index:1;
+  background:
+    linear-gradient(100deg, rgba(9,14,23,.70) 0%, rgba(25,40,72,.55) 45%, rgba(60,46,112,.30) 75%, rgba(0,0,0,.10) 100%),
+    radial-gradient(120% 90% at 0% 50%, rgba(0,0,0,.40), transparent 60%);
+}
+.gi-hero-inner{ position:relative; z-index:2; width:min(1240px,94%); margin:0 auto; color:#fff; }
+.gi-hero-badge{
+  display:inline-block; font-size:12px; font-weight:800; letter-spacing:.6px;
+  padding:6px 10px; border-radius:999px; background:rgba(255,255,255,.92); color:#111; margin-bottom:12px;
+}
+.gi-hero-title{ margin:0 0 10px; font-size:32px; font-weight:900; color:#fff; }
+.gi-hero-desc{ max-width:640px; line-height:1.6; font-size:15px; color:#f0f0f0; margin-bottom:20px; }
+.gi-hero-cta{ display:flex; gap:10px; margin-bottom:24px; }
+
+/* 버튼 */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; padding:10px 14px;
+  border-radius:12px; font-weight:800; font-size:14px; cursor:pointer; border:1px solid #eaeaea;
+  line-height:1; height:40px; letter-spacing:.2px; text-shadow:0 1px 2px rgba(0,0,0,.25);
+}
+.btn.primary{ background:#4f46e5; color:#fff; border-color:#4f46e5; box-shadow:0 8px 20px rgba(79,70,229,.35); }
+.btn.ghost{ background:transparent !important; border:1.5px solid rgba(255,255,255,.85) !important; color:#fff !important; }
+.btn.ghost:hover{ background:rgba(255,255,255,.12) !important; }
+.btn.green{ background:#1a7f4a; color:#fff; border-color:#1a7f4a; }
+
+.gi-hero-stats{ display:flex; gap:20px; font-size:13px; color:#ddd; }
+.gi-hero-stats li strong{ display:block; font-size:18px; color:#fff; }
+
+/* 섹션 헤더 */
+.gi-head{ width:min(1240px,94%); margin:0 auto 12px; display:flex; align-items:center; justify-content:space-between; }
+.gi-head h2{ margin:0; font-size:20px; font-weight:900; }
+.link-more{ font-size:13px; color:#999; text-decoration:none; }
+
+/* 카드 그리드 */
+.gi-grid{ width:min(1240px,94%); margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+.gi-card{ border:1px solid #efefef; border-radius:16px; overflow:hidden; background:#fff; display:flex; flex-direction:column; }
+.gi-thumb{ position:relative; aspect-ratio:4/3; background:#fafafa; overflow:hidden; }
+.gi-thumb img{ width:100%; height:100%; object-fit:cover; }
+.gi-badges{ position:absolute; top:10px; left:10px; display:flex; gap:6px; }
+.gi-badges .bdg{ padding:4px 8px; border-radius:999px; font-size:11px; font-weight:800; background:#fff; border:1px solid #eee; }
+.gi-badges .bdg.new{  border-color:#52c41a; color:#2a7a0f; }
+.gi-badges .bdg.best{ border-color:#ff8a00; color:#a24a00; }
+.gi-badges .bdg.hot{  border-color:#e63946; color:#a11420; }
+
+.gi-meta{ padding:12px; display:grid; gap:6px; }
+.gi-name{ font-size:14px; font-weight:700; line-height:1.4; min-height:40px; }
+.gi-price{ font-size:15px; font-weight:900; }
+.gi-actions{ display:flex; gap:8px; }
+
+/* 혜택 */
+.gi-benefit{ background:#fbfdfb; border-top:1px solid #f1f1f1; border-bottom:1px solid #f1f1f1; padding:24px 0 28px; }
+.gi-benefit .inner{ width:min(1240px,94%); margin:0 auto; display:grid; gap:14px; }
+.signup-card{ display:flex; align-items:center; justify-content:space-between; gap:16px; border:1px solid #e8e8e8; border-radius:16px; padding:18px; background:#fff; }
+.signup-card .left .eyebrow{ font-size:12px; color:#4f46e5; font-weight:800; margin-bottom:4px; }
+.signup-card .left h3{ margin:0 0 6px; font-size:18px; font-weight:900; }
+.signup-card .left p{ margin:0; color:#666; }
+.signup-card .right{ display:flex; gap:10px; }
+
+/* LOOKBOOK */
+.gi-lookbook{ width:min(1240px,94%); margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+.lb-card{ border-radius:16px; overflow:hidden; border:1px solid #efefef; background:#fafafa; }
+.lb-card img{ width:100%; height:100%; object-fit:cover; aspect-ratio:1/1; }
+
+/* 매장 안내 */
+.gi-store{ width:min(1240px,94%); margin:0 auto; display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
+.store-card{ border:1px solid #efefef; border-radius:16px; padding:18px; background:#fff; }
+.store-card .tit{ font-size:16px; font-weight:900; margin-bottom:6px; }
+
+/* 반응형 */
+@media (max-width:1024px){
+  .gi-grid{ grid-template-columns:repeat(2,1fr); }
+  .gi-lookbook{ grid-template-columns:repeat(2,1fr); }
+  .gi-store{ grid-template-columns:1fr; }
+}
+@media (max-width:640px){
+  .gi-hero.with-image{ height:360px; }
+  .gi-hero-title{ font-size:22px; }
+  .gi-grid{ grid-template-columns:1fr; }
+  .signup-card{ flex-direction:column; align-items:flex-start; }
+  .benefit-grid.mini{ grid-template-columns:1fr; }
+}

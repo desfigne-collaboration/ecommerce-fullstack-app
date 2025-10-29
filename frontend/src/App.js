@@ -1,6 +1,6 @@
 // src/App.js
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import { AuthProvider } from "./context/AuthContext.js";
 import PrivateRoute from "./routes/PrivateRoute.jsx";
@@ -79,6 +79,41 @@ import OutletLife from "./pages/outlet/OutletLife.jsx";
 import MyPage from "./pages/mypage/MyPage.jsx";
 import MyCoupons from "./pages/mypage/MyCoupons.jsx";
 
+// 브랜드
+import Brand8SecondsDetail from "./components/brands/Brand8SecondsDetail.jsx";
+import BrandBeanpoleDetail from "./components/brands/BrandBeanpoleDetail.jsx";
+import BrandBeakerDetail from "./components/brands/BrandBeakerDetail.jsx";
+import BrandKuhoDetail from "./components/brands/BrandKuhoDetail.jsx";
+import BrandIsseyMiyakeDetail from "./components/brands/BrandIsseyMiyakeDetail.jsx";
+import BrandMaisonKitsuneDetail from "./components/brands/BrandMaisonKitsuneDetail.jsx";
+import BrandTheoryDetail from "./components/brands/BrandTheoryDetail.jsx";
+import BrandKuhoPlusDetail from "./components/brands/BrandKuhoPlusDetail.jsx";
+import BrandCommeDetail from "./components/brands/BrandCommeDetail.jsx";
+import BrandPatagoniaDetail from "./components/brands/BrandPatagoniaDetail.jsx";
+import BrandSportyRichDetail from "./components/brands/BrandSportyRichDetail.jsx";
+import BrandSIEDetail from "./components/brands/BrandSIEDetail.jsx";
+import BrandInewGolfDetail from "./components/brands/BrandInewGolfDetail.jsx";
+import BrandGeneralIdeaDetail from "./components/brands/BrandGeneralIdeaDetail.jsx";
+import BrandLeMoutonDetail from "./components/brands/BrandLeMoutonDetail.jsx";
+import BrandAmiDetail from "./components/brands/BrandAmiDetail.jsx";
+import BrandJuunJDetail from "./components/brands/BrandJuunJDetail.jsx";
+import BrandRogadisDetail from "./components/brands/BrandRogadisDetail.jsx";
+import BrandDantonDetail from "./components/brands/BrandDantonDetail.jsx";
+import Brand10CorsoComoDetail from "./components/brands/Brand10CorsoComoDetail.jsx";
+import BrandApertureDetail from "./components/brands/BrandApertureDetail.jsx";
+import BrandCOSDetail from "./components/brands/BrandCOSDetail.jsx";
+import BrandSaintJamesDetail from "./components/brands/BrandSaintJamesDetail.jsx";
+import BrandTommyHilfigerDetail from "./components/brands/BrandTommyHilfigerDetail.jsx";
+import BrandCanadaGooseDetail from "./components/brands/BrandCanadaGooseDetail.jsx";
+import BrandHeraDetail from "./components/brands/BrandHeraDetail.jsx";
+import BrandGalaxyLifestyleDetail from "./components/brands/BrandGalaxyLifestyleDetail.jsx";
+import BrandRebaigeDetail from "./components/brands/BrandRebaigeDetail.jsx";
+import BrandToryBurchDetail from "./components/brands/BrandToryBurchDetail.jsx";
+import BrandGalaxyDetail from "./components/brands/BrandGalaxyDetail.jsx";
+
+
+
+
 // 고객센터/회사/정책
 import HelpPage from "./pages/help/HelpPage.jsx";
 import CompanyPage from "./pages/company/CompanyPage.jsx";
@@ -92,105 +127,140 @@ import BulkOrder from "./pages/help/BulkOrder.jsx";
 // 위시리스트
 import Wishlist from "./pages/wish/Wishlist.jsx";
 
+
 function App() {
   return (
     <AuthProvider>
       <Header />
-      <Switch>
+      <Routes>
           {/* 홈/메뉴 */}
-          <Route exact path="/" component={Home} />
-          <Route path="/menu" component={Menu} />
+          <Route path="/" element={<Home />} />
+          <Route path="/menu" element={<Menu />} />
 
           {/* 로그인/회원가입 */}
-          <Route path="/login" component={Login} />
-          <Route path="/signup" component={Signup} />
-          <Route path="/account/recovery" component={AccountRecovery} />
-          <Route path="/naver-callback" component={NaverCallback} />
-          <Route path="/kakao-callback" component={KakaoCallback} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/account/recovery" element={<AccountRecovery />} />
+          <Route path="/naver-callback" element={<NaverCallback />} />
+          <Route path="/kakao-callback" element={<KakaoCallback />} />
 
           {/* 마이페이지 */}
-          <PrivateRoute exact path="/mypage"><MyPage /></PrivateRoute>
-          <PrivateRoute exact path="/mypage/coupons"><MyCoupons /></PrivateRoute>
+          <Route path="/mypage" element={<PrivateRoute><MyPage /></PrivateRoute>} />
+          <Route path="/mypage/coupons" element={<PrivateRoute><MyCoupons /></PrivateRoute>} />
 
           {/* 주문/장바구니/결제 */}
-          <PrivateRoute exact path="/orders"><MyOrders /></PrivateRoute>
-          <PrivateRoute exact path="/cart"><CartPage /></PrivateRoute>
-          <PrivateRoute exact path="/checkout"><Checkout /></PrivateRoute>
-          <Route exact path="/order/success" component={OrderSuccess} />
-          <PrivateRoute exact path="/mypage/orders"><MyOrders /></PrivateRoute>
+          <Route path="/orders" element={<PrivateRoute><MyOrders /></PrivateRoute>} />
+          <Route path="/cart" element={<PrivateRoute><CartPage /></PrivateRoute>} />
+          <Route path="/checkout" element={<PrivateRoute><Checkout /></PrivateRoute>} />
+          <Route path="/order/success" element={<OrderSuccess />} />
+          <Route path="/mypage/orders" element={<PrivateRoute><MyOrders /></PrivateRoute>} />
 
-          {/* ✅ 결제: 'pay/confirm'이 'pay'보다 먼저! */}
-          <PrivateRoute exact path="/pay/confirm"><PayConfirm /></PrivateRoute>
-          <PrivateRoute exact path="/pay"><PaySelect /></PrivateRoute>
+
+          <Route path="/pay/confirm" element={<PrivateRoute><PayConfirm /></PrivateRoute>} />
+          <Route path="/pay" element={<PrivateRoute><PaySelect /></PrivateRoute>} />
 
           {/* 고객센터/회사/정책 */}
-          <Route path="/help" component={HelpPage} />
-          <Route path="/company" component={CompanyPage} />
-          <Route path="/terms" component={Terms} />
-          <Route path="/privacy" component={Privacy} />
-          <Route path="/membership" component={Membership} />
-          <Route path="/stores" component={StoreFinder} />
-          <Route path="/notice" component={NoticeEvents} />
-          <Route path="/bulk-order" component={BulkOrder} />
+          <Route path="/help" element={<HelpPage />} />
+          <Route path="/company" element={<CompanyPage />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/membership" element={<Membership />} />
+          <Route path="/stores" element={<StoreFinder />} />
+          <Route path="/notice" element={<NoticeEvents />} />
+          <Route path="/bulk-order" element={<BulkOrder />} />
 
           {/* 위시리스트 */}
-          <Route path="/wishlist" component={Wishlist} />
+          <Route path="/wishlist" element={<Wishlist />} />
 
           {/* 검색/리스트 */}
-          <Route path="/search/:keyword" component={Search} />
-          <Route path="/list" component={ProductList} />
+          <Route path="/search/:keyword" element={<Search />} />
+          <Route path="/list" element={<ProductList />} />
 
           {/* 상품 */}
-          <Route path="/product/:id" component={ProductDetail} />
-          <Route path="/product" component={ProductDetail} />
+          <Route path="/product/:id" element={<ProductDetail />} />
+          <Route path="/product" element={<ProductDetail />} />
 
           {/* 카테고리 */}
-          <Route path="/women/:subcategory?" component={CategoryPage} />
-          <Route path="/men/:subcategory?" component={CategoryPage} />
-          <Route path="/kids/:subcategory?" component={CategoryPage} />
-          <Route path="/sports/:subcategory?" component={CategoryPage} />
-          <Route path="/beauty/:subcategory?" component={CategoryPage} />
+          <Route path="/women/:subcategory?" element={<CategoryPage />} />
+          <Route path="/men/:subcategory?" element={<CategoryPage />} />
+          <Route path="/kids/:subcategory?" element={<CategoryPage />} />
+          <Route path="/sports/:subcategory?" element={<CategoryPage />} />
+          <Route path="/beauty/:subcategory?" element={<CategoryPage />} />
 
           {/* 골프 */}
-          <Route path="/golf" component={GolfMain} />
-          <Route path="/golf/new" component={GolfNew} />
-          <Route path="/golf/women" component={GolfWomen} />
-          <Route path="/golf/men" component={GolfMen} />
+          <Route path="/golf" element={<GolfMain />} />
+          <Route path="/golf/new" element={<GolfNew />} />
+          <Route path="/golf/women" element={<GolfWomen />} />
+          <Route path="/golf/men" element={<GolfMen />} />
 
           {/* 신발 */}
-          <Route path="/shoes" component={ShoesMain} />
-          <Route path="/shoes/new" component={ShoesNew} />
-          <Route path="/shoes/women" component={ShoesWomen} />
-          <Route path="/shoes/men" component={ShoesMen} />
+          <Route path="/shoes" element={<ShoesMain />} />
+          <Route path="/shoes/new" element={<ShoesNew />} />
+          <Route path="/shoes/women" element={<ShoesWomen />} />
+          <Route path="/shoes/men" element={<ShoesMen />} />
 
           {/* 라이프 */}
-          <Route path="/life" component={LifeMain} />
-          <Route path="/life/new" component={LifeNew} />
-          <Route path="/life/furniture" component={LifeFurniture} />
-          <Route path="/life/pet" component={LifePet} />
-          <Route path="/life/car" component={LifeCar} />
+          <Route path="/life" element={<LifeMain />} />
+          <Route path="/life/new" element={<LifeNew />} />
+          <Route path="/life/furniture" element={<LifeFurniture />} />
+          <Route path="/life/pet" element={<LifePet />} />
+          <Route path="/life/car" element={<LifeCar />} />
 
           {/* 럭셔리 */}
-          <Route path="/luxury" component={LuxuryMain} />
-          <Route path="/luxury/new" component={LuxuryNew} />
-          <Route path="/luxury/women" component={LuxuryWomen} />
-          <Route path="/luxury/men" component={LuxuryMen} />
+          <Route path="/luxury" element={<LuxuryMain />} />
+          <Route path="/luxury/new" element={<LuxuryNew />} />
+          <Route path="/luxury/women" element={<LuxuryWomen />} />
+          <Route path="/luxury/men" element={<LuxuryMen />} />
 
           {/* 아울렛 */}
-          <Route path="/outlet" component={OutletMain} />
-          <Route path="/outlet/women" component={OutletWomen} />
-          <Route path="/outlet/men" component={OutletMen} />
-          <Route path="/outlet/kids" component={OutletKids} />
-          <Route path="/outlet/luxury" component={OutletLuxury} />
-          <Route path="/outlet/shoes" component={OutletShoes} />
-          <Route path="/outlet/sports" component={OutletSports} />
-          <Route path="/outlet/golf" component={OutletGolf} />
-          <Route path="/outlet/life" component={OutletLife} />
+          <Route path="/outlet" element={<OutletMain />} />
+          <Route path="/outlet/women" element={<OutletWomen />} />
+          <Route path="/outlet/men" element={<OutletMen />} />
+          <Route path="/outlet/kids" element={<OutletKids />} />
+          <Route path="/outlet/luxury" element={<OutletLuxury />} />
+          <Route path="/outlet/shoes" element={<OutletShoes />} />
+          <Route path="/outlet/sports" element={<OutletSports />} />
+          <Route path="/outlet/golf" element={<OutletGolf />} />
+          <Route path="/outlet/life" element={<OutletLife />} />
+
+          {/* 브랜드 */}
+          <Route path="/brand/8seconds" element={<Brand8SecondsDetail />} />
+          <Route path="/brand/beanpole" element={<BrandBeanpoleDetail />} />
+          <Route path="/brand/beaker" element={<BrandBeakerDetail />} />
+          <Route path="/brand/kuho" element={<BrandKuhoDetail />} />
+          <Route path="/brand/issey-miyake" element={<BrandIsseyMiyakeDetail />} />
+          <Route path="/brand/maison-kitsune" element={<BrandMaisonKitsuneDetail />} />
+          <Route path="/brand/theory" element={<BrandTheoryDetail />} />
+          <Route path="/brand/kuho-plus" element={<BrandKuhoPlusDetail />} />
+          <Route path="/brand/comme-des-garcons" element={<BrandCommeDetail />} />
+          <Route path="/brand/patagonia" element={<BrandPatagoniaDetail />} />
+          <Route path="/brand/sporty-rich" element={<BrandSportyRichDetail />} />
+          <Route path="/brand/sie" element={<BrandSIEDetail />} />
+          <Route path="/brand/inu-golf" element={<BrandInewGolfDetail />} />
+          <Route path="/brand/general-idea" element={<BrandGeneralIdeaDetail />} />
+          <Route path="/brand/le-mouton" element={<BrandLeMoutonDetail />} />
+          <Route path="/brand/ami" element={<BrandAmiDetail />} />
+          <Route path="/brand/juun-j" element={<BrandJuunJDetail />} />
+          <Route path="/brand/rokadis" element={<BrandRogadisDetail />} />
+          <Route path="/brand/danton" element={<BrandDantonDetail />} />
+          <Route path="/brand/10-corso-como" element={<Brand10CorsoComoDetail />} />
+          <Route path="/brand/diapter" element={<BrandApertureDetail />} />
+          <Route path="/brand/cos" element={<BrandCOSDetail />} />
+          <Route path="/brand/saint-james" element={<BrandSaintJamesDetail />} />
+          <Route path="/brand/tommy-hilfiger" element={<BrandTommyHilfigerDetail />} />
+          <Route path="/brand/canada-goose" element={<BrandCanadaGooseDetail />} />
+          <Route path="/brand/hera" element={<BrandHeraDetail />} />
+          <Route path="/brand/galaxy-lifestyle" element={<BrandGalaxyLifestyleDetail />} />
+          <Route path="/brand/rebaige" element={<BrandRebaigeDetail />} />
+          <Route path="/brand/tory-burch" element={<BrandToryBurchDetail />} />
+          <Route path="/brand/galaxy" element={<BrandGalaxyDetail />} />
+
+
 
           {/* 관리자 */}
-          <PrivateRoute exact path="/admin/orders"><AdminOrders /></PrivateRoute>
-          <PrivateRoute exact path="/admin"><AdminDashboard /></PrivateRoute>
-      </Switch>
+          <Route path="/admin/orders" element={<PrivateRoute><AdminOrders /></PrivateRoute>} />
+          <Route path="/admin" element={<PrivateRoute><AdminDashboard /></PrivateRoute>} />
+      </Routes>
       <Footer />
     </AuthProvider>
   );

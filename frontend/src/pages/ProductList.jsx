@@ -1,6 +1,6 @@
 // src/pages/ProductList.jsx
 import React, { useMemo, useState } from "react";
-import { Link, useLocation, useHistory } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import "../styles/CategoryPage.css";
 
 // 가격 → 숫자
@@ -263,7 +263,7 @@ const sampleProducts = [
 
 export default function ProductList() {
   const location = useLocation();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // ===== 경로 파싱: /women/outer, /search/키워드, /search?q=
   const pathParts = location.pathname.split("/").filter(Boolean);
@@ -376,7 +376,7 @@ export default function ProductList() {
       reviewCount: product.reviewCount || 0,
     };
     localStorage.setItem("lastProduct", JSON.stringify(normalized));
-    history.push(`/product/${normalized.id}`, { product: normalized });
+    navigate(`/product/${normalized.id}`, { product: normalized });
   };
 
   // ===== 위시리스트 =====
