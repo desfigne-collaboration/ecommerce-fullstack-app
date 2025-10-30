@@ -4,11 +4,8 @@ import { useAuth } from "../context/AuthContext";
 import "./Header.css";
 
 export default function Header() {
-  const { user: authUser, logout } = useAuth();
-  const [isLogin, setIsLogin] = useState(localStorage.getItem("isLogin") === "true");
-  const [user, setUser] = useState(() => {
-    try { return JSON.parse(localStorage.getItem("loginUser")) || null; } catch { return null; }
-  });
+  const { user, logout } = useAuth();
+  const isLogin = !!user;
 
   const [cartCount, setCartCount] = useState(0);
   const [wishCount, setWishCount] = useState(0);
@@ -90,21 +87,17 @@ export default function Header() {
     const loadRecentSearches = () => {
       try { setRecentSearches(JSON.parse(localStorage.getItem("recentSearches")) || []); } catch { setRecentSearches([]); }
     };
-    const sync = () => {
-      setIsLogin(localStorage.getItem("isLogin") === "true");
-      try { setUser(JSON.parse(localStorage.getItem("loginUser")) || null); } catch { setUser(null); }
+    const syncCounts = () => {
       updateCartCount(); updateWishCount();
     };
     updateCartCount(); updateWishCount(); loadRecentSearches();
-    window.addEventListener("storage", sync);
+    window.addEventListener("storage", syncCounts);
     window.addEventListener("cartUpdated", updateCartCount);
     window.addEventListener("wishlistUpdated", updateWishCount);
-    window.addEventListener("auth:changed", sync);
     return () => {
-      window.removeEventListener("storage", sync);
+      window.removeEventListener("storage", syncCounts);
       window.removeEventListener("cartUpdated", updateCartCount);
       window.removeEventListener("wishlistUpdated", updateWishCount);
-      window.removeEventListener("auth:changed", sync);
     };
   }, []);
 
