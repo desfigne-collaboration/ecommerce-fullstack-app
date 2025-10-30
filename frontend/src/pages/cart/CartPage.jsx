@@ -8,16 +8,6 @@ export default function CartPage() {
   const [cart, setCart] = useState([]);
   const [selected, setSelected] = useState({});
 
-  // ✅ 로그인 여부 확인
-  useEffect(() => {
-    const isLogin = localStorage.getItem("isLogin") === "true";
-    if (!isLogin) {
-      alert("로그인이 필요합니다.");
-      navigate("/login");
-      return;
-    }
-  }, [navigate]);
-
   // ✅ 장바구니 불러오기
   useEffect(() => {
     try {
