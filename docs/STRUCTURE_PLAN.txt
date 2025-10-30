@@ -1,0 +1,79 @@
+=== 엔터프라이즈급 Docs 폴더 구조 설계 ===
+
+docs/
+├── README.md                                    # 문서 네비게이션 허브
+│
+├── 01-project/                                  # 프로젝트 정의
+│   ├── requirements-specification.md            # 기능 명세서
+│   ├── database-design.md                       # DB 설계서
+│   └── ui-design-reference.md                   # 화면 설계서 참조
+│
+├── 02-architecture/                             # 아키텍처 & 설계
+│   ├── system-architecture.md                   # 시스템 아키텍처
+│   ├── backend-architecture.md                  # 백엔드 아키텍처
+│   ├── frontend-architecture.md                 # 프론트엔드 아키텍처
+│   └── database-schema.md                       # 데이터베이스 스키마
+│
+├── 03-development/                              # 개발 가이드
+│   ├── setup/                                   # 환경 설정
+│   │   ├── initial-setup.md                     # 초기 프로젝트 구조
+│   │   ├── git-strategy.md                      # Git 브랜치 전략
+│   │   └── development-environment.md           # 개발 환경 설정
+│   │
+│   ├── backend/                                 # 백엔드 개발
+│   │   ├── rest-api.md                          # REST API 개발 가이드
+│   │   └── database-operations.md               # 데이터베이스 작업
+│   │
+│   ├── frontend/                                # 프론트엔드 개발
+│   │   ├── component-development.md             # 컴포넌트 개발
+│   │   ├── state-management.md                  # Redux 상태 관리
+│   │   ├── api-integration.md                   # API 연동
+│   │   └── authentication/                      # 인증
+│   │       └── sns-login-guide.md               # SNS 로그인 가이드
+│   │
+│   └── testing/                                 # 테스트
+│       ├── e2e-testing.md                       # E2E 테스트
+│       └── ui-ux-improvements.md                # UI/UX 개선
+│
+├── 04-operations/                               # 운영 & 배포
+│   ├── deployment-guide.md                      # 배포 가이드
+│   └── maintenance.md                           # 유지보수 가이드
+│
+├── 05-guides/                                   # 사용자 가이드
+│   ├── developer-guide.md                       # 개발자 가이드
+│   ├── customer-guide.md                        # 고객 가이드
+│   └── customer-manual.md                       # 고객 매뉴얼
+│
+├── 06-changelog/                                # 변경 이력
+│   ├── updates/                                 # 업데이트 기록
+│   │   ├── 2025-10-28-update.md
+│   │   └── 2025-10-30-session-management.md
+│   │
+│   ├── migrations/                              # 마이그레이션 기록
+│   │   ├── 2025-10-27-react-router-v7.md
+│   │   ├── 2025-10-27-duplicate-fix.md
+│   │   ├── 2025-10-27-brand-logo.md
+│   │   ├── 2025-10-28-router-downgrade.md
+│   │   └── 2025-10-29-router-v7-error.md
+│   │
+│   └── refactoring/                             # 리팩토링 기록
+│       ├── 2025-10-30-file-cleanup.md
+│       ├── 2025-10-30-subcategory-backup.md
+│       └── 2025-10-30-logic-fixes.md
+│
+├── 07-issues/                                   # 이슈 트래킹
+│   └── bugs/                                    # 버그 기록
+│       └── 2025-10-29-coupon-duplication.md
+│
+└── assets/                                      # 문서 자산
+    └── images/                                  # 이미지 파일
+
+=== 파일명 규칙 ===
+- kebab-case 사용 (소문자, 하이픈)
+- 날짜 형식: YYYY-MM-DD-description.md
+- 카테고리별 접두사 사용
+- 명확하고 간결한 이름
+
+=== 폴더 번호 규칙 ===
+- 01~: 두 자리 숫자로 순서 명확화
+- 논리적 순서: 프로젝트 → 아키텍처 → 개발 → 운영 → 가이드 → 변경이력 → 이슈
