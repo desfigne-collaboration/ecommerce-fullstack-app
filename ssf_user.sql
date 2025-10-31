@@ -59,9 +59,8 @@ desc ssf_user;
 select * from ssf_user;
 select * from ssf_addr;
 
-INSERT INTO ssf_user (user_key, email, username, userpwd, banned, signout, signin, snsprov, snsid, referralId) 
-INSERT INTO ssf_user (user_key, email, username, userpwd, banned, signout, signin, snsprov, snsid, referralId, phone, role) 
-VALUES ( UUID() , "test", "test", "test", "N", "N", now(), "test", "test", "test", "010-1234-5678", );
+-- INSERT INTO ssf_user (user_key, email, username, userpwd, banned, signout, signin, snsprov, snsid, referralId) 
+-- VALUES ( UUID() , "test", "test", "test", "N", "N", now(), "test", "test", "test");
 
 DELETE FROM ssf_user;
 

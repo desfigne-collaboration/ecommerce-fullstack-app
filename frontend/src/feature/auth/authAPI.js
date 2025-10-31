@@ -11,8 +11,7 @@ export const getSignup = (formData) => async (dispatch) => {
        const url = "http://localhost:8080/member/signup";
 
        result = await axiosPost(url, formData);
-
-
+    return result;
 }
 
 /** Login */
