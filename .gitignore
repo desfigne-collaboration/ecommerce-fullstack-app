@@ -52,8 +52,20 @@ AUX
 com[0-9]
 lpt[0-9]
 
-# Compressed files
+# Compressed files and backups
 *.zip
 *.rar
 *.7z
 *.tar.gz
+**/@ 히스토리/
+**/@히스토리/
+**/*_backup*
+**/*backup*
+
+# Large presentation files
+*.pptx
+*.ppt
+
+# Large reference files
+**/presentations/
+**/reference/
