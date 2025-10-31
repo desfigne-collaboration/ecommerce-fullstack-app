@@ -38,7 +38,7 @@ export default function PaySelect() {
     try {
       localStorage.setItem("payPayload", JSON.stringify(next));
     } catch {}
-    navigate("/pay/confirm", { state: next });
+    navigate("/pay/confirm", next);
   };
 
   return (
