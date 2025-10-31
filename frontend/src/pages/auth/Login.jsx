@@ -1,19 +1,28 @@
-import React, { useState, useEffect } from "react";
 import "../../styles/Auth.css";
+import { useState, useRef, useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { getLogin } from '../../feature/auth/authAPI.js';
 import { loginApi } from "../../api/auth";
 import { useAuth } from "../../context/AuthContext";
 import NaverLoginButton from "../../components/auth/NaverLoginButton";
 import KakaoLoginButton from "../../components/auth/KakaoLoginButton";
 
 export default function Login() {
-  const location = useLocation();
+
+  const location = useLocation(); //??
+  
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const { login } = useAuth();
-  const [form, setForm] = useState({ id: "", pass: "" });
   const [activeTab, setActiveTab] = useState("member");
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
+  const idRef = useRef(null);
+  const passwordRef = useRef(null);
+  const [form, setForm] = useState({ id: "", password: "" });
 
   useEffect(() => {
     const statePrefill = location?.state?.prefill;
@@ -42,9 +51,36 @@ export default function Login() {
     setForm(p => ({ ...p, [name]: value }));
   };
 
-  const onSubmit = e => {
+  
+
+  /** 로그인 버튼 이벤트 */
+  const onSubmit = async (e) => {
     e.preventDefault();
-    const res = loginApi({ email: form.id.trim(), password: form.pass });
+    const param = {
+      idRef: idRef,
+      passwordRef: passwordRef
+    }
+
+    const success = await dispatch(getLogin(form, param));
+
+    if (success) {
+      window.dispatchEvent(new Event("auth:changed"));
+      alert("로그인에 성공하였습니다.");
+      navigate("/");
+
+    } else {
+      alert("로그인에 실패, 확인 후 다시 진행해주세요.");
+      setForm({ id: '', password: '' });
+      idRef.current.focus();
+
+    }
+  }
+
+
+
+  const onSubmit2 = e => {
+    e.preventDefault();
+    const res = loginApi({ email: form.id.trim(), password: form.password });
 
     if (!res?.ok) {
       alert(res?.message || "로그인에 실패했습니다.");
@@ -66,10 +102,10 @@ export default function Login() {
       res.user && typeof res.user === "object"
         ? res.user
         : {
-            email: form.id.trim(),
-            name: res.name || fallbackName,
-            role: res.role || "user"
-          };
+          email: form.id.trim(),
+          name: res.name || fallbackName,
+          role: res.role || "user"
+        };
 
     // ✅ AuthContext의 login 함수 사용
     const userWithRole = {
@@ -81,7 +117,7 @@ export default function Login() {
 
     try {
       window.dispatchEvent(new Event("auth:changed"));
-    } catch {}
+    } catch { }
 
     alert("로그인 성공!");
 
@@ -91,6 +127,8 @@ export default function Login() {
       navigate("/", { replace: true });
     }
   };
+
+  /////////////////////////////////////////////////////////////////////////////////////////
 
   return (
     <div className="auth-container">
@@ -119,8 +157,9 @@ export default function Login() {
               <input
                 type="text"
                 name="id"
-                placeholder="아이디 또는 이메일"
+                placeholder="이메일"
                 value={form.id}
+                ref={idRef}
                 onChange={onChange}
                 required
               />
@@ -128,9 +167,10 @@ export default function Login() {
               <div className="password-input-wrapper">
                 <input
                   type={showPassword ? "text" : "password"}
-                  name="pass"
+                  name="password"
                   placeholder="비밀번호"
-                  value={form.pass}
+                  value={form.password}
+                  ref={passwordRef}
                   onChange={onChange}
                   required
                 />

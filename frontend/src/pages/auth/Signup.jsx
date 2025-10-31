@@ -1,11 +1,14 @@
 // src/pages/auth/Signup.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useDispatch } from 'react-redux';
 import { signupApi } from "../../api/auth";
 import { useAuth } from "../../context/AuthContext";
 import "./Signup.css";
+import { getSignup } from '../../feature/auth/authAPI.js';
 
 export default function Signup() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const { issueWelcomeCouponIfNeeded } = useAuth();
@@ -150,56 +153,56 @@ export default function Signup() {
 
   // 이메일 유효성 및 중복 검사
   const validateEmail = (value) => {
-    if (!value) {
-      setValidation((prev) => ({ ...prev, email: { valid: null, message: "" } }));
-      return;
-    }
-
-    // 이메일 형식 검사
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(value)) {
-      setValidation((prev) => ({
-        ...prev,
-        email: { valid: false, message: "올바른 이메일 형식이 아닙니다." },
-      }));
-      return;
-    }
-
-    // 이메일 중복 검사
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
-    const isDuplicate = users.some((u) => u.email === value);
-
-    if (isDuplicate) {
-      setValidation((prev) => ({
-        ...prev,
-        email: { valid: false, message: "이미 가입된 이메일입니다." },
-      }));
-    } else {
-      setValidation((prev) => ({
-        ...prev,
-        email: { valid: true, message: "사용 가능한 이메일입니다." },
-      }));
-    }
+//     if (!value) {
+//       setValidation((prev) => ({ ...prev, email: { valid: null, message: "" } }));
+//       return;
+//     }
+//
+//     // 이메일 형식 검사
+//     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+//     if (!emailRegex.test(value)) {
+//       setValidation((prev) => ({
+//         ...prev,
+//         email: { valid: false, message: "올바른 이메일 형식이 아닙니다." },
+//       }));
+//       return;
+//     }
+//
+//     // 이메일 중복 검사
+//     const users = JSON.parse(localStorage.getItem("users") || "[]");
+//     const isDuplicate = users.some((u) => u.email === value);
+//
+//     if (isDuplicate) {
+//       setValidation((prev) => ({
+//         ...prev,
+//         email: { valid: false, message: "이미 가입된 이메일입니다." },
+//       }));
+//     } else {
+//       setValidation((prev) => ({
+//         ...prev,
+//         email: { valid: true, message: "사용 가능한 이메일입니다." },
+//       }));
+//     }
   };
 
   // 비밀번호 확인 검사
   const validatePasswordCheck = (checkValue, passwordValue) => {
-    if (!checkValue) {
-      setValidation((prev) => ({ ...prev, passwordCheck: { valid: null, message: "" } }));
-      return;
-    }
-
-    if (checkValue !== passwordValue) {
-      setValidation((prev) => ({
-        ...prev,
-        passwordCheck: { valid: false, message: "비밀번호가 일치하지 않습니다." },
-      }));
-    } else {
-      setValidation((prev) => ({
-        ...prev,
-        passwordCheck: { valid: true, message: "비밀번호가 일치합니다." },
-      }));
-    }
+//     if (!checkValue) {
+//       setValidation((prev) => ({ ...prev, passwordCheck: { valid: null, message: "" } }));
+//       return;
+//     }
+//
+//     if (checkValue !== passwordValue) {
+//       setValidation((prev) => ({
+//         ...prev,
+//         passwordCheck: { valid: false, message: "비밀번호가 일치하지 않습니다." },
+//       }));
+//     } else {
+//       setValidation((prev) => ({
+//         ...prev,
+//         passwordCheck: { valid: true, message: "비밀번호가 일치합니다." },
+//       }));
+//     }
   };
 
   // 필수 전체 동의
@@ -239,68 +242,74 @@ export default function Signup() {
   };
 
   // 회원가입 처리
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
 
-    // 필수 항목 체크
-    if (!form.name || !form.password || !form.passwordCheck || !form.email) {
-      alert("필수 항목을 모두 입력해주세요.");
-      return;
-    }
-
-    // 이름 검사
-    if (form.name.trim().length < 2) {
-      alert("이름은 최소 2자 이상이어야 합니다.");
-      return;
-    }
-
-    // 비밀번호 일치 확인
-    if (form.password !== form.passwordCheck) {
-      alert("비밀번호가 일치하지 않습니다.");
-      return;
-    }
-
-    // 유효성 검사 확인
-    if (!validation.password.valid) {
-      alert("비밀번호를 확인해주세요.");
-      return;
-    }
-
-    if (validation.email.valid === false) {
-      alert("이메일을 확인해주세요.");
-      return;
-    }
-
-    // 필수 약관 동의 확인
-    if (!agreements.age14 || !agreements.termsOfUse || !agreements.privacy || !agreements.membership) {
-      alert("필수 약관에 모두 동의해주세요.");
-      return;
-    }
-
-    // 전화번호 검사 (선택사항이지만 입력했으면 검사)
-    if (form.phone && !/^[0-9]{10,11}$/.test(form.phone.replace(/-/g, ""))) {
-      alert("올바른 전화번호 형식이 아닙니다. (10-11자리 숫자)");
-      return;
-    }
-
-    // signupApi 호출
-    const result = signupApi({
-      email: form.email,
-      password: form.password,
-      name: form.name,
-      phone: form.phone,
-    });
-
-    if (!result.ok) {
-      alert(result.message);
-      return;
-    }
+//     // 필수 항목 체크
+//     if (!form.name || !form.password || !form.passwordCheck || !form.email) {
+//       alert("필수 항목을 모두 입력해주세요.");
+//       return;
+//     }
+//
+//     // 이름 검사
+//     if (form.name.trim().length < 2) {
+//       alert("이름은 최소 2자 이상이어야 합니다.");
+//       return;
+//     }
+//
+//     // 비밀번호 일치 확인
+//     if (form.password !== form.passwordCheck) {
+//       alert("비밀번호가 일치하지 않습니다.");
+//       return;
+//     }
+//
+//     // 유효성 검사 확인
+//     if (!validation.password.valid) {
+//       alert("비밀번호를 확인해주세요.");
+//       return;
+//     }
+//
+//     if (validation.email.valid === false) {
+//       alert("이메일을 확인해주세요.");
+//       return;
+//     }
+//
+//     // 필수 약관 동의 확인
+//     if (!agreements.age14 || !agreements.termsOfUse || !agreements.privacy || !agreements.membership) {
+//       alert("필수 약관에 모두 동의해주세요.");
+//       return;
+//     }
+//
+//     // 전화번호 검사 (선택사항이지만 입력했으면 검사)
+//     if (form.phone && !/^[0-9]{10,11}$/.test(form.phone.replace(/-/g, ""))) {
+//       alert("올바른 전화번호 형식이 아닙니다. (10-11자리 숫자)");
+//       return;
+//     }
+//
+//     // signupApi 호출
+//     const result = signupApi({
+//       email: form.email,
+//       password: form.password,
+//       name: form.name,
+//       phone: form.phone,
+//     });
+//
+//     if (!result.ok) {
+//       alert(result.message);
+//       return;
+//     }
 
     // 신규 회원 웰컴 쿠폰 발급 (AuthContext의 중복 방지 함수 사용)
     issueWelcomeCouponIfNeeded();
 
-    alert("회원가입이 완료되었습니다! 🎉");
-    navigate("/login");
+    const signResult = await dispatch(getSignup(form));
+
+       if(signResult) {
+           alert("회원가입이 완료되었습니다! 🎉");
+               navigate("/login");
+       } else {
+           alert("회원가입에 실패하셨습니다.");
+       }
   };
 
   const allRequired = agreements.age14 && agreements.termsOfUse && agreements.privacy && agreements.membership;
@@ -325,7 +334,7 @@ export default function Signup() {
                   value={form.name}
                   onChange={onChange}
                   placeholder="이름을 입력하세요"
-                  required
+//                   required
                 />
                 {form.name && (
                   <button
@@ -354,7 +363,7 @@ export default function Signup() {
                   value={form.email}
                   onChange={onChange}
                   placeholder="이메일을 입력하세요"
-                  required
+//                   required
                 />
                 {form.email && (
                   <button
@@ -414,7 +423,7 @@ export default function Signup() {
                   value={form.password}
                   onChange={onChange}
                   placeholder="비밀번호를 입력하세요"
-                  required
+//                   required
                 />
                 <button
                   type="button"
@@ -472,7 +481,7 @@ export default function Signup() {
                   placeholder="비밀번호 확인"
                   value={form.passwordCheck}
                   onChange={onChange}
-                  required
+//                   required
                 />
                 <button
                   type="button"
