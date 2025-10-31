@@ -1,13 +1,13 @@
 # Proxy ECONNREFUSED Error - Troubleshooting Guide
 
-**Document Version:** 1.0
+**Document Version:** 1.1
 **Date:** 2025-10-31
 **Issue Type:** Runtime Error / Proxy Configuration
 **Status:** Resolved
 
 ## Issue Summary
 
-When running `npm start`, developers see "Proxy error: Could not proxy request" with ECONNREFUSED errors for image files. The webpack compiler completes successfully, but 21+ proxy errors appear in the console.
+When running `npm start`, developers see "Proxy error: Could not proxy request" with ECONNREFUSED errors for image files and logo files. The webpack compiler completes successfully, but 21+ proxy errors appear in the console.
 
 ## Error Messages
 
@@ -18,6 +18,9 @@ Proxy error: Could not proxy request /images/216419883.jpeg from localhost:3000 
 See https://nodejs.org/api/errors.html#errors_common_system_errors for more information (ECONNREFUSED).
 
 Proxy error: Could not proxy request /images/521681749.jpeg from localhost:3000 to http://localhost:8080/.
+See https://nodejs.org/api/errors.html#errors_common_system_errors for more information (ECONNREFUSED).
+
+Proxy error: Could not proxy request /logo192.png from localhost:3000 to http://localhost:8080/.
 See https://nodejs.org/api/errors.html#errors_common_system_errors for more information (ECONNREFUSED).
 
 [... 19 more similar errors for .jpeg files]
@@ -32,6 +35,13 @@ The root cause was **incorrect file extensions** in image references:
 - **Actual files:** `.webp` format
 
 All images in `frontend/public/images/` were converted to WebP format for optimization, but `Home.jsx` still referenced them with `.jpeg` extensions.
+
+### Additional Issue: Missing Logo Files
+
+PWA manifest file (`manifest.json`) referenced logo files that don't exist:
+- **Referenced in manifest.json:** `logo192.png` and `logo512.png`
+- **Actual files:** Only `favicon.ico` exists in `public/`
+- **Result:** Additional proxy error for `/logo192.png`
 
 ### Secondary Issue: Misunderstanding of Proxy Behavior
 
@@ -74,9 +84,54 @@ image: "/images/3207359177.webp"
 <img src="/images/216419883.webp" alt="..." />
 ```
 
+### Fix 2: Update PWA Manifest
+
+Removed references to non-existent logo files in `manifest.json`:
+
+**Before:**
+```json
+{
+  "short_name": "React App",
+  "name": "Create React App Sample",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
+```
+
+**After:**
+```json
+{
+  "short_name": "SSF Shop",
+  "name": "SSF E-commerce Platform",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}
+```
+
 ### Files Modified
 
 - `frontend/src/pages/home/Home.jsx`
+- `frontend/public/manifest.json`
   - 21 image references updated
   - 5 product images in homeProducts array
   - 3 event banner images
@@ -363,6 +418,7 @@ For older browsers, use `<picture>` with fallback:
 | Version | Date | Author | Changes |
 |---------|------|--------|---------|
 | 1.0 | 2025-10-31 | Claude Code | Initial documentation of proxy ECONNREFUSED error fix |
+| 1.1 | 2025-10-31 | Claude Code | Added manifest.json fix for missing logo files (logo192.png, logo512.png) |
 
 ---
 
