@@ -1,11 +1,16 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
 import "./Header.css";
+import { useDispatch } from 'react-redux';
+import { useAuth } from "../context/AuthContext";
+import { getLogout } from "../feature/auth/authAPI.js";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 
 export default function Header() {
-  const { user, logout } = useAuth();
-  const isLogin = !!user;
+  const { user: authUser, logout } = useAuth();
+  const [isLogin, setIsLogin] = useState(localStorage.getItem("isLogin") === "true");
+  const [user, setUser] = useState(() => {
+    try { return JSON.parse(localStorage.getItem("loginUser")) || null; } catch { return null; }
+  });
 
   const [cartCount, setCartCount] = useState(0);
   const [wishCount, setWishCount] = useState(0);
@@ -23,6 +28,7 @@ export default function Header() {
   const headerRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   /** 공용 MegaMenu 래퍼 */
   const MegaMenu = ({ id, active, top, cols = "2", children }) => (
@@ -87,17 +93,21 @@ export default function Header() {
     const loadRecentSearches = () => {
       try { setRecentSearches(JSON.parse(localStorage.getItem("recentSearches")) || []); } catch { setRecentSearches([]); }
     };
-    const syncCounts = () => {
+    const sync = () => {
+      setIsLogin(localStorage.getItem("isLogin") === "true");
+      try { setUser(JSON.parse(localStorage.getItem("loginUser")) || null); } catch { setUser(null); }
       updateCartCount(); updateWishCount();
     };
     updateCartCount(); updateWishCount(); loadRecentSearches();
-    window.addEventListener("storage", syncCounts);
+    window.addEventListener("storage", sync);
     window.addEventListener("cartUpdated", updateCartCount);
     window.addEventListener("wishlistUpdated", updateWishCount);
+    window.addEventListener("auth:changed", sync);
     return () => {
-      window.removeEventListener("storage", syncCounts);
+      window.removeEventListener("storage", sync);
       window.removeEventListener("cartUpdated", updateCartCount);
       window.removeEventListener("wishlistUpdated", updateWishCount);
+      window.removeEventListener("auth:changed", sync);
     };
   }, []);
 
@@ -115,15 +125,22 @@ export default function Header() {
   }, [bannerVisible, location.pathname]);
 
   /** 인증/네비 핸들러 */
-  const handleLogout = () => {
-    // ✅ AuthContext의 logout 함수 사용
-    logout();
-    setIsLogin(false);
-    setUser(null);
-    try { window.dispatchEvent(new Event("auth:changed")); } catch {}
-    alert("로그아웃 되었습니다.");
-    navigate("/login");
+  const handleLogout = async() => {
+
+    //로그아웃 API 호출
+    const succ = await dispatch(getLogout());
+    localStorage.removeItem("loginInfo");
+    localStorage.removeItem("isLogin");
+
+    if(succ) {
+      setIsLogin(false);
+      setUser(null);    
+      alert("로그아웃 되었습니다.");
+      navigate("/");
+    }  
+
   };
+
   const handleCartClick = (e) => {
     if (!isLogin) { e.preventDefault(); alert("로그인이 필요합니다."); window.location.href = "/#/login"; }
   };
