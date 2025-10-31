@@ -22,11 +22,13 @@ CREATE TABLE `ssf_user` (
 	`username`		VARCHAR(20)		NOT NULL		COMMENT '이름',
 	`userpwd`		VARCHAR(100)	NOT NULL		COMMENT '비밀번호',
 	`banned`		VARCHAR(1)		NULL			COMMENT '정지여부',
-	`signout`		VARCHAR(1)		NULL			COMMENT '회원탈퇴',
+	`signout`		VARCHAR(1)		NULL			COMMENT '회원탈퇴여부',
 	`signin`		DATETIME		NOT NULL		COMMENT '가입날짜',
 	`snsprov`		VARCHAR(100)	NULL			COMMENT 'SNS제공자종류',
 	`snsid`			VARCHAR(100)	NULL			COMMENT '사용자SNS고유ID',
-	`referralId`	VARCHAR(100)	NULL			COMMENT '추천인ID'
+	`referralId`	VARCHAR(100)	NULL			COMMENT '추천인ID',
+    `phone`			VARCHAR(13)		NULL			COMMENT '휴대전화번호',
+    `role`			VARCHAR(13)		NOT NULL		COMMENT '권한구분코드'
 );
 
 /****************************************
@@ -55,9 +57,11 @@ CREATE TABLE ssf_addr (
 
 desc ssf_user;
 select * from ssf_user;
+select * from ssf_addr;
 
--- INSERT INTO ssf_user (user_key, email, username, userpwd, banned, signout, signin, snsprov, snsid, referralId) 
--- VALUES ( UUID() , "test", "test", "test", "N", "N", now(), "test", "test", "test");
+INSERT INTO ssf_user (user_key, email, username, userpwd, banned, signout, signin, snsprov, snsid, referralId) 
+INSERT INTO ssf_user (user_key, email, username, userpwd, banned, signout, signin, snsprov, snsid, referralId, phone, role) 
+VALUES ( UUID() , "test", "test", "test", "N", "N", now(), "test", "test", "test", "010-1234-5678", );
 
 DELETE FROM ssf_user;
 
