@@ -59,6 +59,9 @@
 
 운영 환경 배포와 유지보수 관련 문서입니다.
 
+- [git-repository-optimization.md](./04-operations/git-repository-optimization.md) - Git 저장소 최적화 작업
+- [github-performance-analysis.md](./04-operations/github-performance-analysis.md) - GitHub 업로드 성능 분석
+
 **예정**:
 - deployment-guide.md - 배포 가이드 (프로덕션)
 - maintenance.md - 유지보수 가이드
@@ -70,6 +73,7 @@
 - [developer-guide.md](./05-guides/developer-guide.md) - 개발자 가이드
 - [customer-guide.md](./05-guides/customer-guide.md) - 고객 가이드
 - [customer-manual.md](./05-guides/customer-manual.md) - 고객 사용 매뉴얼
+- [webp-conversion-guide.md](./05-guides/webp-conversion-guide.md) - WebP 이미지 변환 가이드
 
 ### [06-changelog](./06-changelog/) - 변경 이력
 
@@ -93,6 +97,10 @@
 - [2025-10-30-file-cleanup.md](./06-changelog/refactoring/2025-10-30-file-cleanup.md) - 불필요한 파일 정리 (Phase 1)
 - [2025-10-30-subcategory-backup.md](./06-changelog/refactoring/2025-10-30-subcategory-backup.md) - 서브카테고리 페이지 백업 (Phase 2)
 - [2025-10-30-logic-fixes.md](./06-changelog/refactoring/2025-10-30-logic-fixes.md) - 로직 오류 수정 (Phase 3)
+
+#### Standardization - 표준화 기록
+- [image-file-standardization.md](./06-changelog/image-file-standardization.md) - 이미지 파일 명명 규칙 표준화 (2025-10-31)
+- [2025-10-31-documentation-compliance-audit.md](./06-changelog/2025-10-31-documentation-compliance-audit.md) - 프로젝트 문서 준수 검사 및 개선
 
 ### [07-issues](./07-issues/) - 이슈 트래킹
 
@@ -171,5 +179,5 @@
 
 문서 개선 제안이나 오류 발견 시 GitHub Issues를 활용해주세요.
 
-**최종 업데이트**: 2025-10-30
-**문서 구조 버전**: 1.0.0 (Enterprise Edition)
+**최종 업데이트**: 2025-10-31
+**문서 구조 버전**: 1.1.0 (Enterprise Edition)
