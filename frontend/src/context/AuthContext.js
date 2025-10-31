@@ -29,20 +29,6 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  // ✅ 로그인 함수 (Login 페이지에서 호출)
-  const login = (userInfo) => {
-    setUser(userInfo);
-    localStorage.setItem("loginUser", JSON.stringify(userInfo));
-    localStorage.setItem("isLogin", "true");
-  };
-
-  // ✅ 로그아웃 함수 (Header 등에서 호출)
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem("loginUser");
-    localStorage.setItem("isLogin", "false");
-  };
-
   // ✅ 신규 회원 웰컴 쿠폰 발급 (중복 방지)
   const issueWelcomeCouponIfNeeded = () => {
     const savedCoupons = JSON.parse(localStorage.getItem("coupons") || "[]");
@@ -65,7 +51,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, ready, login, logout, issueWelcomeCouponIfNeeded }}>
+    <AuthContext.Provider value={{ user, ready, issueWelcomeCouponIfNeeded }}>
       {children}
     </AuthContext.Provider>
   );

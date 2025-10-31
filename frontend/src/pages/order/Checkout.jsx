@@ -178,7 +178,7 @@ const goPaymentMethod = () => {
     console.error("Failed to save checkout data:", e);
   }
 
-  navigate("/pay", { state: payloadData });
+  navigate("/pay", payloadData);
 };
 
   // 쿠폰 사용 처리(실 결제 성공 후에 처리하는 게 정석; 여기서는 데모용)
