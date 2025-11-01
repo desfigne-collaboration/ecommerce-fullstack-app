@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { signupApi } from "../../api/auth";
-import { useAuth } from "../../context/AuthContext";
+import { issueWelcomeCoupon } from "../../feature/auth/authSlice";
 import "./Signup.css";
 import { getSignup } from '../../feature/auth/authAPI.js';
 
@@ -11,7 +11,6 @@ export default function Signup() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const { issueWelcomeCouponIfNeeded } = useAuth();
 
   const [form, setForm] = useState({
     name: "",
@@ -299,8 +298,8 @@ export default function Signup() {
       return;
     }
 
-    // 신규 회원 웰컴 쿠폰 발급 (AuthContext의 중복 방지 함수 사용)
-    issueWelcomeCouponIfNeeded();
+    // 신규 회원 웰컴 쿠폰 발급 (Redux action 사용)
+    dispatch(issueWelcomeCoupon());
 
     const signResult = await dispatch(getSignup(form));
     console.log(signResult);
