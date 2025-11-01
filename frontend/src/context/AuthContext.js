@@ -50,8 +50,29 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // ✅ 로그인 함수
+  const login = (userData) => {
+    setUser(userData);
+    localStorage.setItem("loginUser", JSON.stringify(userData));
+    localStorage.setItem("isLogin", "true");
+  };
+
+  // ✅ 로그아웃 함수
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem("loginUser");
+    localStorage.setItem("isLogin", "false");
+    localStorage.removeItem("auth");
+  };
+
   return (
-    <AuthContext.Provider value={{ user, ready, issueWelcomeCouponIfNeeded }}>
+    <AuthContext.Provider value={{
+      user,
+      ready,
+      login,
+      logout,
+      issueWelcomeCouponIfNeeded
+    }}>
       {children}
     </AuthContext.Provider>
   );

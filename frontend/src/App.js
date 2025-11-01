@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 
 import { AuthProvider } from "./context/AuthContext.js";
 import PrivateRoute from "./routes/PrivateRoute.jsx";
+import ErrorBoundary from "./components/ErrorBoundary.jsx";
 
 import Header from "./components/Header.jsx";
 import Footer from "./components/Footer.jsx";
@@ -130,9 +131,10 @@ import Wishlist from "./pages/wish/Wishlist.jsx";
 
 function App() {
   return (
-    <AuthProvider>
-      <Header />
-      <Routes>
+    <ErrorBoundary>
+      <AuthProvider>
+        <Header />
+        <Routes>
           {/* 홈/메뉴 */}
           <Route path="/" element={<Home />} />
           <Route path="/menu" element={<Menu />} />
@@ -260,9 +262,10 @@ function App() {
           {/* 관리자 */}
           <Route path="/admin/orders" element={<PrivateRoute><AdminOrders /></PrivateRoute>} />
           <Route path="/admin" element={<PrivateRoute><AdminDashboard /></PrivateRoute>} />
-      </Routes>
-      <Footer />
-    </AuthProvider>
+        </Routes>
+        <Footer />
+      </AuthProvider>
+    </ErrorBoundary>
   );
 }
 

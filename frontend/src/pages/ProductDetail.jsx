@@ -47,20 +47,25 @@ export default function ProductDetail() {
     try {
       const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
       const i = wishlist.findIndex((w) => String(w.id) === String(product.id));
+
+      let updatedWishlist;
       if (i >= 0) {
-        wishlist.splice(i, 1);
+        // ✅ filter를 사용하여 새 배열 생성 (불변성 유지)
+        updatedWishlist = wishlist.filter((w) => String(w.id) !== String(product.id));
         setIsWished(false);
       } else {
-        wishlist.push({
+        // ✅ 스프레드 연산자로 새 배열 생성 (불변성 유지)
+        updatedWishlist = [...wishlist, {
           id: product.id,
           name: product.name || "",
           image: product.image || product.img,
           price: normalizedPrice,
           addedAt: Date.now(),
-        });
+        }];
         setIsWished(true);
       }
-      localStorage.setItem("wishlist", JSON.stringify(wishlist));
+
+      localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
       window.dispatchEvent(new Event("wishlistUpdated"));
     } catch {}
   };
