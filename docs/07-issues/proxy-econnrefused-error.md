@@ -80,8 +80,8 @@ image: "/images/3207359177.jpeg"
 
 **After:**
 ```javascript
-image: "/images/3207359177.webp"
-<img src="/images/216419883.webp" alt="..." />
+image: "https://desfigne.synology.me/data/image/thejoeun/products/3207359177.webp"
+<img src="https://desfigne.synology.me/data/image/thejoeun/products/216419883.webp" alt="..." />
 ```
 
 ### Fix 2: Update PWA Manifest

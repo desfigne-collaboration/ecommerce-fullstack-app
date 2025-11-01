@@ -61,7 +61,7 @@ export default function PayConfirm() {
   const total = Math.max(0, subtotal - effectiveDiscount + shipping);
 
   // QR 경로
-  const qrCandidates = ["/icons/qr.png", "/icons/qr.webp", "/icons/qr.jpg"];
+  const qrCandidates = ["/icons/qr.png", "https://desfigne.synology.me/data/image/thejoeun/icons/qr.webp", "/icons/qr.jpg"];
   const qrSrc0 = useMemo(() => srcOf(qrCandidates[0]), []);
 
   const [paying, setPaying] = useState(false);

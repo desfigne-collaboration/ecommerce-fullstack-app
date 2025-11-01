@@ -5,12 +5,12 @@ import ProductThumb from "../../components/ProductThumb";
 
 function SportsFitness() {
   const products = [
-    { id: 1, name: "", desc: "", price: "", img: "/images/sports/fitness/sports_fitness1.webp" },
-    { id: 2, name: "", desc: "", price: "", img: "/images/sports/fitness/sports_fitness2.webp" },
-    { id: 3, name: "", desc: "", price: "", img: "/images/sports/fitness/sports_fitness3.webp" },
-    { id: 4, name: "", desc: "", price: "", img: "/images/sports/fitness/sports_fitness4.webp" },
-    { id: 5, name: "", desc: "", price: "", img: "/images/sports/fitness/sports_fitness5.webp" },
-    { id: 6, name: "", desc: "", price: "", img: "/images/sports/fitness/sports_fitness6.webp" },
+    { id: 1, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_fitness1.webp" },
+    { id: 2, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_fitness2.webp" },
+    { id: 3, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_fitness3.webp" },
+    { id: 4, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_fitness4.webp" },
+    { id: 5, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_fitness5.webp" },
+    { id: 6, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_fitness6.webp" },
   ];
 
   return (

@@ -4,12 +4,12 @@ import ProductThumb from "../../components/ProductThumb";
 Beauty/BeautyNew
 function BeautyNew() {
   const products = [
-    { id: 1, name: "", desc: "", price: "", img: "/images/Beauty/New/beauty_new1.webp" },
-    { id: 2, name: "", desc: "", price: "", img: "/images/Beauty/New/beauty_new2.webp" },
-    { id: 3, name: "", desc: "", price: "", img: "/images/Beauty/New/beauty_new3.webp" },
-    { id: 4, name: "", desc: "", price: "", img: "/images/Beauty/New/beauty_new4.webp" },
-    { id: 5, name: "", desc: "", price: "", img: "/images/Beauty/New/beauty_new5.webp" },
-    { id: 6, name: "", desc: "", price: "", img: "/images/Beauty/New/beauty_new6.webp" },
+    { id: 1, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/beauty_new1.webp" },
+    { id: 2, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/beauty_new2.webp" },
+    { id: 3, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/beauty_new3.webp" },
+    { id: 4, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/beauty_new4.webp" },
+    { id: 5, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/beauty_new5.webp" },
+    { id: 6, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/beauty_new6.webp" },
   ];
 
   return (

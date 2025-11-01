@@ -4,12 +4,12 @@ import ProductThumb from "../../components/ProductThumb";
 
 function LifeFurniture() {
   const products = [
-    { id: 1, name: "", desc: "", price: "", img: "/images/life/furniture/life_furniture1.webp" },
-    { id: 2, name: "", desc: "", price: "", img: "/images/life/furniture/life_furniture2.webp" },
-    { id: 3, name: "", desc: "", price: "", img: "/images/life/furniture/life_furniture3.webp" },
-    { id: 4, name: "", desc: "", price: "", img: "/images/life/furniture/life_furniture4.webp" },
-    { id: 5, name: "", desc: "", price: "", img: "/images/life/furniture/life_furniture5.webp" },
-    { id: 6, name: "", desc: "", price: "", img: "/images/life/furniture/life_furniture6.webp" },
+    { id: 1, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/life_furniture1.webp" },
+    { id: 2, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/life_furniture2.webp" },
+    { id: 3, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/life_furniture3.webp" },
+    { id: 4, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/life_furniture4.webp" },
+    { id: 5, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/life_furniture5.webp" },
+    { id: 6, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/life_furniture6.webp" },
   ];
 
   return (

@@ -4,12 +4,12 @@ import ProductThumb from "../../components/ProductThumb";
 
 function BeautyPerfume() {
   const products = [
-    { id: 1, name: "", desc: "", price: "", img: "/images/beauty/Perfume/beauty_perfume1.webp" },
-    { id: 2, name: "", desc: "", price: "", img: "/images/beauty/Perfume/beauty_perfume2.webp" },
-    { id: 3, name: "", desc: "", price: "", img: "/images/beauty/Perfume/beauty_perfume3.webp" },
-    { id: 4, name: "", desc: "", price: "", img: "/images/beauty/Perfume/beauty_perfume4.webp" },
-    { id: 5, name: "", desc: "", price: "", img: "/images/beauty/Perfume/beauty_perfume5.webp" },
-    { id: 6, name: "", desc: "", price: "", img: "/images/beauty/Perfume/beauty_perfume6.webp" },
+    { id: 1, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/beauty_perfume1.webp" },
+    { id: 2, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/beauty_perfume2.webp" },
+    { id: 3, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/beauty_perfume3.webp" },
+    { id: 4, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/beauty_perfume4.webp" },
+    { id: 5, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/beauty_perfume5.webp" },
+    { id: 6, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/beauty_perfume6.webp" },
   ];
 
   return (

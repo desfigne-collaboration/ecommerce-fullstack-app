@@ -5,12 +5,12 @@ import ProductThumb from "../../components/ProductThumb";
 
 function SportsOutdoor() {
   const products = [
-    { id: 1, name: "", desc: "", price: "", img: "/images/sprots/outdoor/sports_outdoor1.webp" },
-    { id: 2, name: "", desc: "", price: "", img: "/images/sprots/outdoor/sports_outdoor2.webp" },
-    { id: 3, name: "", desc: "", price: "", img: "/images/sprots/outdoor/sports_outdoor3.webp" },
-    { id: 4, name: "", desc: "", price: "", img: "/images/sprots/outdoor/sports_outdoor4.webp" },
-    { id: 5, name: "", desc: "", price: "", img: "/images/sprots/outdoor/sports_outdoor5.webp" },
-    { id: 6, name: "", desc: "", price: "", img: "/images/sprots/outdoor/sports_outdoor6.webp" },
+    { id: 1, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_outdoor1.webp" },
+    { id: 2, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_outdoor2.webp" },
+    { id: 3, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_outdoor3.webp" },
+    { id: 4, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_outdoor4.webp" },
+    { id: 5, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_outdoor5.webp" },
+    { id: 6, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_outdoor6.webp" },
   ];
 
   return (

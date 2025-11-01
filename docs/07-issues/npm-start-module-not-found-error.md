@@ -13,10 +13,10 @@ When running `npm start` in the frontend directory, developers encounter multipl
 
 ```
 ERROR in ./src/pages/home/Home.jsx 11:0-73
-Module not found: Error: Can't resolve '../../assets/brands/brand_eight-seconds.webp' in 'C:\dev\ecommerce-fullstack-app\frontend\src\pages\home'
+Module not found: Error: Can't resolve 'https://desfigne.synology.me/data/image/thejoeun/icons/brand_eight-seconds.webp' in 'C:\dev\ecommerce-fullstack-app\frontend\src\pages\home'
 
 ERROR in ./src/pages/home/Home.jsx 12:0-68
-Module not found: Error: Can't resolve '../../assets/brands/brand_beanpole.webp' in 'C:\dev\ecommerce-fullstack-app\frontend\src\pages\home'
+Module not found: Error: Can't resolve 'https://desfigne.synology.me/data/image/thejoeun/icons/brand_beanpole.webp' in 'C:\dev\ecommerce-fullstack-app\frontend\src\pages\home'
 
 [... 21 more similar errors for other brand files]
 ```
