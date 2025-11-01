@@ -18,7 +18,15 @@ export const authSlice = createSlice({
   initialState: loadInitialState(),
   reducers: {
     login(state, action) {
-        const { userId, ...userData } = action.payload;
+        // userId (일반 로그인) 또는 id (SNS 로그인) 처리
+        const { userId, id, ...rest } = action.payload;
+        const finalId = userId || id;
+
+        // user 객체 생성 (id 필드로 통일)
+        const userData = {
+          ...rest,
+          id: finalId
+        };
 
         // Redux 상태 업데이트
         state.isLogin = true;
@@ -28,9 +36,9 @@ export const authSlice = createSlice({
         storage.set("isLogin", true);
         storage.set("loginUser", userData);
 
-        // 레거시 loginInfo (admin/1234 테스트용)
-        if (userId) {
-          const loginInfo = {"token": "123455dkfdf", "userId": userId};
+        // 레거시 loginInfo (admin/1234 테스트용 및 SNS 로그인)
+        if (finalId) {
+          const loginInfo = {"token": "123455dkfdf", "userId": finalId};
           storage.set("loginInfo", loginInfo);
         }
     },

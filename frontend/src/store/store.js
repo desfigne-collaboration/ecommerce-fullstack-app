@@ -1,11 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit'
-import authSlice from '../features/auth/slice/authSlice.js'
+import authSlice from 'features/auth/slice/authSlice.js'
 
-// 액션 로깅 처리 담당 미들웨어
+// 액션 로깅 처리 담당 미들웨어 (개발 환경에서만)
 const myLoggerMiddleware = (store) => (next) => (action) => {
-  console.log("dispatch :: ", action);
+  if (process.env.NODE_ENV === 'development') {
+    console.log("dispatch :: ", action);
+  }
   const result = next(action);
-  console.log("next state :: ", store.getState());
+  if (process.env.NODE_ENV === 'development') {
+    console.log("next state :: ", store.getState());
+  }
   return result;
 }
 
