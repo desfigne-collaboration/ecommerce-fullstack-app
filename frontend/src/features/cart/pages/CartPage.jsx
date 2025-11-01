@@ -1,6 +1,8 @@
 // src/pages/cart/CartPage.jsx
 import React, { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectIsLogin } from "features/auth/slice/authSlice.js";
 import storage from "../../../utils/storage.js";
 import "./CartPage.css";
 
@@ -8,16 +10,16 @@ export default function CartPage() {
   const navigate = useNavigate();
   const [cart, setCart] = useState([]);
   const [selected, setSelected] = useState({});
+  const isLogin = useSelector(selectIsLogin);
 
   // ✅ 로그인 여부 확인
   useEffect(() => {
-    const isLogin = storage.get("isLogin", "false") === "true";
     if (!isLogin) {
       alert("로그인이 필요합니다.");
       navigate("/login");
       return;
     }
-  }, [navigate]);
+  }, [isLogin, navigate]);
 
   // ✅ 장바구니 불러오기
   useEffect(() => {

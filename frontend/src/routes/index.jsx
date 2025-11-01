@@ -88,23 +88,11 @@ export const publicRoutes = (
     <Route path="/kids/:subcategory?" element={<CategoryPage />} />
     <Route path="/sports/:subcategory?" element={<CategoryPage />} />
     <Route path="/beauty/:subcategory?" element={<CategoryPage />} />
-
-    {/* 골프 (동적 라우팅) */}
     <Route path="/golf/:subcategory?" element={<CategoryPage />} />
-
-    {/* 신발 (동적 라우팅) */}
     <Route path="/shoes/:subcategory?" element={<CategoryPage />} />
-
-    {/* 라이프 (동적 라우팅) */}
     <Route path="/life/:subcategory?" element={<CategoryPage />} />
-
-    {/* 럭셔리 (동적 라우팅) */}
     <Route path="/luxury/:subcategory?" element={<CategoryPage />} />
-
-    {/* 아울렛 (동적 라우팅) */}
     <Route path="/outlet/:subcategory?" element={<CategoryPage />} />
-
-    {/* 브랜드 (동적 라우팅) */}
     <Route path="/brand/:brandId" element={<BrandDetail />} />
 
     {/* 고객센터/회사/정책 */}
