@@ -2,6 +2,7 @@
  * localStorage 유틸리티
  * 전체 앱에서 일관된 storage 접근 방식 제공
  */
+import { logError } from './errorHandler.js';
 
 /**
  * localStorage에서 값 가져오기
@@ -15,7 +16,7 @@ export const getItem = (key, fallback = null) => {
     if (item === null) return fallback;
     return JSON.parse(item);
   } catch (error) {
-    console.error(`Storage get error for key "${key}":`, error);
+    logError(error, `Storage get: ${key}`);
     return fallback;
   }
 };
@@ -31,7 +32,7 @@ export const setItem = (key, value) => {
     localStorage.setItem(key, JSON.stringify(value));
     return true;
   } catch (error) {
-    console.error(`Storage set error for key "${key}":`, error);
+    logError(error, `Storage set: ${key}`);
     return false;
   }
 };
@@ -46,7 +47,7 @@ export const removeItem = (key) => {
     localStorage.removeItem(key);
     return true;
   } catch (error) {
-    console.error(`Storage remove error for key "${key}":`, error);
+    logError(error, `Storage remove: ${key}`);
     return false;
   }
 };
@@ -60,7 +61,7 @@ export const clear = () => {
     localStorage.clear();
     return true;
   } catch (error) {
-    console.error('Storage clear error:', error);
+    logError(error, 'Storage clear');
     return false;
   }
 };
