@@ -1,5 +1,6 @@
 // src/context/AuthContext.jsx
 import React, { createContext, useContext, useEffect, useState } from "react";
+import storage from "../utils/storage.js";
 
 /**
  * 로그인 상태 유지 전략
@@ -15,23 +16,14 @@ export const AuthProvider = ({ children }) => {
 
   // ✅ 앱 시작/새로고침 시 로그인 사용자 복원
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem("loginUser");
-      if (saved) {
-        setUser(JSON.parse(saved));
-      } else {
-        setUser(null);
-      }
-    } catch {
-      setUser(null);
-    } finally {
-      setReady(true);
-    }
+    const saved = storage.get("loginUser");
+    setUser(saved);
+    setReady(true);
   }, []);
 
   // ✅ 신규 회원 웰컴 쿠폰 발급 (중복 방지)
   const issueWelcomeCouponIfNeeded = () => {
-    const savedCoupons = JSON.parse(localStorage.getItem("coupons") || "[]");
+    const savedCoupons = storage.get("coupons", []);
     const hasWelcomeCoupon = savedCoupons.some((c) => c.id === "welcome-10000");
 
     if (!hasWelcomeCoupon) {
@@ -46,23 +38,23 @@ export const AuthProvider = ({ children }) => {
       };
 
       const updatedCoupons = [...savedCoupons, newCoupon];
-      localStorage.setItem("coupons", JSON.stringify(updatedCoupons));
+      storage.set("coupons", updatedCoupons);
     }
   };
 
   // ✅ 로그인 함수
   const login = (userData) => {
     setUser(userData);
-    localStorage.setItem("loginUser", JSON.stringify(userData));
-    localStorage.setItem("isLogin", "true");
+    storage.set("loginUser", userData);
+    storage.set("isLogin", true);
   };
 
   // ✅ 로그아웃 함수
   const logout = () => {
     setUser(null);
-    localStorage.removeItem("loginUser");
-    localStorage.setItem("isLogin", "false");
-    localStorage.removeItem("auth");
+    storage.remove("loginUser");
+    storage.set("isLogin", false);
+    storage.remove("auth");
   };
 
   return (
