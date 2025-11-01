@@ -3,10 +3,10 @@ export const PRODUCT_DATA = {
   women: {
     main: [], // 메인은 샘플 이미지 사용
     new: [
-      { id: "women_new_1", name: "심플 블랙 티셔츠", desc: "데일리로 활용하기 좋은 베이직 아이템", price: "89000", image: "/images/women/new/women_new1.jpg" },
+      { id: "women_new_1", name: "심플 블랙 티셔츠", desc: "데일리로 활용하기 좋은 베이직 아이템", price: "89000", image: "https://desfigne.synology.me/data/image/thejoeun/products/women_new1.webp" },
       { id: "women_new_2", name: "슬림 슬랙스", desc: "세련된 핏으로 오피스룩에도 잘 어울림", price: "99000", image: "https://desfigne.synology.me/data/image/thejoeun/products/women_new2.webp" },
       { id: "women_new_3", name: "니트 가디건", desc: "여성스러운 무드로 다양한 계절에 활용 가능", price: "59000", image: "https://desfigne.synology.me/data/image/thejoeun/products/women_new3.webp" },
-      { id: "women_new_4", name: "그레이 톤 팬츠", desc: "캐주얼과 포멀룩 모두 소화", price: "79000", image: "/images/women/new/women_new4.jpg" },
+      { id: "women_new_4", name: "그레이 톤 팬츠", desc: "캐주얼과 포멀룩 모두 소화", price: "79000", image: "https://desfigne.synology.me/data/image/thejoeun/products/women_new4.webp" },
       { id: "women_new_5", name: "화이트 베이직 티셔츠", desc: "깔끔한 스타일의 필수 아이템", price: "99000", image: "https://desfigne.synology.me/data/image/thejoeun/products/women_new5.webp" },
       { id: "women_new_6", name: "롱 원피스", desc: "심플하면서 우아한 라인", price: "109000", image: "https://desfigne.synology.me/data/image/thejoeun/products/women_new6.webp" },
     ],
