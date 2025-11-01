@@ -80,37 +80,8 @@ import OutletLife from "./pages/outlet/OutletLife.jsx";
 import MyPage from "./pages/mypage/MyPage.jsx";
 import MyCoupons from "./pages/mypage/MyCoupons.jsx";
 
-// 브랜드
-import Brand8SecondsDetail from "./components/brands/Brand8SecondsDetail.jsx";
-import BrandBeanpoleDetail from "./components/brands/BrandBeanpoleDetail.jsx";
-import BrandBeakerDetail from "./components/brands/BrandBeakerDetail.jsx";
-import BrandKuhoDetail from "./components/brands/BrandKuhoDetail.jsx";
-import BrandIsseyMiyakeDetail from "./components/brands/BrandIsseyMiyakeDetail.jsx";
-import BrandMaisonKitsuneDetail from "./components/brands/BrandMaisonKitsuneDetail.jsx";
-import BrandTheoryDetail from "./components/brands/BrandTheoryDetail.jsx";
-import BrandKuhoPlusDetail from "./components/brands/BrandKuhoPlusDetail.jsx";
-import BrandCommeDetail from "./components/brands/BrandCommeDetail.jsx";
-import BrandPatagoniaDetail from "./components/brands/BrandPatagoniaDetail.jsx";
-import BrandSportyRichDetail from "./components/brands/BrandSportyRichDetail.jsx";
-import BrandSIEDetail from "./components/brands/BrandSIEDetail.jsx";
-import BrandInewGolfDetail from "./components/brands/BrandInewGolfDetail.jsx";
-import BrandGeneralIdeaDetail from "./components/brands/BrandGeneralIdeaDetail.jsx";
-import BrandLeMoutonDetail from "./components/brands/BrandLeMoutonDetail.jsx";
-import BrandAmiDetail from "./components/brands/BrandAmiDetail.jsx";
-import BrandJuunJDetail from "./components/brands/BrandJuunJDetail.jsx";
-import BrandRogadisDetail from "./components/brands/BrandRogadisDetail.jsx";
-import BrandDantonDetail from "./components/brands/BrandDantonDetail.jsx";
-import Brand10CorsoComoDetail from "./components/brands/Brand10CorsoComoDetail.jsx";
-import BrandApertureDetail from "./components/brands/BrandApertureDetail.jsx";
-import BrandCOSDetail from "./components/brands/BrandCOSDetail.jsx";
-import BrandSaintJamesDetail from "./components/brands/BrandSaintJamesDetail.jsx";
-import BrandTommyHilfigerDetail from "./components/brands/BrandTommyHilfigerDetail.jsx";
-import BrandCanadaGooseDetail from "./components/brands/BrandCanadaGooseDetail.jsx";
-import BrandHeraDetail from "./components/brands/BrandHeraDetail.jsx";
-import BrandGalaxyLifestyleDetail from "./components/brands/BrandGalaxyLifestyleDetail.jsx";
-import BrandRebaigeDetail from "./components/brands/BrandRebaigeDetail.jsx";
-import BrandToryBurchDetail from "./components/brands/BrandToryBurchDetail.jsx";
-import BrandGalaxyDetail from "./components/brands/BrandGalaxyDetail.jsx";
+// 브랜드 (동적 컴포넌트로 통합)
+import BrandDetail from "./pages/brand/BrandDetail.jsx";
 
 
 
@@ -225,37 +196,8 @@ function App() {
           <Route path="/outlet/golf" element={<OutletGolf />} />
           <Route path="/outlet/life" element={<OutletLife />} />
 
-          {/* 브랜드 */}
-          <Route path="/brand/8seconds" element={<Brand8SecondsDetail />} />
-          <Route path="/brand/beanpole" element={<BrandBeanpoleDetail />} />
-          <Route path="/brand/beaker" element={<BrandBeakerDetail />} />
-          <Route path="/brand/kuho" element={<BrandKuhoDetail />} />
-          <Route path="/brand/issey-miyake" element={<BrandIsseyMiyakeDetail />} />
-          <Route path="/brand/maison-kitsune" element={<BrandMaisonKitsuneDetail />} />
-          <Route path="/brand/theory" element={<BrandTheoryDetail />} />
-          <Route path="/brand/kuho-plus" element={<BrandKuhoPlusDetail />} />
-          <Route path="/brand/comme-des-garcons" element={<BrandCommeDetail />} />
-          <Route path="/brand/patagonia" element={<BrandPatagoniaDetail />} />
-          <Route path="/brand/sporty-rich" element={<BrandSportyRichDetail />} />
-          <Route path="/brand/sie" element={<BrandSIEDetail />} />
-          <Route path="/brand/inu-golf" element={<BrandInewGolfDetail />} />
-          <Route path="/brand/general-idea" element={<BrandGeneralIdeaDetail />} />
-          <Route path="/brand/le-mouton" element={<BrandLeMoutonDetail />} />
-          <Route path="/brand/ami" element={<BrandAmiDetail />} />
-          <Route path="/brand/juun-j" element={<BrandJuunJDetail />} />
-          <Route path="/brand/rokadis" element={<BrandRogadisDetail />} />
-          <Route path="/brand/danton" element={<BrandDantonDetail />} />
-          <Route path="/brand/10-corso-como" element={<Brand10CorsoComoDetail />} />
-          <Route path="/brand/diapter" element={<BrandApertureDetail />} />
-          <Route path="/brand/cos" element={<BrandCOSDetail />} />
-          <Route path="/brand/saint-james" element={<BrandSaintJamesDetail />} />
-          <Route path="/brand/tommy-hilfiger" element={<BrandTommyHilfigerDetail />} />
-          <Route path="/brand/canada-goose" element={<BrandCanadaGooseDetail />} />
-          <Route path="/brand/hera" element={<BrandHeraDetail />} />
-          <Route path="/brand/galaxy-lifestyle" element={<BrandGalaxyLifestyleDetail />} />
-          <Route path="/brand/rebaige" element={<BrandRebaigeDetail />} />
-          <Route path="/brand/tory-burch" element={<BrandToryBurchDetail />} />
-          <Route path="/brand/galaxy" element={<BrandGalaxyDetail />} />
+          {/* 브랜드 (동적 라우팅) */}
+          <Route path="/brand/:brandId" element={<BrandDetail />} />
 
 
 
