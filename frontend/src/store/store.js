@@ -4,6 +4,7 @@ import cartSlice from 'features/cart/slice/cartSlice.js'
 import wishlistSlice from 'features/wishlist/slice/wishlistSlice.js'
 
 // 액션 로깅 처리 담당 미들웨어 (개발 환경에서만)
+// eslint-disable-next-line no-unused-vars
 const myLoggerMiddleware = (store) => (next) => (action) => {
   if (process.env.NODE_ENV === 'development') {
     console.log("dispatch :: ", action);
@@ -16,6 +17,7 @@ const myLoggerMiddleware = (store) => (next) => (action) => {
 }
 
 // 장바구니 & 위시리스트 상태 저장 : LocalStorage 저장
+// eslint-disable-next-line no-unused-vars
 const myCartSaveMiddleware = (store) => (next) => (action) => {
   const result = next(action);
 

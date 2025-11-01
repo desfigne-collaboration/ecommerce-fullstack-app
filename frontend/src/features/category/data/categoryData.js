@@ -123,6 +123,103 @@ export const CATEGORY_DATA = {
       new: { title: "신상품", count: "6,000" },
     }
   },
+  golf: {
+    name: "골프",
+    nameEn: "GOLF",
+    totalCount: "45,780",
+    subcategories: [
+      { name: "전체", path: "/golf", count: "45,780" },
+      { name: "신상품", path: "/golf/new", count: "5,230" },
+      { name: "여성", path: "/golf/women", count: "20,340" },
+      { name: "남성", path: "/golf/men", count: "20,210" },
+    ],
+    pages: {
+      main: { title: "골프", count: "45,780" },
+      new: { title: "신상품", count: "5,230" },
+      women: { title: "여성", count: "20,340" },
+      men: { title: "남성", count: "20,210" },
+    }
+  },
+  luxury: {
+    name: "럭셔리",
+    nameEn: "LUXURY",
+    totalCount: "32,450",
+    subcategories: [
+      { name: "전체", path: "/luxury", count: "32,450" },
+      { name: "신상품", path: "/luxury/new", count: "3,890" },
+      { name: "여성", path: "/luxury/women", count: "15,670" },
+      { name: "남성", path: "/luxury/men", count: "12,890" },
+    ],
+    pages: {
+      main: { title: "럭셔리", count: "32,450" },
+      new: { title: "신상품", count: "3,890" },
+      women: { title: "여성", count: "15,670" },
+      men: { title: "남성", count: "12,890" },
+    }
+  },
+  shoes: {
+    name: "백&슈즈",
+    nameEn: "SHOES",
+    totalCount: "78,920",
+    subcategories: [
+      { name: "전체", path: "/shoes", count: "78,920" },
+      { name: "신상품", path: "/shoes/new", count: "8,450" },
+      { name: "여성", path: "/shoes/women", count: "38,670" },
+      { name: "남성", path: "/shoes/men", count: "31,800" },
+    ],
+    pages: {
+      main: { title: "백&슈즈", count: "78,920" },
+      new: { title: "신상품", count: "8,450" },
+      women: { title: "여성", count: "38,670" },
+      men: { title: "남성", count: "31,800" },
+    }
+  },
+  life: {
+    name: "라이프",
+    nameEn: "LIFE",
+    totalCount: "56,340",
+    subcategories: [
+      { name: "전체", path: "/life", count: "56,340" },
+      { name: "신상품", path: "/life/new", count: "6,780" },
+      { name: "가구/인테리어", path: "/life/furniture", count: "22,450" },
+      { name: "반려동물", path: "/life/pet", count: "15,670" },
+      { name: "자동차", path: "/life/car", count: "11,440" },
+    ],
+    pages: {
+      main: { title: "라이프", count: "56,340" },
+      new: { title: "신상품", count: "6,780" },
+      furniture: { title: "가구/인테리어", count: "22,450" },
+      pet: { title: "반려동물", count: "15,670" },
+      car: { title: "자동차", count: "11,440" },
+    }
+  },
+  outlet: {
+    name: "아울렛",
+    nameEn: "OUTLET",
+    totalCount: "125,670",
+    subcategories: [
+      { name: "전체", path: "/outlet", count: "125,670" },
+      { name: "여성", path: "/outlet/women", count: "35,890" },
+      { name: "남성", path: "/outlet/men", count: "28,450" },
+      { name: "키즈", path: "/outlet/kids", count: "12,340" },
+      { name: "럭셔리", path: "/outlet/luxury", count: "8,920" },
+      { name: "슈즈", path: "/outlet/shoes", count: "15,670" },
+      { name: "스포츠", path: "/outlet/sports", count: "11,230" },
+      { name: "골프", path: "/outlet/golf", count: "7,890" },
+      { name: "라이프", path: "/outlet/life", count: "5,280" },
+    ],
+    pages: {
+      main: { title: "아울렛", count: "125,670" },
+      women: { title: "여성", count: "35,890" },
+      men: { title: "남성", count: "28,450" },
+      kids: { title: "키즈", count: "12,340" },
+      luxury: { title: "럭셔리", count: "8,920" },
+      shoes: { title: "슈즈", count: "15,670" },
+      sports: { title: "스포츠", count: "11,230" },
+      golf: { title: "골프", count: "7,890" },
+      life: { title: "라이프", count: "5,280" },
+    }
+  },
 };
 
 export default CATEGORY_DATA;
