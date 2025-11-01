@@ -4,18 +4,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getLogin } from '../../feature/auth/authAPI.js';
 import { loginApi } from "../../api/auth";
-import { useAuth } from "../../context/AuthContext";
+import { login as loginAction } from "../../feature/auth/authSlice";
 import NaverLoginButton from "../../components/auth/NaverLoginButton";
 import KakaoLoginButton from "../../components/auth/KakaoLoginButton";
 
 export default function Login() {
 
   const location = useLocation(); //??
-  
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const { login } = useAuth();
   const [activeTab, setActiveTab] = useState("member");
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -106,13 +104,13 @@ export default function Login() {
           role: res.role || "user"
         };
 
-    // ✅ AuthContext의 login 함수 사용
+    // ✅ Redux login action 사용
     const userWithRole = {
       ...user,
       role: user.role || res.role || "user"
     };
 
-    login(userWithRole);
+    dispatch(loginAction(userWithRole));
 
     alert("로그인 성공!");
 
