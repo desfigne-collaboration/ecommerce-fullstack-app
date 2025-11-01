@@ -66,7 +66,7 @@ export default function ProductDetail() {
       }
 
       localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
-      window.dispatchEvent(new Event("wishlistUpdated"));
+      window.dispatchEvent(new StorageEvent("storage", { key: "wishlist", newValue: JSON.stringify(updatedWishlist) }));
     } catch {}
   };
 
@@ -102,7 +102,7 @@ export default function ProductDetail() {
         });
       }
       localStorage.setItem("cart", JSON.stringify(cart));
-      window.dispatchEvent(new Event("cartUpdated"));
+      window.dispatchEvent(new StorageEvent("storage", { key: "cart", newValue: JSON.stringify(cart) }));
       alert("장바구니에 담았습니다.");
     } catch (e) {
       console.error(e);

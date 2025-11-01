@@ -107,7 +107,7 @@ export default function PaymentGateway() {
       // 장바구니 비우기 (헤더 카운트 갱신 이벤트 발송)
       localStorage.setItem("cart", JSON.stringify([]));
       try {
-        window.dispatchEvent(new Event("cartUpdated"));
+        window.dispatchEvent(new StorageEvent("storage", { key: "cart", newValue: "[]" }));
       } catch {}
 
       // 4) 성공 페이지로 이동

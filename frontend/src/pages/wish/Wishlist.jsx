@@ -18,14 +18,15 @@ export default function Wishlist() {
   const [items, setItems] = useState(() => readWishlist());
   const count = items.length;
 
-  // 같은 탭 즉시 반영: 커스텀 이벤트 + storage 둘 다 구독
+  // 같은 탭 즉시 반영: storage 이벤트만 구독
   useEffect(() => {
-    const onCustom = (e) => setItems(e.detail?.items ?? readWishlist());
-    const onStorage = () => setItems(readWishlist());
-    window.addEventListener("wishlist:update", onCustom);
+    const onStorage = (e) => {
+      if (!e || !e.key || e.key === "wishlist") {
+        setItems(readWishlist());
+      }
+    };
     window.addEventListener("storage", onStorage);
     return () => {
-      window.removeEventListener("wishlist:update", onCustom);
       window.removeEventListener("storage", onStorage);
     };
   }, []);
@@ -35,20 +36,18 @@ export default function Wishlist() {
     navigate(`/product/${p.id}`, { product: p });
   };
 
-  // ✅ 단건 삭제: 로컬스토리지 저장 + 두 이벤트 발행
+  // ✅ 단건 삭제: 로컬스토리지 저장 + StorageEvent 발행
   const removeOne = (id) => {
     const next = items.filter((it) => it.id !== id);
     localStorage.setItem(KEY, JSON.stringify(next));
-    window.dispatchEvent(new CustomEvent("wishlist:update", { detail: { items: next } }));
-    window.dispatchEvent(new Event("storage")); // 헤더가 storage만 듣는 경우까지 커버
+    window.dispatchEvent(new StorageEvent("storage", { key: "wishlist", newValue: JSON.stringify(next) }));
     setItems(next);
   };
 
-  // ✅ 전체 삭제: 로컬스토리지 저장 + 두 이벤트 발행
+  // ✅ 전체 삭제: 로컬스토리지 저장 + StorageEvent 발행
   const clearAll = () => {
     localStorage.setItem(KEY, JSON.stringify([]));
-    window.dispatchEvent(new CustomEvent("wishlist:update", { detail: { items: [] } }));
-    window.dispatchEvent(new Event("storage"));
+    window.dispatchEvent(new StorageEvent("storage", { key: "wishlist", newValue: "[]" }));
     setItems([]);
   };
 

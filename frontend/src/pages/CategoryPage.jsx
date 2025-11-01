@@ -88,9 +88,6 @@ export default function CategoryPage() {
     // ✅ 홈처럼 로컬스토리지 저장
     localStorage.setItem("wishlist", JSON.stringify(next));
 
-    // ✅ 추가: 같은 탭에서도 바로 반영되게 이벤트 발송
-    window.dispatchEvent(new Event("storage"));
-
     return next;
   });
 };

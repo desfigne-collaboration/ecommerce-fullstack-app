@@ -64,7 +64,6 @@ export default function Login() {
     const success = await dispatch(getLogin(form, param));
 
     if (success) {
-      window.dispatchEvent(new Event("auth:changed"));
       alert("로그인에 성공하였습니다.");
       navigate("/");
 
@@ -114,10 +113,6 @@ export default function Login() {
     };
 
     login(userWithRole);
-
-    try {
-      window.dispatchEvent(new Event("auth:changed"));
-    } catch { }
 
     alert("로그인 성공!");
 

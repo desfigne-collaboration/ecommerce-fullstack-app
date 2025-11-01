@@ -103,17 +103,6 @@ export default function KakaoCallback() {
             console.log("- auth:", localStorage.getItem("auth"));
 
             if (res?.ok) {
-              // 이벤트 발생
-              console.log("\n🔔 이벤트 디스패치 시작");
-              try {
-                window.dispatchEvent(new Event("auth:changed"));
-                console.log("✅ auth:changed 이벤트 발생");
-                window.dispatchEvent(new Event("storage"));
-                console.log("✅ storage 이벤트 발생");
-              } catch (e) {
-                console.error("❌ 이벤트 발생 실패:", e);
-              }
-
               console.log("\n🎉 카카오 로그인 완료! 메인 페이지로 이동");
               console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
               alert(`${name}님, 환영합니다!`);

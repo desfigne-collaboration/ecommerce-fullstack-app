@@ -407,7 +407,7 @@ export default function ProductList() {
     }
     localStorage.setItem("wishlist", JSON.stringify(list));
     try {
-      window.dispatchEvent(new Event("wishlistUpdated"));
+      window.dispatchEvent(new StorageEvent("storage", { key: "wishlist", newValue: JSON.stringify(list) }));
     } catch {}
     setRefresh((n) => n + 1);
   };

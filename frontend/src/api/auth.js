@@ -52,9 +52,6 @@ export function naverLoginApi(userData) {
   storage.set("isLogin", true);
   storage.set("loginUser", user);
 
-  // 이벤트 발행
-  window.dispatchEvent(new Event("auth:changed"));
-
   return { ok: true, role: "user", user };
 }
 
@@ -72,9 +69,6 @@ export function kakaoLoginApi(userData) {
   storage.set("auth", { email: user.email, role: "user", token });
   storage.set("isLogin", true);
   storage.set("loginUser", user);
-
-  // 이벤트 발행
-  window.dispatchEvent(new Event("auth:changed"));
 
   return { ok: true, role: "user", user };
 }

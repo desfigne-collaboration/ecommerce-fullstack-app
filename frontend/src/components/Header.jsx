@@ -93,21 +93,30 @@ export default function Header() {
     const loadRecentSearches = () => {
       try { setRecentSearches(JSON.parse(localStorage.getItem("recentSearches")) || []); } catch { setRecentSearches([]); }
     };
-    const sync = () => {
-      setIsLogin(localStorage.getItem("isLogin") === "true");
-      try { setUser(JSON.parse(localStorage.getItem("loginUser")) || null); } catch { setUser(null); }
-      updateCartCount(); updateWishCount();
+    const sync = (e) => {
+      // StorageEvent를 통한 동기화
+      if (e && e.key) {
+        if (e.key === "cart") updateCartCount();
+        else if (e.key === "wishlist") updateWishCount();
+        else if (e.key === "isLogin" || e.key === "loginUser" || e.key === "auth") {
+          setIsLogin(localStorage.getItem("isLogin") === "true");
+          try { setUser(JSON.parse(localStorage.getItem("loginUser")) || null); } catch { setUser(null); }
+        }
+      } else {
+        // 초기 로드 시 전체 동기화
+        setIsLogin(localStorage.getItem("isLogin") === "true");
+        try { setUser(JSON.parse(localStorage.getItem("loginUser")) || null); } catch { setUser(null); }
+        updateCartCount();
+        updateWishCount();
+      }
     };
-    updateCartCount(); updateWishCount(); loadRecentSearches();
+    // 초기 로드
+    sync();
+    loadRecentSearches();
+    // storage 이벤트만 구독 (커스텀 이벤트 제거)
     window.addEventListener("storage", sync);
-    window.addEventListener("cartUpdated", updateCartCount);
-    window.addEventListener("wishlistUpdated", updateWishCount);
-    window.addEventListener("auth:changed", sync);
     return () => {
       window.removeEventListener("storage", sync);
-      window.removeEventListener("cartUpdated", updateCartCount);
-      window.removeEventListener("wishlistUpdated", updateWishCount);
-      window.removeEventListener("auth:changed", sync);
     };
   }, []);
 
