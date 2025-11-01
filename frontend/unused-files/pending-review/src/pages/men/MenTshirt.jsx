@@ -5,12 +5,12 @@ import ProductThumb from "../../components/ProductThumb";
 
 function menTshirt() {
   const products = [
-    { id: 1, name: "", desc: "", price: "", img: "/images/men/tshirt/men_tshirt1.webp" },
-    { id: 2, name: "", desc: "", price: "", img: "/images/men/tshirt/men_tshirt2.webp" },
-    { id: 3, name: "", desc: "", price: "", img: "/images/men/tshirt/men_tshirt3.webp" },
-    { id: 4, name: "", desc: "", price: "", img: "/images/men/tshirt/men_tshirt4.webp" },
-    { id: 5, name: "", desc: "", price: "", img: "/images/men/tshirt/men_tshirt5.webp" },
-    { id: 6, name: "", desc: "", price: "", img: "/images/men/tshirt/men_tshirt6.webp" },
+    { id: 1, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/men_tshirt1.webp" },
+    { id: 2, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/men_tshirt2.webp" },
+    { id: 3, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/men_tshirt3.webp" },
+    { id: 4, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/men_tshirt4.webp" },
+    { id: 5, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/men_tshirt5.webp" },
+    { id: 6, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/men_tshirt6.webp" },
   ];
 
   return (

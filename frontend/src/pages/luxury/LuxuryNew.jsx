@@ -6,11 +6,11 @@ import ProductThumb from "../../components/ProductThumb";
 function LuxuryNew() {
   const products = [
     { id: 1, name: "", desc: "", price: "", img: "/images/luxury/new/luxury_new1.jpg" },
-    { id: 2, name: "", desc: "", price: "", img: "/images/luxury/new/luxury_new2.webp" },
-    { id: 3, name: "", desc: "", price: "", img: "/images/luxury/new/luxury_new3.webp" },
-    { id: 4, name: "", desc: "", price: "", img: "/images/luxury/new/luxury_new4.webp" },
-    { id: 5, name: "", desc: "", price: "", img: "/images/luxury/new/luxury_new5.webp" },
-    { id: 6, name: "", desc: "", price: "", img: "/images/luxury/new/luxury_new6.webp" },
+    { id: 2, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/luxury_new2.webp" },
+    { id: 3, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/luxury_new3.webp" },
+    { id: 4, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/luxury_new4.webp" },
+    { id: 5, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/luxury_new5.webp" },
+    { id: 6, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/luxury_new6.webp" },
   ];
 
   return (

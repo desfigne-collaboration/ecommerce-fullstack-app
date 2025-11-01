@@ -5,12 +5,12 @@ import ProductThumb from "../../components/ProductThumb";
 
 function LuxuryWomen() {
   const products = [
-    { id: 1, name: "", desc: "", price: "", img: "/images/luxury/women/luxury_women1.webp" },
-    { id: 2, name: "", desc: "", price: "", img: "/images/luxury/women/luxury_women2.webp" },
-    { id: 3, name: "", desc: "", price: "", img: "/images/luxury/women/luxury_women3.webp" },
-    { id: 4, name: "", desc: "", price: "", img: "/images/luxury/women/luxury_women4.webp" },
-    { id: 5, name: "", desc: "", price: "", img: "/images/luxury/women/luxury_women5.webp" },
-    { id: 6, name: "", desc: "", price: "", img: "/images/luxury/women/luxury_women6.webp" },
+    { id: 1, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/luxury_women1.webp" },
+    { id: 2, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/luxury_women2.webp" },
+    { id: 3, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/luxury_women3.webp" },
+    { id: 4, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/luxury_women4.webp" },
+    { id: 5, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/luxury_women5.webp" },
+    { id: 6, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/luxury_women6.webp" },
   ];
 
   return (

@@ -5,12 +5,12 @@ import ProductThumb from "../../components/ProductThumb";
 
 function WomenOnepiece() {
   const products = [
-    { id: 1, name: "", desc: "", price: "", img: "/images/women/onepiece/women_onepiece1.webp" },
-    { id: 2, name: "", desc: "", price: "", img: "/images/women/onepiece/women_onepiece2.webp" },
-    { id: 3, name: "", desc: "", price: "", img: "/images/women/onepiece/women_onepiece3.webp" },
-    { id: 4, name: "", desc: "", price: "", img: "/images/women/onepiece/women_onepiece4.webp" },
-    { id: 5, name: "", desc: "", price: "", img: "/images/women/onepiece/women_onepiece5.webp" },
-    { id: 6, name: "", desc: "", price: "", img: "/images/women/onepiece/women_onepiece6.webp" },
+    { id: 1, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_onepiece1.webp" },
+    { id: 2, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_onepiece2.webp" },
+    { id: 3, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_onepiece3.webp" },
+    { id: 4, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_onepiece4.webp" },
+    { id: 5, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_onepiece5.webp" },
+    { id: 6, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_onepiece6.webp" },
   ];
 
   return (
