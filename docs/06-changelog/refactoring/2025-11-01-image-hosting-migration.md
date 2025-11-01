@@ -422,6 +422,72 @@ node replace-image-paths.js https://new-cdn.com/images
 
 ---
 
-**작업 완료 시각**: 2025-11-01 20:02:00 (KST)
+## 🗂️ 후속 작업: 파일 정리
+
+### 9단계: 작업 파일 정리 및 아카이빙 ✅
+
+**수행 일시**: 2025-11-01 20:06
+
+**수행 내용**:
+- 작업에 사용된 모든 스크립트 및 데이터 파일을 `scripts/image-hosting/` 폴더로 이동
+- 업로드 완료된 `images-for-hosting/` 폴더 삭제
+- 프로젝트 루트 디렉토리 정리
+
+**이동된 파일 목록**:
+
+#### 스크립트 파일 (5개)
+- `collect-images.js` - 이미지 수집 스크립트
+- `classify-images.js` - 이미지 분류 스크립트
+- `copy-images-for-hosting.js` - 통합 폴더 생성 스크립트
+- `find-image-references.js` - 참조 검색 스크립트
+- `replace-image-paths.js` - 경로 교체 스크립트
+
+#### 가이드 문서 (3개)
+- `IMAGE-HOSTING-MIGRATION-GUIDE.md` - 종합 마이그레이션 가이드
+- `ROLLBACK-GUIDE.md` - 롤백 방법 안내
+- `image-classification-report.md` - 이미지 분류 보고서
+
+#### 데이터 파일 (7개)
+- `image-inventory.json` / `image-inventory.csv` - 전체 이미지 목록
+- `image-classification.json` - 분류 데이터
+- `file-mapping.json` - 파일 매핑 정보
+- `image-references.json` / `image-references.csv` - 참조 목록
+- `replacement-log.json` - 경로 교체 로그
+
+**삭제된 폴더**:
+- `images-for-hosting/` - 호스팅 서버에 업로드 완료로 삭제
+
+**최종 정리 결과**:
+```
+scripts/image-hosting/
+├── collect-images.js
+├── classify-images.js
+├── copy-images-for-hosting.js
+├── find-image-references.js
+├── replace-image-paths.js
+├── IMAGE-HOSTING-MIGRATION-GUIDE.md
+├── ROLLBACK-GUIDE.md
+├── image-classification-report.md
+├── file-mapping.json
+├── image-classification.json
+├── image-inventory.csv
+├── image-inventory.json
+├── image-references.csv
+├── image-references.json
+└── replacement-log.json
+```
+
+**보존된 폴더**:
+- `backup-before-url-replacement/` - 롤백용 백업 (115개 파일)
+
+**정리 효과**:
+- ✅ 프로젝트 루트 디렉토리 깔끔하게 정리
+- ✅ 작업 관련 파일들을 한 곳에 체계적으로 보관
+- ✅ 향후 참고 및 재사용 용이
+- ✅ 불필요한 업로드용 폴더 제거
+
+---
+
+**작업 완료 시각**: 2025-11-01 20:06:00 (KST)
 **작업 소요 시간**: 약 2시간
 **작업 상태**: 성공 ✅
