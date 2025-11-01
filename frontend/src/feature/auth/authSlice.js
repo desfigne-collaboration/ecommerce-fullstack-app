@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import storage from '../../utils/storage.js'
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -10,12 +11,14 @@ export const authSlice = createSlice({
         state.isLogin = true;
         const { userId } = action.payload;
         const loginInfo = {"token": "123455dkfdf", "userId": userId};
-        localStorage.setItem("loginInfo", JSON.stringify(loginInfo));
-        localStorage.setItem("isLogin", state.isLogin);
+        storage.set("loginInfo", loginInfo);
+        storage.set("isLogin", state.isLogin);
 
     },
     logout(state) {
         state.isLogin = false;
+        storage.remove("loginInfo");
+        storage.set("isLogin", false);
     }
   }
 })
