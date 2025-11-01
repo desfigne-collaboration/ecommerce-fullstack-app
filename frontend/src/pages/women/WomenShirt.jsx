@@ -5,12 +5,12 @@ import ProductThumb from "../../components/ProductThumb";
 
 function WomenShirt() {
   const products = [
-    { id: 1, name: "", desc: "", price: "", img: "/images/women/shirt/women_Shirt1.webp" },
-    { id: 2, name: "", desc: "", price: "", img: "/images/women/shirt/women_Shirt2.webp" },
-    { id: 3, name: "", desc: "", price: "", img: "/images/women/shirt/women_Shirt3.webp" },
-    { id: 4, name: "", desc: "", price: "", img: "/images/women/shirt/women_Shirt4.webp" },
-    { id: 5, name: "", desc: "", price: "", img: "/images/women/shirt/women_Shirt5.webp" },
-    { id: 6, name: "", desc: "", price: "", img: "/images/women/shirt/women_Shirt6.webp" },
+    { id: 1, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_shirt1.webp" },
+    { id: 2, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_shirt2.webp" },
+    { id: 3, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_shirt3.webp" },
+    { id: 4, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_shirt4.webp" },
+    { id: 5, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_shirt5.webp" },
+    { id: 6, name: "", desc: "", price: "", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_shirt6.webp" },
   ];
 
   return (
