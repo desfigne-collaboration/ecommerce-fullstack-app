@@ -142,10 +142,10 @@ export default function Header() {
   };
 
   const handleCartClick = (e) => {
-    if (!isLogin) { e.preventDefault(); alert("로그인이 필요합니다."); window.location.href = "/#/login"; }
+    if (!isLogin) { e.preventDefault(); alert("로그인이 필요합니다."); navigate("/login"); }
   };
   const handleMyPageClick = (e) => {
-    if (!isLogin) { e.preventDefault(); alert("로그인이 필요합니다."); window.location.href = "/#/login"; }
+    if (!isLogin) { e.preventDefault(); alert("로그인이 필요합니다."); navigate("/login"); }
   };
 
   /** 검색 */
