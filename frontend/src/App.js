@@ -2,10 +2,10 @@
 import React from "react";
 import { Routes } from "react-router-dom";
 
-import ErrorBoundary from "./components/ErrorBoundary.jsx";
+import ErrorBoundary from "./components/common/ErrorBoundary.jsx";
 
-import Header from "./components/Header.jsx";
-import Footer from "./components/Footer.jsx";
+import Header from "./components/layout/Header.jsx";
+import Footer from "./components/layout/Footer.jsx";
 
 import { publicRoutes, privateRoutes } from "./routes/index.jsx";
 

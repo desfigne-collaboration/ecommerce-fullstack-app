@@ -3,91 +3,91 @@ import React from "react";
 import { Route } from "react-router-dom";
 
 // Auth
-import Login from "../pages/auth/Login.jsx";
-import Signup from "../pages/auth/Signup.jsx";
-import AccountRecovery from "../pages/auth/AccountRecovery.jsx";
-import NaverCallback from "../pages/auth/NaverCallback.jsx";
-import KakaoCallback from "../pages/auth/KakaoCallback.jsx";
+import Login from "../features/auth/pages/Login.jsx";
+import Signup from "../features/auth/pages/Signup.jsx";
+import AccountRecovery from "../features/auth/pages/AccountRecovery.jsx";
+import NaverCallback from "../features/auth/pages/NaverCallback.jsx";
+import KakaoCallback from "../features/auth/pages/KakaoCallback.jsx";
 
 // Home & Menu
-import Home from "../pages/home/Home.jsx";
-import Menu from "../pages/menu/Menu.jsx";
+import HomePage from "../features/home/pages/HomePage.jsx";
+import Menu from "../features/menu/pages/Menu.jsx";
 
 // Product
-import ProductDetail from "../pages/ProductDetail.jsx";
-import ProductList from "../pages/ProductList.jsx";
-import Search from "../pages/Search.jsx";
+import ProductDetail from "../features/product/pages/ProductDetail.jsx";
+import ProductList from "../features/product/pages/ProductList.jsx";
+import Search from "../features/product/pages/Search.jsx";
 
 // Category
-import CategoryPage from "../pages/CategoryPage.jsx";
+import CategoryPage from "../features/category/pages/CategoryPage.jsx";
 
 // Order & Cart
-import Checkout from "../pages/order/Checkout.jsx";
-import MyOrders from "../pages/order/MyOrders.jsx";
-import OrderSuccess from "../pages/order/OrderSuccess.jsx";
-import CartPage from "../pages/cart/CartPage.jsx";
-import PaySelect from "../pages/order/PaySelect.jsx";
-import PayConfirm from "../pages/order/PayConfirm.jsx";
+import Checkout from "../features/order/pages/Checkout.jsx";
+import MyOrders from "../features/order/pages/MyOrders.jsx";
+import OrderSuccess from "../features/order/pages/OrderSuccess.jsx";
+import CartPage from "../features/cart/pages/CartPage.jsx";
+import PaySelect from "../features/order/pages/PaySelect.jsx";
+import PayConfirm from "../features/order/pages/PayConfirm.jsx";
 
 // MyPage
-import MyPage from "../pages/mypage/MyPage.jsx";
-import MyCoupons from "../pages/mypage/MyCoupons.jsx";
+import MyPage from "../features/mypage/pages/MyPage.jsx";
+import MyCoupons from "../features/mypage/pages/MyCoupons.jsx";
 
 // Golf
-import GolfMain from "../pages/golf/GolfMain.jsx";
-import GolfNew from "../pages/golf/GolfNew.jsx";
-import GolfWomen from "../pages/golf/GolfWomen.jsx";
-import GolfMen from "../pages/golf/GolfMen.jsx";
+import GolfMain from "../features/category/pages/golf/GolfMain.jsx";
+import GolfNew from "../features/category/pages/golf/GolfNew.jsx";
+import GolfWomen from "../features/category/pages/golf/GolfWomen.jsx";
+import GolfMen from "../features/category/pages/golf/GolfMen.jsx";
 
 // Luxury
-import LuxuryMain from "../pages/luxury/LuxuryMain.jsx";
-import LuxuryNew from "../pages/luxury/LuxuryNew.jsx";
-import LuxuryWomen from "../pages/luxury/LuxuryWomen.jsx";
-import LuxuryMen from "../pages/luxury/LuxuryMen.jsx";
+import LuxuryMain from "../features/category/pages/luxury/LuxuryMain.jsx";
+import LuxuryNew from "../features/category/pages/luxury/LuxuryNew.jsx";
+import LuxuryWomen from "../features/category/pages/luxury/LuxuryWomen.jsx";
+import LuxuryMen from "../features/category/pages/luxury/LuxuryMen.jsx";
 
 // Shoes
-import ShoesMain from "../pages/shoes/ShoesMain.jsx";
-import ShoesNew from "../pages/shoes/ShoesNew.jsx";
-import ShoesWomen from "../pages/shoes/ShoesWomen.jsx";
-import ShoesMen from "../pages/shoes/ShoesMen.jsx";
+import ShoesMain from "../features/category/pages/shoes/ShoesMain.jsx";
+import ShoesNew from "../features/category/pages/shoes/ShoesNew.jsx";
+import ShoesWomen from "../features/category/pages/shoes/ShoesWomen.jsx";
+import ShoesMen from "../features/category/pages/shoes/ShoesMen.jsx";
 
 // Life
-import LifeMain from "../pages/life/LifeMain.jsx";
-import LifeNew from "../pages/life/LifeNew.jsx";
-import LifeFurniture from "../pages/life/LifeFurniture.jsx";
-import LifePet from "../pages/life/LifePet.jsx";
-import LifeCar from "../pages/life/LifeCar.jsx";
+import LifeMain from "../features/category/pages/life/LifeMain.jsx";
+import LifeNew from "../features/category/pages/life/LifeNew.jsx";
+import LifeFurniture from "../features/category/pages/life/LifeFurniture.jsx";
+import LifePet from "../features/category/pages/life/LifePet.jsx";
+import LifeCar from "../features/category/pages/life/LifeCar.jsx";
 
 // Outlet
-import OutletMain from "../pages/outlet/OutletMain.jsx";
-import OutletWomen from "../pages/outlet/OutletWomen.jsx";
-import OutletMen from "../pages/outlet/OutletMen.jsx";
-import OutletKids from "../pages/outlet/OutletKids.jsx";
-import OutletLuxury from "../pages/outlet/OutletLuxury.jsx";
-import OutletShoes from "../pages/outlet/OutletShoes.jsx";
-import OutletSports from "../pages/outlet/OutletSports.jsx";
-import OutletGolf from "../pages/outlet/OutletGolf.jsx";
-import OutletLife from "../pages/outlet/OutletLife.jsx";
+import OutletMain from "../features/category/pages/outlet/OutletMain.jsx";
+import OutletWomen from "../features/category/pages/outlet/OutletWomen.jsx";
+import OutletMen from "../features/category/pages/outlet/OutletMen.jsx";
+import OutletKids from "../features/category/pages/outlet/OutletKids.jsx";
+import OutletLuxury from "../features/category/pages/outlet/OutletLuxury.jsx";
+import OutletShoes from "../features/category/pages/outlet/OutletShoes.jsx";
+import OutletSports from "../features/category/pages/outlet/OutletSports.jsx";
+import OutletGolf from "../features/category/pages/outlet/OutletGolf.jsx";
+import OutletLife from "../features/category/pages/outlet/OutletLife.jsx";
 
 // Brand
-import BrandDetail from "../pages/brand/BrandDetail.jsx";
+import BrandDetail from "../features/brand/pages/BrandDetail.jsx";
 
 // Admin
-import AdminDashboard from "../pages/admin/AdminDashboard.jsx";
-import AdminOrders from "../pages/admin/AdminOrders.jsx";
+import AdminDashboard from "../features/admin/pages/AdminDashboard.jsx";
+import AdminOrders from "../features/admin/pages/AdminOrders.jsx";
 
 // Help & Company
-import HelpPage from "../pages/help/HelpPage.jsx";
-import CompanyPage from "../pages/company/CompanyPage.jsx";
-import Terms from "../pages/policy/Terms.jsx";
-import Privacy from "../pages/policy/Privacy.jsx";
-import Membership from "../pages/membership/Membership.jsx";
-import StoreFinder from "../pages/store/StoreFinder.jsx";
-import NoticeEvents from "../pages/board/NoticeEvents.jsx";
-import BulkOrder from "../pages/help/BulkOrder.jsx";
+import HelpPage from "../features/help/pages/HelpPage.jsx";
+import CompanyPage from "../features/company/pages/CompanyPage.jsx";
+import Terms from "../features/policy/pages/Terms.jsx";
+import Privacy from "../features/policy/pages/Privacy.jsx";
+import Membership from "../features/membership/pages/Membership.jsx";
+import StoreFinder from "../features/store/pages/StoreFinder.jsx";
+import NoticeEvents from "../features/board/pages/NoticeEvents.jsx";
+import BulkOrder from "../features/help/pages/BulkOrder.jsx";
 
 // Wishlist
-import Wishlist from "../pages/wish/Wishlist.jsx";
+import WishlistPage from "../features/wishlist/pages/WishlistPage.jsx";
 
 // PrivateRoute
 import PrivateRoute from "./PrivateRoute.jsx";
@@ -100,7 +100,7 @@ import PrivateRoute from "./PrivateRoute.jsx";
 export const publicRoutes = (
   <>
     {/* 홈/메뉴 */}
-    <Route path="/" element={<Home />} />
+    <Route path="/" element={<HomePage />} />
     <Route path="/menu" element={<Menu />} />
 
     {/* 로그인/회원가입 */}
@@ -175,7 +175,7 @@ export const publicRoutes = (
     <Route path="/bulk-order" element={<BulkOrder />} />
 
     {/* 위시리스트 */}
-    <Route path="/wishlist" element={<Wishlist />} />
+    <Route path="/wishlist" element={<WishlistPage />} />
 
     {/* 주문 성공 페이지 */}
     <Route path="/order/success" element={<OrderSuccess />} />

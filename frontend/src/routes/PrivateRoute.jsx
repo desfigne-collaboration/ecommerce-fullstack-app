@@ -2,7 +2,7 @@
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectUser, selectAuthReady } from "../feature/auth/authSlice.js";
+import { selectUser, selectAuthReady } from "../features/auth/slice/authSlice.js";
 
 /**
  * React Router v7 전용 PrivateRoute
