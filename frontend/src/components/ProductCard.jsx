@@ -1,6 +1,7 @@
+import PropTypes from 'prop-types';
 import "./ProductCard.css";
 
-export default function ProductCard({ id, name, brand, price, img }) {
+function ProductCard({ id, name, brand, price, img }) {
   return (
     <div className="product-card">
       <img src={img} alt={name || "상품"} />
@@ -12,3 +13,13 @@ export default function ProductCard({ id, name, brand, price, img }) {
     </div>
   );
 }
+
+ProductCard.propTypes = {
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  name: PropTypes.string.isRequired,
+  brand: PropTypes.string,
+  price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  img: PropTypes.string.isRequired,
+};
+
+export default ProductCard;
