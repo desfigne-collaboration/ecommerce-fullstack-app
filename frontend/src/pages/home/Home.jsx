@@ -160,8 +160,8 @@ export default function Home() {
       localStorage.setItem("wishlist", JSON.stringify(list));
       // 로컬 상태도 즉시 반영
       setWishIds(new Set(list.map((it) => it.id)));
-      // 헤더 카운트 갱신용 커스텀 이벤트
-      try { window.dispatchEvent(new Event("wishlistUpdated")); } catch {}
+      // 헤더 카운트 갱신용 StorageEvent 발송
+      try { window.dispatchEvent(new StorageEvent("storage", { key: "wishlist", newValue: JSON.stringify(list) })); } catch {}
     } catch (e) {
       console.error("Failed to update wishlist", e);
     }

@@ -125,7 +125,7 @@ export default function PayConfirm() {
     localStorage.removeItem("payPayload");
     localStorage.removeItem("pendingOrder");
     localStorage.removeItem("cartCheckout");
-    window.dispatchEvent(new Event("cartUpdated"));
+    window.dispatchEvent(new StorageEvent("storage", { key: "cart", newValue: "[]" }));
   };
 
   const onClickPay = () => {

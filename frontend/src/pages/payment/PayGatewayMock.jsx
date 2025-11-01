@@ -135,7 +135,7 @@ export default function PayGatewayMock() {
     try {
       localStorage.removeItem("cart");
       localStorage.removeItem("cartCheckout");
-      window.dispatchEvent(new Event("cartUpdated"));
+      window.dispatchEvent(new StorageEvent("storage", { key: "cart", newValue: "[]" }));
     } catch {}
 
     // 4) 성공 페이지로 이동 (재계산 값 포함해 넘김)

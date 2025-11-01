@@ -38,7 +38,7 @@ export default function CartPage() {
   const saveCart = (next) => {
     setCart(next);
     localStorage.setItem("cart", JSON.stringify(next));
-    window.dispatchEvent(new Event("cartUpdated"));
+    window.dispatchEvent(new StorageEvent("storage", { key: "cart", newValue: JSON.stringify(next) }));
   };
 
   // ✅ 단일 체크

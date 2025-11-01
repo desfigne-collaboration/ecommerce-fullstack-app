@@ -62,14 +62,6 @@ export default function NaverCallback() {
               console.log("- loginUser:", localStorage.getItem("loginUser"));
 
               if (res?.ok) {
-                // 이벤트 발생
-                try {
-                  window.dispatchEvent(new Event("auth:changed"));
-                  window.dispatchEvent(new Event("storage"));
-                } catch (e) {
-                  console.error("이벤트 발생 실패:", e);
-                }
-
                 alert(`${name}님, 환영합니다!`);
 
                 // 페이지 완전 새로고침
