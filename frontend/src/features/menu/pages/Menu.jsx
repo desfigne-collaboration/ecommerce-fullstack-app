@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Menu.css";
-import { NAV } from "../../../data/navData";
+import { NAV } from "components/layout/data/navData";
 
 export default function Menu() {
   return (
