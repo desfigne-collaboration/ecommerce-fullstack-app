@@ -114,7 +114,7 @@ export default function NaverCallback() {
 
       if (res?.ok) {
         alert(`네이버 로그인 성공!`);
-        window.location.href = "/#/";
+        navigate("/");
       } else {
         alert("로그인 처리 중 오류가 발생했습니다.");
         navigate("/login");
