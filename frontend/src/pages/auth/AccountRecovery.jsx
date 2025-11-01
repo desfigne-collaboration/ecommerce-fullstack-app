@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import storage from "../../utils/storage.js";
 import "../../styles/Auth.css";
 
 export default function AccountRecovery() {
@@ -14,7 +15,7 @@ export default function AccountRecovery() {
   const [newPassCheck, setNewPassCheck] = useState("");
 
   const getUser = () => {
-    try { return JSON.parse(localStorage.getItem("userData")); } catch { return null; }
+    return storage.get("userData", null);
   };
 
   const maskEmail = (v) => {
@@ -78,7 +79,7 @@ export default function AccountRecovery() {
     if (!newPassCheck) { alert("비밀번호 확인을 입력해 주세요."); return; }
     if (newPass !== newPassCheck) { alert("비밀번호가 일치하지 않습니다."); return; }
     const updated = { ...user, password: newPass };
-    localStorage.setItem("userData", JSON.stringify(updated));
+    storage.set("userData", updated);
     alert("비밀번호가 변경되었습니다. 다시 로그인해 주세요.");
     window.location.href = "http://localhost:3000/#/login";
   };

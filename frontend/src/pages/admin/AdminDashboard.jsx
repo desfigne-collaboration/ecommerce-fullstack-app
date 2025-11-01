@@ -1,13 +1,14 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { getAuth, logoutApi } from "../../api/auth";
 import { Link, useNavigate } from "react-router-dom";
+import storage from "../../utils/storage.js";
 import "../../styles/AdminDashboard.css";
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
   const [q, setQ] = useState("");
   const [users, setUsers] = useState(() => {
-    try { return JSON.parse(localStorage.getItem("users")) || []; } catch { return []; }
+    try { return storage.get("users", []); } catch { return []; }
   });
 
   const auth = getAuth();
@@ -19,16 +20,16 @@ export default function AdminDashboard() {
   }, [auth, navigate]);
 
   const refresh = () => {
-    try { setUsers(JSON.parse(localStorage.getItem("users")) || []); } catch { setUsers([]); }
+    try { setUsers(storage.get("users", [])); } catch { setUsers([]); }
   };
 
   const onDelete = (email) => {
     const next = users.filter(u => u.email !== email);
-    localStorage.setItem("users", JSON.stringify(next));
-    if (JSON.parse(localStorage.getItem("loginUser") || "null")?.email === email) {
-      localStorage.setItem("isLogin", "false");
-      localStorage.removeItem("loginUser");
-      localStorage.removeItem("auth");
+    storage.set("users", next);
+    if (storage.get("loginUser", null)?.email === email) {
+      storage.set("isLogin", "false");
+      storage.remove("loginUser");
+      storage.remove("auth");
     }
     setUsers(next);
     alert("회원이 삭제되었습니다.");

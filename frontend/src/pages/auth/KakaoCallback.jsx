@@ -1,10 +1,14 @@
 import React, { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../../feature/auth/authSlice";
 import { kakaoLoginApi } from "../../api/auth";
+import storage from "../../utils/storage.js";
 
 export default function KakaoCallback() {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
@@ -98,11 +102,15 @@ export default function KakaoCallback() {
 
             console.log("✅ 로그인 API 응답:", res);
             console.log("\n📦 localStorage 저장 확인:");
-            console.log("- isLogin:", localStorage.getItem("isLogin"));
-            console.log("- loginUser:", localStorage.getItem("loginUser"));
-            console.log("- auth:", localStorage.getItem("auth"));
+            console.log("- isLogin:", storage.get("isLogin", null));
+            console.log("- loginUser:", storage.get("loginUser", null));
+            console.log("- auth:", storage.get("auth", null));
 
             if (res?.ok) {
+              // Redux 상태 업데이트
+              console.log("\n🟢 Redux 상태 업데이트");
+              dispatch(login(res.user));
+
               console.log("\n🎉 카카오 로그인 완료! 메인 페이지로 이동");
               console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
               alert(`${name}님, 환영합니다!`);
@@ -134,7 +142,7 @@ export default function KakaoCallback() {
     };
 
     getKakaoToken();
-  }, [navigate, location]);
+  }, [navigate, location, dispatch]);
 
   return (
     <div style={{

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
+import storage from "../../utils/storage.js";
 import "./Home.css";
 
 // 브랜드 로고 이미지 (외부 URL)
@@ -48,7 +49,7 @@ export default function Home() {
   // ---- NEW: 위시리스트 상태 (id 셋만 캐시해서 빠르게 렌더) ----
   const [wishIds, setWishIds] = useState(() => {
     try {
-      const w = JSON.parse(localStorage.getItem("wishlist")) || [];
+      const w = storage.get("wishlist", []);
       return new Set(w.map((it) => it.id));
     } catch {
       return new Set();
@@ -138,7 +139,7 @@ export default function Home() {
 
   const toggleWishlist = (product) => {
     try {
-      let list = JSON.parse(localStorage.getItem("wishlist")) || [];
+      let list = storage.get("wishlist", []);
       const exists = list.some((it) => it.id === product.id);
 
       if (exists) {
@@ -157,7 +158,7 @@ export default function Home() {
         list.push(payload);
       }
 
-      localStorage.setItem("wishlist", JSON.stringify(list));
+      storage.set("wishlist", list);
       // 로컬 상태도 즉시 반영
       setWishIds(new Set(list.map((it) => it.id)));
       // 헤더 카운트 갱신용 StorageEvent 발송

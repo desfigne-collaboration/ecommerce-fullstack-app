@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import storage from "../utils/storage.js";
 import "./WishlistPage.css";
 
 export default function WishlistPage() {
   const [wishlist, setWishlist] = useState([]);
 
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("wishlist")) || [];
+    const stored = storage.get("wishlist", []);
     setWishlist(stored);
   }, []);
 
   const removeItem = (id) => {
     const updated = wishlist.filter((item) => item.id !== id);
     setWishlist(updated);
-    localStorage.setItem("wishlist", JSON.stringify(updated));
+    storage.set("wishlist", updated);
   };
 
   return (

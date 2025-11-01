@@ -1,10 +1,11 @@
+import storage from "../utils/storage.js";
+
 const KEY = "cart";
 
 const read = () => {
-  try { return JSON.parse(localStorage.getItem(KEY)) || []; }
-  catch { return []; }
+  return storage.get(KEY, []);
 };
-const write = (list) => localStorage.setItem(KEY, JSON.stringify(list));
+const write = (list) => storage.set(KEY, list);
 
 // 카트 아이템 키 생성
 export const cartItemKey = (item = {}) => (

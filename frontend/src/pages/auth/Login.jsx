@@ -5,6 +5,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getLogin } from '../../feature/auth/authAPI.js';
 import { loginApi } from "../../api/auth";
 import { login as loginAction } from "../../feature/auth/authSlice";
+import storage from "../../utils/storage.js";
 import NaverLoginButton from "../../components/auth/NaverLoginButton";
 import KakaoLoginButton from "../../components/auth/KakaoLoginButton";
 
@@ -26,7 +27,7 @@ export default function Login() {
     const statePrefill = location?.state?.prefill;
     const lsPrefill = (() => {
       try {
-        return JSON.parse(localStorage.getItem("prefillLogin"));
+        return storage.get("prefillLogin", null);
       } catch {
         return null;
       }
@@ -34,10 +35,10 @@ export default function Login() {
 
     const prefill = statePrefill || lsPrefill;
     if (prefill?.id) setForm(p => ({ ...p, id: prefill.id }));
-    if (lsPrefill) localStorage.removeItem("prefillLogin");
+    if (lsPrefill) storage.remove("prefillLogin");
 
     // 저장된 아이디 불러오기
-    const savedId = localStorage.getItem("savedLoginId");
+    const savedId = storage.get("savedLoginId", null);
     if (savedId) {
       setForm(p => ({ ...p, id: savedId }));
       setRememberMe(true);
@@ -86,9 +87,9 @@ export default function Login() {
 
     // 아이디 저장 처리
     if (rememberMe) {
-      localStorage.setItem("savedLoginId", form.id.trim());
+      storage.set("savedLoginId", form.id.trim());
     } else {
-      localStorage.removeItem("savedLoginId");
+      storage.remove("savedLoginId");
     }
 
     const fallbackName = form.id.includes("@")

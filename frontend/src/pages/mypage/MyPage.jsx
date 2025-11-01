@@ -1,10 +1,11 @@
 // src/pages/mypage/MyPage.jsx
 import React from "react";
 import { Link } from "react-router-dom";
+import storage from "../../utils/storage.js";
 import "../../styles/MyPage.css";
 
 export default function MyPage() {
-  const loginUser = JSON.parse(localStorage.getItem("loginUser") || "null");
+  const loginUser = storage.get("loginUser", null);
 
   if (!loginUser) {
     return (

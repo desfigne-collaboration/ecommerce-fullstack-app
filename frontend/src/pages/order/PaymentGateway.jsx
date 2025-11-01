@@ -1,6 +1,7 @@
 // src/pages/order/PaymentGateway.jsx
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import storage from "../../utils/storage.js";
 
 // 금액 포맷/숫자화 유틸
 const formatKRW = (n) => `₩${Number(n || 0).toLocaleString()}`;
@@ -21,14 +22,14 @@ export default function PaymentGateway() {
   // 혹시 새로고침 대비 로컬에 백업 저장
   useEffect(() => {
     if (statePayment) {
-      localStorage.setItem("lastPayment", JSON.stringify(statePayment));
+      storage.set("lastPayment", statePayment);
     }
   }, [statePayment]);
 
   // 마지막 결제 데이터 복구
   const backupPayment = useMemo(() => {
     try {
-      return JSON.parse(localStorage.getItem("lastPayment") || "null");
+      return storage.get("lastPayment", null);
     } catch {
       return null;
     }
@@ -81,13 +82,13 @@ export default function PaymentGateway() {
         coupon: payment?.coupon || null,
         status: "PAID",
       };
-      const orders = JSON.parse(localStorage.getItem("orders") || "[]");
+      const orders = storage.get("orders", []);
       orders.unshift(order);
-      localStorage.setItem("orders", JSON.stringify(orders));
+      storage.set("orders", orders);
 
       // 2) 쿠폰 사용 처리
       if (payment?.coupon?.id) {
-        const coupons = JSON.parse(localStorage.getItem("coupons") || "[]");
+        const coupons = storage.get("coupons", []);
         const idx = coupons.findIndex((c) => c.id === payment.coupon.id);
         if (idx >= 0) {
           coupons[idx] = {
@@ -95,17 +96,17 @@ export default function PaymentGateway() {
             used: true,
             usedAt: new Date().toISOString(),
           };
-          localStorage.setItem("coupons", JSON.stringify(coupons));
+          storage.set("coupons", coupons);
         }
       }
 
       // 3) 장바구니/임시 주문 청소
-      localStorage.removeItem("pendingOrder");
-      localStorage.removeItem("cartCheckout");
-      localStorage.removeItem("lastPayment");
+      storage.remove("pendingOrder");
+      storage.remove("cartCheckout");
+      storage.remove("lastPayment");
 
       // 장바구니 비우기 (헤더 카운트 갱신 이벤트 발송)
-      localStorage.setItem("cart", JSON.stringify([]));
+      storage.set("cart", []);
       try {
         window.dispatchEvent(new StorageEvent("storage", { key: "cart", newValue: "[]" }));
       } catch {}

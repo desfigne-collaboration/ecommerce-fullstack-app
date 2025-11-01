@@ -1,4 +1,6 @@
 // src/utils/buynow.js
+import storage from "./storage.js";
+
 export function buyNow(product, qty = 1, push, option = {}) {
   const payload = {
     items: [
@@ -16,7 +18,7 @@ export function buyNow(product, qty = 1, push, option = {}) {
     mode: "buynow",
   };
 
-  try { localStorage.setItem("pendingCheckout", JSON.stringify(payload)); } catch {}
+  storage.set("pendingCheckout", payload);
 
   if (typeof push === "function") push("/order/checkout?mode=buynow");
   else window.location.hash = "#/order/checkout?mode=buynow";

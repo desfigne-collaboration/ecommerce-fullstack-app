@@ -1,13 +1,14 @@
 // src/pages/wish/Wishlist.jsx
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import storage from "../../utils/storage.js";
 import "../../styles/Wishlist.css";
 
 const KEY = "wishlist";
 
 const readWishlist = () => {
   try {
-    return JSON.parse(localStorage.getItem(KEY)) || [];
+    return storage.get(KEY, []);
   } catch {
     return [];
   }
@@ -32,21 +33,21 @@ export default function Wishlist() {
   }, []);
 
   const goDetail = (p) => {
-    localStorage.setItem("lastProduct", JSON.stringify(p));
+    storage.set("lastProduct", p);
     navigate(`/product/${p.id}`, { product: p });
   };
 
   // ✅ 단건 삭제: 로컬스토리지 저장 + StorageEvent 발행
   const removeOne = (id) => {
     const next = items.filter((it) => it.id !== id);
-    localStorage.setItem(KEY, JSON.stringify(next));
+    storage.set(KEY, next);
     window.dispatchEvent(new StorageEvent("storage", { key: "wishlist", newValue: JSON.stringify(next) }));
     setItems(next);
   };
 
   // ✅ 전체 삭제: 로컬스토리지 저장 + StorageEvent 발행
   const clearAll = () => {
-    localStorage.setItem(KEY, JSON.stringify([]));
+    storage.set(KEY, []);
     window.dispatchEvent(new StorageEvent("storage", { key: "wishlist", newValue: "[]" }));
     setItems([]);
   };

@@ -1,6 +1,7 @@
 // src/pages/order/Checkout.jsx
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import storage from "../../utils/storage.js";
 import "./Checkout.css";
 
 /* ===========================
@@ -51,24 +52,15 @@ const getDiscountByCoupon = (subtotal, rawCoupon) => {
 /* ===========================
    3) 보조: 로컬에서 카트/단건 주문 불러오기
    =========================== */
-const readJSON = (key, fallback) => {
-  try {
-    const v = JSON.parse(localStorage.getItem(key) || "null");
-    return v ?? fallback;
-  } catch {
-    return fallback;
-  }
-};
-
 const getCheckoutPayload = (location) => {
   // 우선순위: (1) location.state.order (2) localStorage.pendingOrder (3) localStorage.cartCheckout (4) cart 전체
   const fromState = location?.state?.order;
   if (fromState) return [fromState];
 
-  const pendingOrder = readJSON("pendingOrder", null);
+  const pendingOrder = storage.get("pendingOrder", null);
   if (pendingOrder) return [pendingOrder];
 
-  const cartCheckout = readJSON("cartCheckout", null);
+  const cartCheckout = storage.get("cartCheckout", null);
   if (Array.isArray(cartCheckout) && cartCheckout.length > 0) {
     // cartCheckout 구조: [{ id, name, image, price, qty, size }]
     // product 객체로 래핑
@@ -85,7 +77,7 @@ const getCheckoutPayload = (location) => {
   }
 
   // cart에서 전부 가져오기 (마지막 fallback)
-  const cart = readJSON("cart", []);
+  const cart = storage.get("cart", []);
   // cart 구조: [{ id, product:{id,name,image,price}, size, qty }]
   return cart.map((i) => ({
     product: {
@@ -110,7 +102,7 @@ export default function Checkout() {
   const items = useMemo(() => getCheckoutPayload(location), [location]);
 
   // 쿠폰 목록: 컨텍스트가 있으면 그걸 쓰고, 없으면 localStorage에서
-  const [coupons, setCoupons] = useState(() => readJSON("coupons", []));
+  const [coupons, setCoupons] = useState(() => storage.get("coupons", []));
   // 선택된 쿠폰
   const [couponId, setCouponId] = useState("");
 
@@ -173,7 +165,7 @@ const goPaymentMethod = () => {
 
   // localStorage에도 백업 저장
   try {
-    localStorage.setItem("lastCheckout", JSON.stringify(payloadData));
+    storage.set("lastCheckout", payloadData);
   } catch (e) {
     console.error("Failed to save checkout data:", e);
   }
@@ -190,15 +182,15 @@ const goPaymentMethod = () => {
         : x
     );
     setCoupons(next);
-    localStorage.setItem("coupons", JSON.stringify(next));
+    storage.set("coupons", next);
   };
 
   // 주문 완료 처리 (PaymentSuccess 페이지 등에서 호출하는 게 일반적)
   const placeOrderForDemo = () => {
     markCouponUsed(selectedCoupon);
     // 장바구니 비우기 (선택 결제였다면 cartCheckout만 비우는 것이 좋음)
-    localStorage.removeItem("cartCheckout");
-    localStorage.removeItem("pendingOrder");
+    storage.remove("cartCheckout");
+    storage.remove("pendingOrder");
     alert(`결제가 완료되었습니다!\n총 ${items.length}개 상품\n결제 금액: ${formatKRW(total)}`);
     navigate("/order/success");
   };
