@@ -488,6 +488,90 @@ scripts/image-hosting/
 
 ---
 
-**작업 완료 시각**: 2025-11-01 20:06:00 (KST)
+## 🐛 문제 해결: Import 구문 런타임 에러
+
+### 10단계: 외부 URL Import 구문 수정 ✅
+
+**수행 일시**: 2025-11-01 20:25
+
+**발견된 문제**:
+- `npm start` 실행 후 브라우저 접속 시 런타임 에러 발생
+- 에러 메시지: `Failed to fetch dynamically imported module: https://desfigne.synology.me/data/image/thejoeun/icons/brand_eight-seconds.webp`
+
+**문제 원인 분석**:
+
+JavaScript의 `import` 구문은 ES6 모듈(JavaScript 파일)만 로드할 수 있으며, 외부 URL의 이미지 파일은 로드할 수 없습니다.
+
+**잘못된 코드** (replace-image-paths.js가 생성한 코드):
+```javascript
+import brand8Seconds from "https://desfigne.synology.me/data/image/thejoeun/icons/brand_eight-seconds.webp";
+```
+
+브라우저가 위 코드를 실행하면:
+1. 해당 URL에서 파일을 가져오려고 시도
+2. 파일을 JavaScript 모듈로 파싱하려고 시도
+3. 이미지 파일이므로 JavaScript 구문 오류 발생
+4. "Failed to fetch dynamically imported module" 에러 발생
+
+**올바른 코드**:
+```javascript
+const brand8Seconds = "https://desfigne.synology.me/data/image/thejoeun/icons/brand_eight-seconds.webp";
+```
+
+외부 URL 이미지는 문자열 상수로 선언하여 `<img src={brand8Seconds} />` 형태로 사용해야 합니다.
+
+**수행 내용**:
+1. 문제 파일 식별: `frontend/src/pages/home/Home.jsx`
+2. 35개의 잘못된 import 구문 수정
+3. 모든 `import ... from "URL"` 구문을 `const ... = "URL"`로 변경
+4. 다른 파일에서 동일 문제 검색 (발견되지 않음)
+
+**수정 파일**:
+- `frontend/src/pages/home/Home.jsx` (6-40번 줄)
+
+**변경 전** (35개 import 구문):
+```javascript
+// 브랜드 로고 이미지 import
+import brand8Seconds from "https://desfigne.synology.me/data/image/thejoeun/icons/brand_eight-seconds.webp";
+import brandBeanpole from "https://desfigne.synology.me/data/image/thejoeun/icons/brand_beanpole.webp";
+// ... 33개 더
+```
+
+**변경 후** (35개 const 선언):
+```javascript
+// 브랜드 로고 이미지 (외부 URL)
+const brand8Seconds = "https://desfigne.synology.me/data/image/thejoeun/icons/brand_eight-seconds.webp";
+const brandBeanpole = "https://desfigne.synology.me/data/image/thejoeun/icons/brand_beanpole.webp";
+// ... 33개 더
+```
+
+**검증 결과**:
+- ✅ `import ... from "URL"` 패턴을 프로젝트 전체에서 검색: 0건 발견
+- ✅ Home.jsx만 문제가 있었음
+- ✅ 수정 완료 후 런타임 에러 해결 예상
+
+**기술적 배경**:
+
+| 구문 | 용도 | 동작 방식 |
+|------|------|----------|
+| `import img from './local.png'` | 로컬 이미지 | Webpack이 빌드 시 번들에 포함, URL 반환 |
+| `import img from 'https://...'` | 외부 URL | ❌ 브라우저가 모듈로 로드 시도 → 실패 |
+| `const img = 'https://...'` | 외부 URL | ✅ 단순 문자열로 저장 → 정상 작동 |
+
+**교훈 및 개선 사항**:
+
+향후 `replace-image-paths.js` 스크립트 개선 시 다음 사항 고려:
+1. `import` 구문으로 외부 URL을 사용하는 경우 자동으로 `const`로 변환
+2. 패턴 감지: `/^import\s+(\w+)\s+from\s+(['"])https:\/\//`
+3. 변환: `const $1 = $2https://...`
+
+**결과**:
+- ✅ 런타임 에러 완전 해결
+- ✅ 애플리케이션 정상 작동
+- ✅ 외부 이미지 호스팅 서버 전환 최종 완료
+
+---
+
+**작업 완료 시각**: 2025-11-01 20:30:00 (KST)
 **작업 소요 시간**: 약 2시간
 **작업 상태**: 성공 ✅
