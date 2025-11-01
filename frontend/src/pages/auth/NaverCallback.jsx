@@ -1,9 +1,13 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import storage from "../../utils/storage.js";
+import { login } from "../../feature/auth/authSlice";
 import { naverLoginApi } from "../../api/auth";
 
 export default function NaverCallback() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     console.log("NaverCallback 페이지 로드됨");
@@ -57,11 +61,14 @@ export default function NaverCallback() {
               const res = naverLoginApi({ email, name, id });
 
               console.log("로그인 API 응답:", res);
-              console.log("localStorage 확인:");
-              console.log("- isLogin:", localStorage.getItem("isLogin"));
-              console.log("- loginUser:", localStorage.getItem("loginUser"));
+              console.log("storage 확인:");
+              console.log("- isLogin:", storage.get("isLogin"));
+              console.log("- loginUser:", storage.get("loginUser"));
 
               if (res?.ok) {
+                // Redux 상태 업데이트
+                dispatch(login(res.user));
+
                 alert(`${name}님, 환영합니다!`);
 
                 // 페이지 완전 새로고침
@@ -85,6 +92,9 @@ export default function NaverCallback() {
             const res = naverLoginApi({ email, name, id });
 
             if (res?.ok) {
+              // Redux 상태 업데이트
+              dispatch(login(res.user));
+
               alert(`네이버 로그인 성공!\n\n개발 환경이므로 기본 사용자 정보로 로그인됩니다.`);
               window.location.href = "/#/";
             } else {
@@ -105,6 +115,9 @@ export default function NaverCallback() {
       const res = naverLoginApi({ email, name, id });
 
       if (res?.ok) {
+        // Redux 상태 업데이트
+        dispatch(login(res.user));
+
         alert(`네이버 로그인 성공!`);
         navigate("/");
       } else {
@@ -112,7 +125,7 @@ export default function NaverCallback() {
         navigate("/login");
       }
     }
-  }, [navigate]);
+  }, [navigate, dispatch]);
 
   return (
     <div style={{

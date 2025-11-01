@@ -1,10 +1,11 @@
+import storage from "../utils/storage.js";
+
 const KEY = "wishlist";
 
 const read = () => {
-  try { return JSON.parse(localStorage.getItem(KEY)) || []; }
-  catch { return []; }
+  return storage.get(KEY, []);
 };
-const write = (list) => localStorage.setItem(KEY, JSON.stringify(list));
+const write = (list) => storage.set(KEY, list);
 
 // ✅ 어디서든 똑같은 방식으로 키 생성 (id 없을 때도 고정 규칙)
 export const productKey = (p = {}) => (

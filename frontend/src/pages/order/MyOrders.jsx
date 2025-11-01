@@ -1,6 +1,7 @@
 // src/pages/order/MyOrders.jsx
 import React, { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import storage from "../../utils/storage.js";
 import "./MyOrders.css";
 
 const formatKRW = (n) => `₩${Number(n || 0).toLocaleString()}`;
@@ -8,15 +9,14 @@ const formatKRW = (n) => `₩${Number(n || 0).toLocaleString()}`;
 export default function MyOrders() {
   const navigate = useNavigate();
   const [orders, setOrders] = useState(() => {
-    try { return JSON.parse(localStorage.getItem("orders")) || []; } catch { return []; }
+    return storage.get("orders", []);
   });
   const user = useMemo(() => {
-    try { return JSON.parse(localStorage.getItem("loginUser")) || null; } catch { return null; }
+    return storage.get("loginUser", null);
   }, []);
 
   useEffect(() => {
-    try { setOrders(JSON.parse(localStorage.getItem("orders")) || []); }
-    catch { setOrders([]); }
+    setOrders(storage.get("orders", []));
   }, []);
 
   const mine = useMemo(() => {

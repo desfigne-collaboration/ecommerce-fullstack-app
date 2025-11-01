@@ -1,6 +1,7 @@
 // src/pages/payment/PayGatewayMock.jsx
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import storage from "../../utils/storage.js";
 
 const toNum = (v) =>
   typeof v === "number" ? v : Number(String(v || 0).replace(/[^\d]/g, "")) || 0;
@@ -13,7 +14,7 @@ export default function PayGatewayMock() {
   // backup payload
   const backup = useMemo(() => {
     try {
-      return JSON.parse(localStorage.getItem("lastCheckout") || "null");
+      return storage.get("lastCheckout", null);
     } catch {
       return null;
     }
@@ -71,7 +72,7 @@ export default function PayGatewayMock() {
     // 2) couponId가 있으면 로컬 쿠폰에서 금액 탐색 (amount/discount/value 등 관용 필드 지원)
     if (payload.couponId != null) {
       try {
-        const list = JSON.parse(localStorage.getItem("coupons") || "[]");
+        const list = storage.get("coupons", []);
         const cid = String(payload.couponId);
         const found = list.find((c) => String(c.id) === cid);
         if (found) {
@@ -101,20 +102,20 @@ export default function PayGatewayMock() {
     // 1) 쿠폰 사용 처리
     try {
       if (payload.couponId != null) {
-        const saved = JSON.parse(localStorage.getItem("coupons") || "[]");
+        const saved = storage.get("coupons", []);
         const cid = String(payload.couponId);
         const next = saved.map((c) =>
           String(c.id) === cid ? { ...c, used: true, usedAt: new Date().toISOString() } : c
         );
-        localStorage.setItem("coupons", JSON.stringify(next));
+        storage.set("coupons", next);
       }
     } catch {}
 
     // 2) 주문 저장 (재계산 값 사용)
     try {
-      const loginUser = JSON.parse(localStorage.getItem("loginUser") || "null");
+      const loginUser = storage.get("loginUser", null);
       const userId = loginUser?.id || "guest";
-      const orders = JSON.parse(localStorage.getItem("orders") || "[]");
+      const orders = storage.get("orders", []);
       const orderId = `ORD-${Date.now()}`;
       const order = {
         id: orderId,
@@ -127,14 +128,14 @@ export default function PayGatewayMock() {
         status: "PAID",
         createdAt: new Date().toISOString(),
       };
-      localStorage.setItem("orders", JSON.stringify([order, ...orders]));
-      localStorage.setItem("lastOrderId", orderId);
+      storage.set("orders", [order, ...orders]);
+      storage.set("lastOrderId", orderId);
     } catch {}
 
     // 3) 장바구니/임시데이터 정리
     try {
-      localStorage.removeItem("cart");
-      localStorage.removeItem("cartCheckout");
+      storage.remove("cart");
+      storage.remove("cartCheckout");
       window.dispatchEvent(new StorageEvent("storage", { key: "cart", newValue: "[]" }));
     } catch {}
 

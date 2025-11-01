@@ -1,6 +1,7 @@
 // src/pages/order/PaySelect.jsx
 import React, { useMemo, useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import storage from "../../utils/storage.js";
 import "./PaySelect.css";
 
 const formatKRW = (n) => `₩${Number(n || 0).toLocaleString()}`;
@@ -12,16 +13,12 @@ export default function PaySelect() {
 
   // 1) 체크아웃에서 온 state 우선, 없으면 lastCheckout(백업), 마지막으로 payPayload
   const payload = useMemo(() => {
-    try {
-      const fromState = location.state || null;
-      if (fromState && fromState.items && fromState.items.length) return fromState;
-      const last = JSON.parse(localStorage.getItem("lastCheckout") || "null");
-      if (last && last.items && last.items.length) return last;
-      const payPayload = JSON.parse(localStorage.getItem("payPayload") || "null");
-      return payPayload;
-    } catch {
-      return null;
-    }
+    const fromState = location.state || null;
+    if (fromState && fromState.items && fromState.items.length) return fromState;
+    const last = storage.get("lastCheckout", null);
+    if (last && last.items && last.items.length) return last;
+    const payPayload = storage.get("payPayload", null);
+    return payPayload;
   }, [location.state]);
 
   useEffect(() => {
@@ -35,9 +32,7 @@ export default function PaySelect() {
 
   const goConfirm = () => {
     const next = { ...payload, method };
-    try {
-      localStorage.setItem("payPayload", JSON.stringify(next));
-    } catch {}
+    storage.set("payPayload", next);
     navigate("/pay/confirm", next);
   };
 

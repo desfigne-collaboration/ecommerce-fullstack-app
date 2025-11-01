@@ -1,6 +1,7 @@
 // src/pages/ProductDetail.jsx
 import React, { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useLocation, useParams } from "react-router-dom";
+import storage from "../utils/storage.js";
 import "./ProductDetail.css";
 
 export default function ProductDetail() {
@@ -17,7 +18,7 @@ export default function ProductDetail() {
   const product = useMemo(() => {
     if (fromState && fromState.id) return fromState;
     try {
-      return JSON.parse(localStorage.getItem("lastProduct")) || null;
+      return storage.get("lastProduct", null);
     } catch {
       return null;
     }
@@ -35,7 +36,7 @@ export default function ProductDetail() {
   useEffect(() => {
     if (!product?.id) return;
     try {
-      const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+      const wishlist = storage.get("wishlist", []);
       setIsWished(wishlist.some((w) => String(w.id) === String(product.id)));
     } catch {
       setIsWished(false);
@@ -45,7 +46,7 @@ export default function ProductDetail() {
   const toggleWish = () => {
     if (!product) return;
     try {
-      const wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+      const wishlist = storage.get("wishlist", []);
       const i = wishlist.findIndex((w) => String(w.id) === String(product.id));
 
       let updatedWishlist;
@@ -65,7 +66,7 @@ export default function ProductDetail() {
         setIsWished(true);
       }
 
-      localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+      storage.set("wishlist", updatedWishlist);
       window.dispatchEvent(new StorageEvent("storage", { key: "wishlist", newValue: JSON.stringify(updatedWishlist) }));
     } catch {}
   };
@@ -82,7 +83,7 @@ export default function ProductDetail() {
     }
     try {
       const itemId = `${product.id}-${size}`;
-      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+      const cart = storage.get("cart", []);
       const idx = cart.findIndex((c) => c.id === itemId);
       if (idx >= 0) {
         const cur = Number(cart[idx].qty) || 1;
@@ -101,7 +102,7 @@ export default function ProductDetail() {
           qty: Number(qty) || 1,
         });
       }
-      localStorage.setItem("cart", JSON.stringify(cart));
+      storage.set("cart", cart);
       window.dispatchEvent(new StorageEvent("storage", { key: "cart", newValue: JSON.stringify(cart) }));
       alert("장바구니에 담았습니다.");
     } catch (e) {
@@ -133,9 +134,9 @@ export default function ProductDetail() {
     };
 
     // 혹시 대비해 로컬에도 저장
-    localStorage.setItem("pendingOrder", JSON.stringify(payload));
+    storage.set("pendingOrder", payload);
     // 최근 상품도 유지
-    localStorage.setItem("lastProduct", JSON.stringify(product));
+    storage.set("lastProduct", product);
 
     // ✅ Checkout으로 state로도 함께 전달
     navigate("/checkout", { state: { order: payload } });

@@ -1,11 +1,11 @@
 // src/pages/order/PayConfirm.jsx
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import storage from "../../utils/storage.js";
 import "./PayConfirm.css";
 
 const toNumber = (v) => (typeof v === "number" ? v : Number(String(v ?? "").replace(/[^\d]/g, "")) || 0);
 const formatKRW = (n) => `₩${Number(n || 0).toLocaleString()}`;
-const readJSON = (k, f) => { try { const v = JSON.parse(localStorage.getItem(k) || "null"); return v ?? f; } catch { return f; } };
 
 // 안전한 이미지 경로 유틸 (QR만 사용)
 const PLACEHOLDER = `${process.env.PUBLIC_URL || ""}/images/placeholder.webp`;
@@ -39,7 +39,7 @@ export default function PayConfirm() {
     // 우선순위: (1) location.state (2) localStorage.payPayload
     const fromState = location.state || null;
     if (fromState && fromState.items && fromState.items.length) return fromState;
-    return readJSON("payPayload", null);
+    return storage.get("payPayload", null);
   }, [location.state]);
 
   const method = incoming?.method || "toss";
@@ -61,7 +61,7 @@ export default function PayConfirm() {
   const total = Math.max(0, subtotal - effectiveDiscount + shipping);
 
   // QR 경로
-  const qrCandidates = ["/icons/qr.png", "https://desfigne.synology.me/data/image/thejoeun/icons/qr.webp", "/icons/qr.jpg"];
+  const qrCandidates = ["/icons/qr.svg", "https://desfigne.synology.me/data/image/thejoeun/icons/qr.webp"];
   const qrSrc0 = useMemo(() => srcOf(qrCandidates[0]), []);
 
   const [paying, setPaying] = useState(false);
@@ -69,21 +69,21 @@ export default function PayConfirm() {
   const markCouponUsed = () => {
     const c = incoming?.coupon;
     if (!c) return;
-    const list = readJSON("coupons", []);
+    const list = storage.get("coupons", []);
     const next = list.map((x) =>
       String(x.id) === String(c.id) ? { ...x, used: true, usedAt: new Date().toISOString() } : x
     );
-    localStorage.setItem("coupons", JSON.stringify(next));
+    storage.set("coupons", next);
   };
 
   // 주문 저장: 각 상품 당 한 건씩(관리자/마이페이지 호환)
   const saveOrders = () => {
-    const user = readJSON("loginUser", null);
+    const user = storage.get("loginUser", null);
     const buyer = user
       ? { id: user.id, name: user.name || (user.email ? user.email.split("@")[0] : "사용자"), email: user.email || "" }
       : { id: "guest", name: "비회원", email: "" };
 
-    const prev = readJSON("orders", []);
+    const prev = storage.get("orders", []);
     const now = new Date();
     const iso = now.toISOString();
     const baseId = Date.now();
@@ -117,15 +117,40 @@ export default function PayConfirm() {
     });
 
     const next = [...perItemOrders, ...prev];
-    localStorage.setItem("orders", JSON.stringify(next));
+    storage.set("orders", next);
     return perItemOrders.map(o => o.id);
   };
 
+  const removeItemsFromCart = () => {
+    // 현재 장바구니 읽기
+    const currentCart = storage.get("cart", []);
+
+    // 결제한 상품들을 장바구니에서 제거
+    const remainingCart = currentCart.filter(cartItem => {
+      // 결제한 아이템 중에 매칭되는 것이 있는지 확인
+      const isPurchased = items.some(purchasedItem => {
+        const cartProductId = cartItem.product?.id || cartItem.id;
+        const cartSize = cartItem.size || cartItem.option?.size || "";
+        const purchasedProductId = purchasedItem.product.id;
+        const purchasedSize = purchasedItem.option?.size || "";
+
+        // 상품 ID와 사이즈가 모두 일치하면 결제한 상품
+        return cartProductId === purchasedProductId && cartSize === purchasedSize;
+      });
+
+      // 결제하지 않은 상품만 남김
+      return !isPurchased;
+    });
+
+    // 업데이트된 장바구니 저장
+    storage.set("cart", remainingCart);
+    window.dispatchEvent(new StorageEvent("storage", { key: "cart", newValue: JSON.stringify(remainingCart) }));
+  };
+
   const clearTemp = () => {
-    localStorage.removeItem("payPayload");
-    localStorage.removeItem("pendingOrder");
-    localStorage.removeItem("cartCheckout");
-    window.dispatchEvent(new StorageEvent("storage", { key: "cart", newValue: "[]" }));
+    storage.remove("payPayload");
+    storage.remove("pendingOrder");
+    storage.remove("cartCheckout");
   };
 
   const onClickPay = () => {
@@ -135,6 +160,7 @@ export default function PayConfirm() {
       // 실제 결제 SDK가 들어갈 자리 (성공 가정)
       markCouponUsed();
       saveOrders();
+      removeItemsFromCart(); // 결제한 상품만 장바구니에서 제거
       clearTemp();
       navigate("/orders");
     } catch (e) {

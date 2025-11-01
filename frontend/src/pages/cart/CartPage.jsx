@@ -1,6 +1,7 @@
 // src/pages/cart/CartPage.jsx
 import React, { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import storage from "../../utils/storage.js";
 import "./CartPage.css";
 
 export default function CartPage() {
@@ -10,7 +11,7 @@ export default function CartPage() {
 
   // ✅ 로그인 여부 확인
   useEffect(() => {
-    const isLogin = localStorage.getItem("isLogin") === "true";
+    const isLogin = storage.get("isLogin", "false") === "true";
     if (!isLogin) {
       alert("로그인이 필요합니다.");
       navigate("/login");
@@ -21,7 +22,7 @@ export default function CartPage() {
   // ✅ 장바구니 불러오기
   useEffect(() => {
     try {
-      const saved = JSON.parse(localStorage.getItem("cart")) || [];
+      const saved = storage.get("cart", []);
       setCart(saved);
       const initSel = {};
       saved.forEach((i) => {
@@ -37,7 +38,7 @@ export default function CartPage() {
   // ✅ 장바구니 저장 (로컬 + 이벤트 발생)
   const saveCart = (next) => {
     setCart(next);
-    localStorage.setItem("cart", JSON.stringify(next));
+    storage.set("cart", next);
     window.dispatchEvent(new StorageEvent("storage", { key: "cart", newValue: JSON.stringify(next) }));
   };
 
@@ -154,7 +155,7 @@ export default function CartPage() {
       return;
     }
 
-    localStorage.setItem("cartCheckout", JSON.stringify(payload));
+    storage.set("cartCheckout", payload);
     navigate("/checkout", { state: { fromCart: true } });
   };
 

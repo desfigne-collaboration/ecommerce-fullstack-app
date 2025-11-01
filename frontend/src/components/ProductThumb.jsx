@@ -1,6 +1,7 @@
 // src/components/ProductThumb.jsx
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import storage from "../utils/storage.js";
 import { srcOf } from "../utils/srcOf";
 
 export default function ProductThumb({ product, image, src }) {
@@ -19,7 +20,7 @@ export default function ProductThumb({ product, image, src }) {
           : Number(product?.price || 0),
       desc: product?.desc || "",
     };
-    localStorage.setItem("lastProduct", JSON.stringify(normalized));
+    storage.set("lastProduct", normalized);
     navigate(`/product/${normalized.id}`, { state: { product: normalized } });
   };
 

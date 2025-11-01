@@ -1,16 +1,16 @@
 import "./Header.css";
-import { useDispatch } from 'react-redux';
-import { useAuth } from "../context/AuthContext";
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUser, selectIsLogin, logout } from "../feature/auth/authSlice";
 import { getLogout } from "../feature/auth/authAPI.js";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import React, { useEffect, useState, useRef, useMemo } from "react";
+import storage from "../utils/storage.js";
 
 export default function Header() {
-  const { user: authUser, logout } = useAuth();
-  const [isLogin, setIsLogin] = useState(localStorage.getItem("isLogin") === "true");
-  const [user, setUser] = useState(() => {
-    try { return JSON.parse(localStorage.getItem("loginUser")) || null; } catch { return null; }
-  });
+  // Redux 상태 사용
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const isLogin = useSelector(selectIsLogin);
 
   const [cartCount, setCartCount] = useState(0);
   const [wishCount, setWishCount] = useState(0);
@@ -28,7 +28,6 @@ export default function Header() {
   const headerRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   /** 공용 MegaMenu 래퍼 */
   const MegaMenu = ({ id, active, top, cols = "2", children }) => (
@@ -85,27 +84,22 @@ export default function Header() {
   /** 카트/위시/로그인 동기화 */
   useEffect(() => {
     const updateCartCount = () => {
-      try { setCartCount((JSON.parse(localStorage.getItem("cart")) || []).length); } catch { setCartCount(0); }
+      try { setCartCount((storage.get("cart", [])).length); } catch { setCartCount(0); }
     };
     const updateWishCount = () => {
-      try { setWishCount((JSON.parse(localStorage.getItem("wishlist")) || []).length); } catch { setWishCount(0); }
+      try { setWishCount((storage.get("wishlist", [])).length); } catch { setWishCount(0); }
     };
     const loadRecentSearches = () => {
-      try { setRecentSearches(JSON.parse(localStorage.getItem("recentSearches")) || []); } catch { setRecentSearches([]); }
+      try { setRecentSearches(storage.get("recentSearches", [])); } catch { setRecentSearches([]); }
     };
     const sync = (e) => {
       // StorageEvent를 통한 동기화
       if (e && e.key) {
         if (e.key === "cart") updateCartCount();
         else if (e.key === "wishlist") updateWishCount();
-        else if (e.key === "isLogin" || e.key === "loginUser" || e.key === "auth") {
-          setIsLogin(localStorage.getItem("isLogin") === "true");
-          try { setUser(JSON.parse(localStorage.getItem("loginUser")) || null); } catch { setUser(null); }
-        }
+        // auth 관련은 Redux가 자동으로 처리하므로 제거
       } else {
-        // 초기 로드 시 전체 동기화
-        setIsLogin(localStorage.getItem("isLogin") === "true");
-        try { setUser(JSON.parse(localStorage.getItem("loginUser")) || null); } catch { setUser(null); }
+        // 초기 로드 시 카트/위시만 동기화
         updateCartCount();
         updateWishCount();
       }
@@ -135,19 +129,15 @@ export default function Header() {
 
   /** 인증/네비 핸들러 */
   const handleLogout = async() => {
-
-    //로그아웃 API 호출
+    // 로그아웃 API 호출
     const succ = await dispatch(getLogout());
-    localStorage.removeItem("loginInfo");
-    localStorage.removeItem("isLogin");
 
     if(succ) {
-      setIsLogin(false);
-      setUser(null);    
+      // Redux 상태 업데이트 (localStorage도 함께 정리됨)
+      dispatch(logout());
       alert("로그아웃 되었습니다.");
       navigate("/");
-    }  
-
+    }
   };
 
   const handleCartClick = (e) => {
@@ -180,10 +170,10 @@ export default function Header() {
     const raw = (keyword || "").trim();
     if (!raw) return;
     try {
-      let recent = JSON.parse(localStorage.getItem("recentSearches")) || [];
+      let recent = storage.get("recentSearches", []);
       recent = recent.filter((item) => item !== raw);
       recent.unshift(raw);
-      localStorage.setItem("recentSearches", JSON.stringify(recent.slice(0, 10)));
+      storage.set("recentSearches", recent.slice(0, 10));
       setRecentSearches(recent.slice(0, 10));
     } catch {}
     navigate(`/search/${encodeURIComponent(raw)}`);
@@ -821,16 +811,16 @@ export default function Header() {
                                 <button className="search-keyword" onClick={() => handleSearch(keyword)}>{keyword}</button>
                                 <button className="remove-btn" onClick={() => {
                                   try {
-                                    let recent = JSON.parse(localStorage.getItem("recentSearches")) || [];
+                                    let recent = storage.get("recentSearches", []);
                                     recent = recent.filter((i) => i !== keyword);
-                                    localStorage.setItem("recentSearches", JSON.stringify(recent));
+                                    storage.set("recentSearches", recent);
                                     setRecentSearches(recent);
                                   } catch {}
                                 }} aria-label="삭제">×</button>
                               </li>
                             ))}
                           </ul>
-                          <button className="clear-all-btn" onClick={() => { try { localStorage.removeItem("recentSearches"); setRecentSearches([]); } catch {} }}>전체 삭제</button>
+                          <button className="clear-all-btn" onClick={() => { try { storage.remove("recentSearches"); setRecentSearches([]); } catch {} }}>전체 삭제</button>
                         </>
                       )}
                     </div>

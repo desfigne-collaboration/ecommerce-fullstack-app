@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from 'react-redux';
+import storage from "../../utils/storage.js";
 import { signupApi } from "../../api/auth";
 import { issueWelcomeCoupon } from "../../feature/auth/authSlice";
 import "./Signup.css";
@@ -168,7 +169,7 @@ export default function Signup() {
     }
 
     // 이메일 중복 검사
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    const users = storage.get("users", []);
     const isDuplicate = users.some((u) => u.email === value);
 
     if (isDuplicate) {

@@ -1,0 +1,147 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="200" height="200" fill="white"/>
+
+  <!-- QR Code Pattern - Simplified representation -->
+  <!-- Top-left finder pattern -->
+  <rect x="10" y="10" width="50" height="50" fill="black"/>
+  <rect x="20" y="20" width="30" height="30" fill="white"/>
+  <rect x="25" y="25" width="20" height="20" fill="black"/>
+
+  <!-- Top-right finder pattern -->
+  <rect x="140" y="10" width="50" height="50" fill="black"/>
+  <rect x="150" y="20" width="30" height="30" fill="white"/>
+  <rect x="155" y="25" width="20" height="20" fill="black"/>
+
+  <!-- Bottom-left finder pattern -->
+  <rect x="10" y="140" width="50" height="50" fill="black"/>
+  <rect x="20" y="150" width="30" height="30" fill="white"/>
+  <rect x="25" y="155" width="20" height="20" fill="black"/>
+
+  <!-- Data pattern (simplified) -->
+  <rect x="70" y="10" width="10" height="10" fill="black"/>
+  <rect x="85" y="10" width="10" height="10" fill="black"/>
+  <rect x="100" y="10" width="10" height="10" fill="black"/>
+  <rect x="115" y="10" width="10" height="10" fill="black"/>
+  <rect x="130" y="10" width="5" height="5" fill="black"/>
+
+  <rect x="10" y="70" width="10" height="10" fill="black"/>
+  <rect x="25" y="70" width="10" height="10" fill="black"/>
+  <rect x="40" y="70" width="10" height="10" fill="black"/>
+  <rect x="55" y="70" width="10" height="10" fill="black"/>
+
+  <!-- More data patterns -->
+  <rect x="70" y="25" width="5" height="5" fill="black"/>
+  <rect x="80" y="25" width="5" height="5" fill="black"/>
+  <rect x="90" y="25" width="5" height="5" fill="black"/>
+  <rect x="100" y="25" width="5" height="5" fill="black"/>
+  <rect x="110" y="25" width="5" height="5" fill="black"/>
+  <rect x="120" y="25" width="5" height="5" fill="black"/>
+  <rect x="130" y="25" width="5" height="5" fill="black"/>
+
+  <rect x="70" y="35" width="5" height="5" fill="black"/>
+  <rect x="85" y="35" width="5" height="5" fill="black"/>
+  <rect x="95" y="35" width="5" height="5" fill="black"/>
+  <rect x="110" y="35" width="5" height="5" fill="black"/>
+  <rect x="125" y="35" width="5" height="5" fill="black"/>
+
+  <rect x="75" y="45" width="5" height="5" fill="black"/>
+  <rect x="85" y="45" width="5" height="5" fill="black"/>
+  <rect x="100" y="45" width="5" height="5" fill="black"/>
+  <rect x="115" y="45" width="5" height="5" fill="black"/>
+  <rect x="130" y="45" width="5" height="5" fill="black"/>
+
+  <rect x="70" y="55" width="5" height="5" fill="black"/>
+  <rect x="90" y="55" width="5" height="5" fill="black"/>
+  <rect x="105" y="55" width="5" height="5" fill="black"/>
+  <rect x="120" y="55" width="5" height="5" fill="black"/>
+
+  <!-- Middle section patterns -->
+  <rect x="70" y="70" width="10" height="10" fill="black"/>
+  <rect x="85" y="70" width="10" height="10" fill="black"/>
+  <rect x="100" y="75" width="5" height="5" fill="black"/>
+  <rect x="110" y="70" width="10" height="10" fill="black"/>
+  <rect x="125" y="75" width="5" height="5" fill="black"/>
+  <rect x="135" y="70" width="10" height="10" fill="black"/>
+  <rect x="150" y="70" width="10" height="10" fill="black"/>
+  <rect x="165" y="75" width="5" height="5" fill="black"/>
+  <rect x="175" y="70" width="10" height="10" fill="black"/>
+
+  <rect x="70" y="85" width="5" height="5" fill="black"/>
+  <rect x="85" y="90" width="5" height="5" fill="black"/>
+  <rect x="95" y="85" width="10" height="10" fill="black"/>
+  <rect x="110" y="90" width="5" height="5" fill="black"/>
+  <rect x="125" y="85" width="10" height="10" fill="black"/>
+  <rect x="140" y="90" width="5" height="5" fill="black"/>
+  <rect x="155" y="85" width="5" height="5" fill="black"/>
+  <rect x="170" y="90" width="5" height="5" fill="black"/>
+  <rect x="180" y="85" width="10" height="10" fill="black"/>
+
+  <!-- Bottom section patterns -->
+  <rect x="70" y="140" width="10" height="10" fill="black"/>
+  <rect x="85" y="145" width="5" height="5" fill="black"/>
+  <rect x="95" y="140" width="10" height="10" fill="black"/>
+  <rect x="110" y="145" width="5" height="5" fill="black"/>
+  <rect x="125" y="140" width="5" height="5" fill="black"/>
+  <rect x="135" y="145" width="10" height="10" fill="black"/>
+  <rect x="150" y="140" width="5" height="5" fill="black"/>
+  <rect x="160" y="145" width="10" height="10" fill="black"/>
+  <rect x="175" y="140" width="5" height="5" fill="black"/>
+
+  <rect x="70" y="155" width="5" height="5" fill="black"/>
+  <rect x="85" y="160" width="5" height="5" fill="black"/>
+  <rect x="100" y="155" width="10" height="10" fill="black"/>
+  <rect x="115" y="160" width="5" height="5" fill="black"/>
+  <rect x="130" y="155" width="10" height="10" fill="black"/>
+  <rect x="145" y="160" width="5" height="5" fill="black"/>
+  <rect x="160" y="155" width="5" height="5" fill="black"/>
+  <rect x="175" y="160" width="10" height="10" fill="black"/>
+
+  <rect x="75" y="170" width="5" height="5" fill="black"/>
+  <rect x="90" y="175" width="5" height="5" fill="black"/>
+  <rect x="105" y="170" width="5" height="5" fill="black"/>
+  <rect x="120" y="175" width="10" height="10" fill="black"/>
+  <rect x="135" y="170" width="5" height="5" fill="black"/>
+  <rect x="150" y="175" width="5" height="5" fill="black"/>
+  <rect x="165" y="170" width="10" height="10" fill="black"/>
+  <rect x="180" y="175" width="5" height="5" fill="black"/>
+
+  <rect x="70" y="180" width="10" height="10" fill="black"/>
+  <rect x="85" y="185" width="5" height="5" fill="black"/>
+  <rect x="100" y="180" width="5" height="5" fill="black"/>
+  <rect x="115" y="185" width="10" height="10" fill="black"/>
+  <rect x="130" y="180" width="5" height="5" fill="black"/>
+  <rect x="145" y="185" width="5" height="5" fill="black"/>
+  <rect x="160" y="180" width="10" height="10" fill="black"/>
+  <rect x="175" y="185" width="5" height="5" fill="black"/>
+
+  <!-- Additional data patterns for more realistic look -->
+  <rect x="100" y="100" width="10" height="10" fill="black"/>
+  <rect x="115" y="105" width="5" height="5" fill="black"/>
+  <rect x="125" y="100" width="5" height="5" fill="black"/>
+  <rect x="135" y="105" width="10" height="10" fill="black"/>
+  <rect x="150" y="100" width="5" height="5" fill="black"/>
+  <rect x="165" y="105" width="5" height="5" fill="black"/>
+  <rect x="175" y="100" width="10" height="10" fill="black"/>
+
+  <rect x="70" y="115" width="5" height="5" fill="black"/>
+  <rect x="85" y="120" width="10" height="10" fill="black"/>
+  <rect x="100" y="115" width="5" height="5" fill="black"/>
+  <rect x="115" y="120" width="5" height="5" fill="black"/>
+  <rect x="130" y="115" width="10" height="10" fill="black"/>
+  <rect x="145" y="120" width="5" height="5" fill="black"/>
+  <rect x="160" y="115" width="5" height="5" fill="black"/>
+  <rect x="175" y="120" width="10" height="10" fill="black"/>
+
+  <rect x="75" y="130" width="10" height="5" fill="black"/>
+  <rect x="90" y="130" width="5" height="5" fill="black"/>
+  <rect x="105" y="130" width="10" height="5" fill="black"/>
+  <rect x="120" y="130" width="5" height="5" fill="black"/>
+  <rect x="135" y="130" width="5" height="5" fill="black"/>
+  <rect x="150" y="130" width="10" height="5" fill="black"/>
+  <rect x="165" y="130" width="5" height="5" fill="black"/>
+  <rect x="180" y="130" width="5" height="5" fill="black"/>
+
+  <!-- Text overlay (optional) -->
+  <text x="100" y="195" font-family="Arial" font-size="8" fill="#666" text-anchor="middle">SCAN ME</text>
+</svg>

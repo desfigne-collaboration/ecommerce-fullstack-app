@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { CATEGORY_DATA } from "../data/categoryData";
 import { getProductsByCategory } from "../data/productData";
 import { productKey } from "../hooks/useWishlist";
+import storage from "../utils/storage.js";
 import "./Page.css";
 import "../styles/CategoryPage.css";
 
@@ -12,11 +13,11 @@ const WISHLIST_KEY = "wishlist";
 
 // 홈과 동일한 포맷으로 읽기/쓰기
 const readWishlist = () => {
-  try { return JSON.parse(localStorage.getItem(WISHLIST_KEY)) || []; }
+  try { return storage.get(WISHLIST_KEY, []); }
   catch { return []; }
 };
 const writeWishlist = (arr) => {
-  localStorage.setItem(WISHLIST_KEY, JSON.stringify(arr));
+  storage.set(WISHLIST_KEY, arr);
 };
 
 // 이미지 경로 보정(그대로)
@@ -86,7 +87,7 @@ export default function CategoryPage() {
     }
 
     // ✅ 홈처럼 로컬스토리지 저장
-    localStorage.setItem("wishlist", JSON.stringify(next));
+    storage.set("wishlist", next);
 
     return next;
   });
@@ -101,7 +102,7 @@ export default function CategoryPage() {
       desc: p.desc || "",
       brand: p.brand || p.brandName || "",
     };
-    localStorage.setItem("lastProduct", JSON.stringify(normalized));
+    storage.set("lastProduct", normalized);
     navigate(`/product/${normalized.id}`, { product: normalized });
   };
 

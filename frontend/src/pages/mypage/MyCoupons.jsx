@@ -1,12 +1,13 @@
 // src/pages/mypage/MyCoupons.jsx
 import React, { useEffect, useState } from "react";
+import storage from "../../utils/storage.js";
 import "../../styles/MyCoupons.css";
 
 export default function MyCoupons() {
   const [coupons, setCoupons] = useState([]);
 
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem("coupons") || "[]");
+    const saved = storage.get("coupons", []);
     if (saved.length === 0) {
       // 기본 회원가입 쿠폰 지급
       const signupCoupon = {
@@ -17,7 +18,7 @@ export default function MyCoupons() {
         validUntil: "2025-12-31",
         used: false,
       };
-      localStorage.setItem("coupons", JSON.stringify([signupCoupon]));
+      storage.set("coupons", [signupCoupon]);
       setCoupons([signupCoupon]);
     } else {
       setCoupons(saved);

@@ -1,6 +1,7 @@
 // src/pages/ProductList.jsx
 import React, { useMemo, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import storage from "../utils/storage.js";
 import "../styles/CategoryPage.css";
 
 // 가격 → 숫자
@@ -375,17 +376,13 @@ export default function ProductList() {
       rating: product.rating || 0,
       reviewCount: product.reviewCount || 0,
     };
-    localStorage.setItem("lastProduct", JSON.stringify(normalized));
+    storage.set("lastProduct", normalized);
     navigate(`/product/${normalized.id}`, { product: normalized });
   };
 
   // ===== 위시리스트 =====
   const readWishlist = () => {
-    try {
-      return JSON.parse(localStorage.getItem("wishlist") || "[]");
-    } catch {
-      return [];
-    }
+    return storage.get("wishlist", []);
   };
   const isWished = (id) =>
     readWishlist().some((p) => String(p.id) === String(id));
@@ -405,7 +402,7 @@ export default function ProductList() {
     } else {
       list.unshift(data);
     }
-    localStorage.setItem("wishlist", JSON.stringify(list));
+    storage.set("wishlist", list);
     try {
       window.dispatchEvent(new StorageEvent("storage", { key: "wishlist", newValue: JSON.stringify(list) }));
     } catch {}

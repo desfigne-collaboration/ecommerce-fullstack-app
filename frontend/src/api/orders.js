@@ -1,16 +1,17 @@
 // localStorage 기반 주문 관리 헬퍼
+import storage from "../utils/storage.js";
 
 const STORAGE_KEY = "orders";
 
 // 공통 저장
 function saveOrders(orders) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(orders));
+  storage.set(STORAGE_KEY, orders);
 }
 
 // 모든 주문 목록 조회
 export function listOrders() {
   try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    return storage.get(STORAGE_KEY, []);
   } catch {
     return [];
   }
@@ -19,7 +20,7 @@ export function listOrders() {
 // 주문 상태 업데이트
 export function updateOrderStatus(id, status) {
   try {
-    const orders = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    const orders = storage.get(STORAGE_KEY, []);
     const idx = orders.findIndex(o => o.id === id);
     if (idx !== -1) {
       orders[idx].status = status;
@@ -33,7 +34,7 @@ export function updateOrderStatus(id, status) {
 // 주문 삭제
 export function deleteOrder(id) {
   try {
-    const orders = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    const orders = storage.get(STORAGE_KEY, []);
     const updated = orders.filter(o => o.id !== id);
     saveOrders(updated);
   } catch (e) {

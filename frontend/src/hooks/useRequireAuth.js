@@ -1,10 +1,11 @@
 // src/hooks/useRequireAuth.js
 import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useSelector } from "react-redux";
+import { selectUser } from "../feature/auth/authSlice.js";
 
 export default function useRequireAuth() {
-  const { user } = useAuth();
+  const user = useSelector(selectUser);
   const navigate = useNavigate();
   const location = useLocation();
 
