@@ -550,7 +550,7 @@ export default function ProductList() {
   const first = pathParts[0] || "women";
   const isSearchMode = first === "search";
   const category = isSearchMode ? "" : first;
-  const subcategory = isSearchMode ? "" : pathParts[1] || "outer";
+  const subcategory = isSearchMode ? "" : pathParts[1] || "";
 
   // 검색어 파싱
   const searchKeyword = useMemo(() => {
@@ -580,6 +580,9 @@ export default function ProductList() {
   };
 
   const subcategoryInfo = {
+    "": { name: "전체", tabs: ["전체"] },  // subcategory가 없을 때
+    all: { name: "전체 상품", tabs: ["전체"] },
+    new: { name: "신상품", tabs: ["전체"] },
     outer: { name: "아우터", tabs: ["전체", "코트", "점퍼", "다운/패딩", "퍼"] },
     jacket: { name: "재킷/베스트", tabs: ["전체", "블레이저", "베스트", "라이더", "기타"] },
     knit: { name: "니트웨어", tabs: ["전체", "카디건", "니트", "베스트"] },
@@ -588,6 +591,13 @@ export default function ProductList() {
     onepiece: { name: "원피스", tabs: ["전체", "미니", "미디", "롱"] },
     pants: { name: "팬츠", tabs: ["전체", "청바지", "슬랙스", "레깅스", "기타"] },
     skirt: { name: "스커트", tabs: ["전체", "미니", "미디", "롱"] },
+    suit: { name: "정장", tabs: ["전체"] },
+    boy: { name: "남아", tabs: ["전체"] },
+    girl: { name: "여아", tabs: ["전체"] },
+    skin: { name: "스킨케어", tabs: ["전체"] },
+    makeup: { name: "메이크업", tabs: ["전체"] },
+    running: { name: "러닝", tabs: ["전체"] },
+    outdoor: { name: "아웃도어", tabs: ["전체"] },
   };
 
   // 로컬 묶음 테이블
@@ -629,6 +639,14 @@ export default function ProductList() {
 
   // 카테고리 페이지용 데이터
   const getProductsByCategory = () => {
+    // subcategory가 없거나 "all" 또는 "new"인 경우: 해당 카테고리의 모든 상품 반환
+    if (!subcategory || subcategory === "all" || subcategory === "new") {
+      if (!localByCategory[category]) return [...sampleProducts];
+      const allProducts = Object.values(localByCategory[category]).flat();
+      return [...sampleProducts, ...allProducts];
+    }
+
+    // 특정 subcategory의 상품만 반환
     const locals =
       (localByCategory[category] && localByCategory[category][subcategory]) ||
       [];
@@ -805,7 +823,7 @@ export default function ProductList() {
         </div>
 
         {/* Tabs */}
-        {!isSearchMode && (
+        {!isSearchMode && subcategory && subcategory !== "all" && subcategory !== "new" && (
           <div className="category-tabs">
             {(currentSubcategory.tabs || ["전체"]).map((tab) => (
               <button
