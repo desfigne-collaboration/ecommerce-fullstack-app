@@ -48,6 +48,39 @@ backend/src/main/java/com/ssf/project/
 - **파일**: `frontend/src/features/auth/api/authAPI.js`
 - **함수**: `checkEmailDuplicate(email)` - 이메일 중복 체크 API 호출
 
+#### 💡 왜 "아이디" 대신 "이메일" 중복 체크를 구현했는가?
+
+**시스템 구조 분석 결과:**
+
+1. **회원가입 폼 구조** (`Signup.jsx`)
+   - 별도의 "아이디(userId)" 입력 필드가 존재하지 않음
+   - `email` 필드만 존재하며, 이것이 유일한 식별자로 사용됨
+   ```javascript
+   const [form, setForm] = useState({
+     name: "",
+     email: "",      // 로그인 ID로 사용
+     password: "",
+     // userId 필드 없음
+   });
+   ```
+
+2. **로그인 시스템** (`Login.jsx`)
+   - 로그인 폼의 "아이디" 입력란에 실제로는 이메일을 입력
+   - 백엔드에서도 이메일로 사용자를 조회
+   ```javascript
+   // Login.jsx - 플레이스홀더가 "이메일"
+   <input type="text" name="id" placeholder="이메일" />
+   ```
+
+3. **백엔드 인증 로직** (`MemberServiceImpl.java`)
+   - `findByIdnPwd(email)` 메서드에서 이메일로 비밀번호 조회
+   - 이메일이 Primary Key 역할
+
+**결론:**
+- 현재 시스템은 **이메일 = 로그인 ID** 구조
+- 별도의 사용자 아이디 개념이 없음
+- 따라서 이메일 중복 체크가 논리적으로 올바른 구현
+
 ---
 
 ### 2. 관리자 로그인 시 대시보드 자동 리다이렉트
