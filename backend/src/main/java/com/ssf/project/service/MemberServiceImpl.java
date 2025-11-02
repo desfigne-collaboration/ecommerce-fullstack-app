@@ -37,4 +37,9 @@ public class MemberServiceImpl implements MemberService{    // MemberService mem
 
         return result;
     }
+
+    @Override
+    public boolean checkEmailDuplicate(String email) {
+        return memberRepository.existsByEmail(email);
+    }
 }

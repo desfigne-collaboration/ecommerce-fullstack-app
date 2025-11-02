@@ -72,6 +72,17 @@
   padding-right: 40px;
 }
 
+.signup-form .input-with-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.signup-form .input-with-button .form-input {
+  flex: 1;
+}
+
 .signup-form .clear-btn {
   position: absolute;
   right: 12px;

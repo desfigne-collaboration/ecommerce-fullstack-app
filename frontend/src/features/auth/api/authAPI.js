@@ -304,3 +304,41 @@ export const getLogout = () => async(dispatch) => {
         return false; // 서버 로그아웃 실패 표시
     }
 }
+
+// ============================================================================
+// 이메일 중복 체크 API
+// ============================================================================
+/**
+ * checkEmailDuplicate - 이메일 중복 체크 API 요청
+ *
+ * @description
+ * 회원가입 시 이메일 중복 여부를 확인합니다.
+ * Spring Boot 백엔드의 /member/check-email 엔드포인트와 통신합니다.
+ *
+ * @async
+ * @function
+ * @param {string} email - 체크할 이메일 주소
+ *
+ * @returns {Promise<boolean>} 중복이면 true, 사용 가능하면 false
+ *
+ * @example
+ * // Signup.jsx에서 사용 예시
+ * const isDuplicate = await checkEmailDuplicate("test@example.com");
+ * if (isDuplicate) {
+ *   alert("이미 사용 중인 이메일입니다.");
+ * } else {
+ *   alert("사용 가능한 이메일입니다.");
+ * }
+ */
+export const checkEmailDuplicate = async (email) => {
+    try {
+        const url = "http://localhost:8080/member/check-email";
+        const result = await axiosPost(url, { email });
+        return result.isDuplicate;
+    } catch (error) {
+        handleError(error, "CheckEmail", {
+            customMessage: "이메일 중복 체크 중 오류가 발생했습니다."
+        });
+        return false; // 에러 시 중복 아님으로 처리
+    }
+}

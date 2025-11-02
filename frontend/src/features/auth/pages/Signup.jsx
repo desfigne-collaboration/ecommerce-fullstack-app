@@ -50,7 +50,7 @@ import { useDispatch } from 'react-redux';
 import storage from "../../../utils/storage.js";
 import { issueWelcomeCoupon } from "../slice/authSlice";
 import "./Signup.css";
-import { getSignup } from '../api/authAPI.js';
+import { getSignup, checkEmailDuplicate } from '../api/authAPI.js';
 
 /**
  * Signup 함수형 컴포넌트
@@ -188,6 +188,17 @@ export default function Signup() {
   });
 
   /**
+   * emailCheckDone - 이메일 중복체크 완료 여부
+   *
+   * @description
+   * 사용자가 중복확인 버튼을 클릭하여 이메일 중복 체크를 완료했는지 여부를 저장합니다.
+   * 회원가입 시 중복확인을 완료하지 않으면 가입이 불가능합니다.
+   *
+   * @type {boolean}
+   */
+  const [emailCheckDone, setEmailCheckDone] = useState(false);
+
+  /**
    * passwordChecks - 비밀번호 조건별 체크 상태
    *
    * @description
@@ -284,6 +295,12 @@ export default function Signup() {
     const { name, value } = e.target;
     setForm((p) => ({ ...p, [name]: value }));
 
+    // 이메일이 변경되면 중복체크를 다시 해야 함
+    if (name === "email") {
+      setEmailCheckDone(false);
+      setValidation((prev) => ({ ...prev, email: { valid: null, message: "" } }));
+    }
+
     // 실시간 유효성 검사
     if (name === "password") {
       validatePassword(value);
@@ -293,8 +310,6 @@ export default function Signup() {
       }
     } else if (name === "passwordCheck") {
       validatePasswordCheck(value, form.password);
-    } else if (name === "email") {
-      validateEmail(value);
     }
   };
 
@@ -379,29 +394,25 @@ export default function Signup() {
   };
 
   /**
-   * validateEmail - 이메일 형식 및 중복 검사
+   * handleEmailCheck - 이메일 중복 확인 버튼 클릭 핸들러
    *
    * @description
-   * 이메일 입력 시 다음 2단계 검증을 수행합니다:
-   * 1. **형식 검증**: 정규식으로 이메일 형식 확인
-   * 2. **중복 검증**: localStorage의 users 배열에서 중복 확인
+   * 사용자가 중복확인 버튼을 클릭하면 백엔드 API를 호출하여
+   * 이메일 중복 여부를 확인합니다.
    *
-   * @param {string} value - 검증할 이메일 주소
-   *
+   * @async
    * @example
-   * validateEmail("test@example.com") // → 형식 OK, 중복 체크
-   * validateEmail("invalid")          // → "올바른 이메일 형식이 아닙니다."
-   * validateEmail("existing@test.com") // → "이미 가입된 이메일입니다."
+   * <button onClick={handleEmailCheck}>중복확인</button>
    */
-  const validateEmail = (value) => {
-    if (!value) {
-      setValidation((prev) => ({ ...prev, email: { valid: null, message: "" } }));
+  const handleEmailCheck = async () => {
+    if (!form.email) {
+      alert("이메일을 입력해주세요.");
       return;
     }
 
     // 이메일 형식 검사
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(value)) {
+    if (!emailRegex.test(form.email)) {
       setValidation((prev) => ({
         ...prev,
         email: { valid: false, message: "올바른 이메일 형식이 아닙니다." },
@@ -409,20 +420,23 @@ export default function Signup() {
       return;
     }
 
-    // 이메일 중복 검사
-    const users = storage.get("users", []);
-    const isDuplicate = users.some((u) => u.email === value);
+    // 백엔드 API 호출하여 이메일 중복 체크
+    const isDuplicate = await checkEmailDuplicate(form.email);
 
     if (isDuplicate) {
       setValidation((prev) => ({
         ...prev,
-        email: { valid: false, message: "이미 가입된 이메일입니다." },
+        email: { valid: false, message: "이미 사용 중인 이메일입니다." },
       }));
+      setEmailCheckDone(false);
+      alert("이미 사용 중인 이메일입니다.");
     } else {
       setValidation((prev) => ({
         ...prev,
         email: { valid: true, message: "사용 가능한 이메일입니다." },
       }));
+      setEmailCheckDone(true);
+      alert("사용 가능한 이메일입니다.");
     }
   };
 
@@ -597,6 +611,11 @@ export default function Signup() {
       return;
     }
 
+    if (!emailCheckDone) {
+      alert("이메일 중복확인을 해주세요.");
+      return;
+    }
+
     if (validation.email.valid === false) {
       alert("이메일을 확인해주세요.");
       return;
@@ -684,7 +703,7 @@ export default function Signup() {
               이메일 <span className="required">*</span>
             </label>
             <div className="form-input-wrapper">
-              <div className="input-with-clear">
+              <div className="input-with-button">
                 <input
                   type="email"
                   name="email"
@@ -694,15 +713,25 @@ export default function Signup() {
                   placeholder="이메일을 입력하세요"
 //                   required
                 />
-                {form.email && (
-                  <button
-                    type="button"
-                    className="clear-btn"
-                    onClick={() => clearField("email")}
-                  >
-                    ✕
-                  </button>
-                )}
+                <button
+                  type="button"
+                  className="check-btn"
+                  onClick={handleEmailCheck}
+                  style={{
+                    marginLeft: '8px',
+                    padding: '8px 16px',
+                    backgroundColor: emailCheckDone ? '#28a745' : '#007bff',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                    fontWeight: '500',
+                    fontSize: '14px',
+                    whiteSpace: 'nowrap'
+                  }}
+                >
+                  {emailCheckDone ? '확인완료' : '중복확인'}
+                </button>
               </div>
               {validation.email.message && (
                 <p className={`validation-message ${validation.email.valid ? "valid" : "invalid"}`}>

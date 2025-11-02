@@ -77,4 +77,11 @@ public class MemberController {
 
         return ResponseEntity.ok(true);
     }
+
+    @PostMapping("/check-email")
+    public ResponseEntity<?> checkEmail(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        boolean isDuplicate = memberService.checkEmailDuplicate(email);
+        return ResponseEntity.ok(Map.of("isDuplicate", isDuplicate));
+    }
 }

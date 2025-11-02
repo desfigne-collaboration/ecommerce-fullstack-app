@@ -48,4 +48,11 @@ public class JdbcTemplateMemberRepository implements MemberRepository{
 
         return member.getUserpwd();
     }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        String sql = "SELECT COUNT(*) FROM ssf_user WHERE email = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, email);
+        return count != null && count > 0;
+    }
 }
