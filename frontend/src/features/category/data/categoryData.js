@@ -211,15 +211,15 @@ export const CATEGORY_DATA = {
       men: { title: "남성", count: "12,890" },
     }
   },
-  shoes: {
+  "bags-shoes": {
     name: "백&슈즈",
-    nameEn: "SHOES",
+    nameEn: "BAGS & SHOES",
     totalCount: "78,920",
     subcategories: [
-      { name: "전체", path: "/shoes", count: "78,920" },
-      { name: "신상품", path: "/shoes/new", count: "8,450" },
-      { name: "여성", path: "/shoes/women", count: "38,670" },
-      { name: "남성", path: "/shoes/men", count: "31,800" },
+      { name: "전체", path: "/bags-shoes", count: "78,920" },
+      { name: "신상품", path: "/bags-shoes/new", count: "8,450" },
+      { name: "여성", path: "/bags-shoes/women", count: "38,670" },
+      { name: "남성", path: "/bags-shoes/men", count: "31,800" },
     ],
     pages: {
       main: { title: "백&슈즈", count: "78,920" },

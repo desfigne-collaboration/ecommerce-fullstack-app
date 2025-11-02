@@ -60,13 +60,8 @@ import Menu from "features/menu/pages/Menu.jsx";                // 전체 메뉴
 // 페이지 컴포넌트 Import - 상품 (Product)
 // ============================================================================
 import ProductDetail from "features/product/pages/ProductDetail.jsx"; // 상품 상세
-import ProductList from "features/product/pages/ProductList.jsx";     // 상품 목록
+import ProductList from "features/product/pages/ProductList.jsx";     // 상품 목록 + 카테고리 페이지 통합
 import Search from "features/product/pages/Search.jsx";                // 검색 결과
-
-// ============================================================================
-// 페이지 컴포넌트 Import - 카테고리 (Category)
-// ============================================================================
-import CategoryPage from "features/category/pages/CategoryPage.jsx";  // 통합 카테고리 페이지
 
 // ============================================================================
 // 페이지 컴포넌트 Import - 주문 & 장바구니
@@ -164,20 +159,20 @@ export const publicRoutes = (
     <Route path="/product" element={<ProductDetail />} />     {/* ID 없는 경우 (state로 전달) */}
 
     {/* ============================================================
-        카테고리 - 모두 CategoryPage 컴포넌트 사용
-        CategoryPage는 URL path와 categoryData.js를 조합하여 동적 렌더링
+        카테고리 - 모두 ProductList 컴포넌트 사용 (동적 라우팅)
+        ProductList는 URL path를 분석하여 카테고리별 상품 표시
         :subcategory?는 선택적 파라미터 (예: /women 또는 /women/outer)
         ============================================================ */}
-    <Route path="/women/:subcategory?" element={<CategoryPage />} />   {/* 여성 (예: /women/outer) */}
-    <Route path="/men/:subcategory?" element={<CategoryPage />} />     {/* 남성 (예: /men/suit) */}
-    <Route path="/kids/:subcategory?" element={<CategoryPage />} />    {/* 키즈 (예: /kids/boy) */}
-    <Route path="/sports/:subcategory?" element={<CategoryPage />} />  {/* 스포츠 (예: /sports/running) */}
-    <Route path="/beauty/:subcategory?" element={<CategoryPage />} />  {/* 뷰티 (예: /beauty/skin) */}
-    <Route path="/golf/:subcategory?" element={<CategoryPage />} />    {/* 골프 (예: /golf/women) */}
-    <Route path="/shoes/:subcategory?" element={<CategoryPage />} />   {/* 백&슈즈 (예: /shoes/women) */}
-    <Route path="/life/:subcategory?" element={<CategoryPage />} />    {/* 라이프 (예: /life/pet) */}
-    <Route path="/luxury/:subcategory?" element={<CategoryPage />} />  {/* 럭셔리 (예: /luxury/women) */}
-    <Route path="/outlet/:subcategory?" element={<CategoryPage />} />  {/* 아울렛 (예: /outlet/women) */}
+    <Route path="/women/:subcategory?" element={<ProductList />} />   {/* 여성 (예: /women/outer) */}
+    <Route path="/men/:subcategory?" element={<ProductList />} />     {/* 남성 (예: /men/suit) */}
+    <Route path="/kids/:subcategory?" element={<ProductList />} />    {/* 키즈 (예: /kids/boy) */}
+    <Route path="/sports/:subcategory?" element={<ProductList />} />  {/* 스포츠 (예: /sports/running) */}
+    <Route path="/beauty/:subcategory?" element={<ProductList />} />  {/* 뷰티 (예: /beauty/skin) */}
+    <Route path="/golf/:subcategory?" element={<ProductList />} />    {/* 골프 (예: /golf/women) */}
+    <Route path="/bags-shoes/:subcategory?" element={<ProductList />} />   {/* 백&슈즈 (예: /bags-shoes/women) */}
+    <Route path="/life/:subcategory?" element={<ProductList />} />    {/* 라이프 (예: /life/pet) */}
+    <Route path="/luxury/:subcategory?" element={<ProductList />} />  {/* 럭셔리 (예: /luxury/women) */}
+    <Route path="/outlet/:subcategory?" element={<ProductList />} />  {/* 아울렛 (예: /outlet/women) */}
     <Route path="/brand/:brandId" element={<BrandDetail />} />         {/* 브랜드 (예: /brand/nike) */}
 
     {/* ============================================================

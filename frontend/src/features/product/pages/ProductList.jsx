@@ -423,13 +423,14 @@ export default function ProductList() {
     { name: "라코스테", img: "/icons/brand_라코스테.png" },
   ];
 
-  // 카테고리/탭 메타
+  // 카테고리/탭 메타 (Header의 모든 카테고리 지원)
   const categoryInfo = {
     women: { name: "여성", nameEn: "WOMEN" },
     men: { name: "남성", nameEn: "MEN" },
     kids: { name: "키즈", nameEn: "KIDS" },
     beauty: { name: "뷰티", nameEn: "BEAUTY" },
     sports: { name: "스포츠", nameEn: "SPORTS" },
+    golf: { name: "골프", nameEn: "GOLF" },
     life: { name: "라이프", nameEn: "LIFE" },
     luxury: { name: "럭셔리", nameEn: "LUXURY" },
     "bags-shoes": { name: "백&슈즈", nameEn: "BAGS & SHOES" },
