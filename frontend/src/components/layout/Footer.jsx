@@ -1,18 +1,70 @@
-// src/components/Footer.jsx
+/**
+ * ============================================================================
+ * Footer.jsx - 하단 푸터 컴포넌트
+ * ============================================================================
+ *
+ * 【목적】
+ * - 모든 페이지 하단에 공통으로 표시되는 푸터 영역
+ * - 회사 정보, 이용약관, 고객센터 등 주요 링크 제공
+ * - 법적 고지 및 인증 정보 표시
+ *
+ * 【구조】
+ * ┌────────────────────────────────────────┐
+ * │ 회사소개 | 이용약관 | 개인정보처리방침  │  ← 상단 링크 영역
+ * │ 멤버십안내 | 고객센터 | 매장찾기        │
+ * ├────────────────────────────────────────┤
+ * │ 회사명: 삼성물산(주)패션부문           │  ← 회사 정보
+ * │ 주소: 서울 강남구...                   │
+ * │ 사업자등록번호, 통신판매업 신고 등     │
+ * ├────────────────────────────────────────┤
+ * │ Copyright © 2025 Samsung C&T           │  ← 저작권 및 인증
+ * │ ISMS 인증마크 | SNS 아이콘            │
+ * └────────────────────────────────────────┘
+ *
+ * 【주요 기능】
+ * 1. 3개 그룹으로 나뉜 푸터 링크 (좌/중/우)
+ * 2. 이메일 무단수집 거부 모달 표시
+ * 3. 회사 정보 및 법적 고지 표시
+ * 4. ISMS 인증 정보 표시
+ * 5. SNS 링크 (유튜브, 인스타그램)
+ *
+ * @component
+ * @author Claude Code
+ * @since 2025-11-02
+ */
+
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Footer.css";
 import EmailPolicyModal from "../ui/EmailPolicyModal";
 
-// Footer 링크 데이터 - 3개 그룹으로 분리
+// ============================================================================
+// 푸터 링크 데이터
+// ============================================================================
+/**
+ * footerLinksLeft - 좌측 링크 그룹
+ *
+ * @description
+ * 회사 소개, 약관, 개인정보처리방침 등 주요 정책 링크
+ *
+ * @type {Array<{text: string, to: string, strong?: boolean, modal?: string}>}
+ */
 const footerLinksLeft = [
   { text: "회사소개", to: "/company" },
   { text: "이용약관", to: "/terms" },
   { text: "개인정보 처리방침", to: "/privacy", strong: true },
   // 이 항목은 페이지 이동 대신 모달로 처리
-  { text: "이메일무단수집거부", to: "/email-policy", modal: "emailPolicy" },
+  { text: "이메일무단수집거부", to: "/email-policy", modal: "emailPolicy" },  // modal 속성: 모달 오픈
 ];
 
+/**
+ * footerLinksCenter - 중앙 링크 그룹
+ *
+ * @description
+ * 멤버십, 고객센터, 매장 찾기 등 사용자 편의 서비스 링크
+ *
+ * @type {Array<{text: string, to: string}>}
+ */
 const footerLinksCenter = [
   { text: "멤버십안내", to: "/membership" },
   { text: "고객센터", to: "/help" },
@@ -21,12 +73,42 @@ const footerLinksCenter = [
   { text: "단체주문", to: "/bulk-order" },
 ];
 
+/**
+ * footerLinksRight - 우측 링크 그룹
+ *
+ * @description
+ * 입점 신청, 제휴 문의 등 비즈니스 관련 링크
+ *
+ * @type {Array<{text: string, to: string}>}
+ */
 const footerLinksRight = [
   { text: "입점신청", to: "/store-application" },
   { text: "제휴문의", to: "/partnership" },
 ];
 
+// ============================================================================
 // 회사 정보 데이터
+// ============================================================================
+/**
+ * companyInfo - 회사 정보 객체
+ *
+ * @description
+ * 통신판매업 신고 및 사업자 정보를 담고 있는 데이터
+ * 전자상거래법에 따라 필수로 표시해야 하는 정보들입니다.
+ *
+ * @type {Object}
+ * @property {string} name - 회사명
+ * @property {string} address - 사업장 주소
+ * @property {string} ceo - 대표자명
+ * @property {string} businessNumber - 사업자등록번호
+ * @property {string} ecommerceNumber - 통신판매업 신고번호
+ * @property {string} hosting - 호스팅 서비스 제공자
+ * @property {string} escrow - 에스크로 서비스 제공자
+ * @property {string} escrowLink - 에스크로 확인 링크 텍스트
+ * @property {string} escrowDesc - 에스크로 안내 문구
+ * @property {string} phone - 대표 전화번호
+ * @property {string} email - 대표 이메일
+ */
 const companyInfo = {
   name: "삼성물산(주)패션부문",
   address: "서울특별시 강남구 남부순환로 2806(도곡동)",
@@ -42,14 +124,47 @@ const companyInfo = {
   email: "ssfshop@samsung.com",
 };
 
+// ============================================================================
+// Footer 컴포넌트
+// ============================================================================
+/**
+ * Footer 함수형 컴포넌트
+ *
+ * @description
+ * 애플리케이션 전역에서 사용되는 하단 푸터입니다.
+ * App.js에서 모든 페이지 하단에 공통으로 표시됩니다.
+ *
+ * @returns {JSX.Element} Footer UI
+ */
 export default function Footer() {
+  // 현재 연도 (Copyright 표시용)
   const currentYear = new Date().getFullYear();
+
+  // 이메일 무단수집 거부 모달 표시 여부 상태
   const [showEmailModal, setShowEmailModal] = useState(false);
 
-  // 공통 렌더 함수: 모달 항목이면 a태그 + onClick으로 처리
+  /**
+   * renderFooterLink - 푸터 링크 렌더링 함수
+   *
+   * @description
+   * 링크 타입에 따라 다른 방식으로 렌더링합니다:
+   * - modal 속성이 있는 경우: <a> 태그 + onClick으로 모달 오픈
+   * - 일반 링크: React Router의 <Link> 컴포넌트 사용
+   *
+   * @param {Object} link - 링크 객체
+   * @param {string} link.text - 링크 텍스트
+   * @param {string} link.to - 링크 경로
+   * @param {boolean} [link.strong] - 강조 표시 여부 (개인정보처리방침)
+   * @param {string} [link.modal] - 모달 타입 (emailPolicy)
+   * @param {number} index - 배열 인덱스 (key prop용)
+   *
+   * @returns {JSX.Element} 링크 엘리먼트
+   */
   const renderFooterLink = (link, index) => {
+    // 강조 표시 여부에 따른 className 설정 (개인정보처리방침은 strong 클래스 적용)
     const className = link.strong ? "strong" : "";
 
+    // 모달 타입 링크인 경우 (이메일무단수집거부)
     if (link.modal === "emailPolicy") {
       return (
         <a
@@ -57,8 +172,8 @@ export default function Footer() {
           href="/#/email-policy"
           className={className}
           onClick={(e) => {
-            e.preventDefault(); // 라우팅 막고
-            setShowEmailModal(true); // 모달 오픈
+            e.preventDefault(); // 페이지 이동 방지
+            setShowEmailModal(true); // 모달 열기
           }}
         >
           {link.text}
@@ -66,6 +181,7 @@ export default function Footer() {
       );
     }
 
+    // 일반 링크: React Router Link 사용
     return (
       <Link key={index} to={link.to} className={className}>
         {link.text}
@@ -76,10 +192,10 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div className="container">
-        {/* Footer 링크 영역 */}
+        {/* ==================== 상단 링크 영역 ==================== */}
         <div className="footer-top">
           <div className="footer-links-wrapper">
-            {/* 왼쪽 그룹 */}
+            {/* 왼쪽 링크 그룹 (회사소개, 약관 등) */}
             <div className="footer-links-group">
               {footerLinksLeft.map(renderFooterLink)}
             </div>
@@ -87,22 +203,25 @@ export default function Footer() {
             {/* 세로 구분선 */}
             <div className="footer-divider"></div>
 
-            {/* 중앙 그룹 */}
+            {/* 중앙 링크 그룹 (멤버십, 고객센터 등) */}
             <div className="footer-links-group">
               {footerLinksCenter.map(renderFooterLink)}
             </div>
 
-            {/* 오른쪽 그룹 */}
+            {/* 오른쪽 링크 그룹 (입점신청, 제휴문의) */}
             <div className="footer-links-group footer-links-right">
               {footerLinksRight.map(renderFooterLink)}
             </div>
           </div>
         </div>
 
-        {/* 회사 정보 영역 */}
+        {/* ==================== 회사 정보 영역 ==================== */}
         <div className="footer-content">
           <div className="company-info">
+            {/* 회사명 */}
             <h3>{companyInfo.name}</h3>
+
+            {/* 사업자 정보 1줄 */}
             <p>
               주소: {companyInfo.address} ㅣ 대표 : {companyInfo.ceo} ㅣ
               사업자 등록번호: {companyInfo.businessNumber}{" "}
@@ -112,6 +231,8 @@ export default function Footer() {
               ㅣ 통신판매업 신고번호: {companyInfo.ecommerceNumber} ㅣ 호스팅서비스:{" "}
               {companyInfo.hosting}
             </p>
+
+            {/* 에스크로 서비스 안내 */}
             <p>
               {companyInfo.escrow}{" "}
               <button type="button" className="info-link" onClick={() => alert('에스크로 서비스 안내 페이지는 준비 중입니다.')}>
@@ -119,14 +240,16 @@ export default function Footer() {
               </button>{" "}
               {companyInfo.escrowDesc}
             </p>
+
+            {/* 연락처 정보 */}
             <p>
               대표전화 {companyInfo.phone} | 이메일: {companyInfo.email}
             </p>
           </div>
 
-          {/* 저작권 및 인증 영역 */}
+          {/* ==================== 저작권 및 인증 영역 ==================== */}
           <div className="footer-bottom">
-            {/* 카피라이트 - 한 줄 전체 차지 */}
+            {/* Copyright 문구 */}
             <div className="footer-bottom-left">
               <p>
                 Copyright (C) {currentYear} Samsung C&T Corporation. All rights
@@ -134,8 +257,9 @@ export default function Footer() {
               </p>
             </div>
 
-            {/* 인증 영역 - 아래 줄 */}
+            {/* ISMS 인증 및 SNS 링크 */}
             <div className="footer-bottom-right">
+              {/* ISMS 인증 마크 및 정보 */}
               <div className="certification">
                 <img
                   src="https://ext.same-assets.com/947818454/209907754.png"
@@ -146,7 +270,10 @@ export default function Footer() {
                   유효기간 : 2025.08.12 ~ 2028.08.11
                 </p>
               </div>
+
+              {/* SNS 아이콘 링크 */}
               <div className="social-icons">
+                {/* 유튜브 */}
                 <a
                   href="https://www.youtube.com"
                   target="_blank"
@@ -161,6 +288,8 @@ export default function Footer() {
                     />
                   </svg>
                 </a>
+
+                {/* 인스타그램 */}
                 <a
                   href="https://www.instagram.com"
                   target="_blank"
@@ -181,7 +310,8 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* 이메일 무단수집거부 모달 */}
+      {/* ==================== 이메일 무단수집거부 모달 ==================== */}
+      {/* showEmailModal 상태에 따라 모달 표시/숨김 처리 */}
       <EmailPolicyModal
         open={showEmailModal}
         onClose={() => setShowEmailModal(false)}

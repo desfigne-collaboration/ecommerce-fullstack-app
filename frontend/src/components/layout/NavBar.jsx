@@ -1,14 +1,49 @@
+/**
+ * ============================================================================
+ * NavBar.jsx - 네비게이션 바 컴포넌트 (현재 미사용)
+ * ============================================================================
+ *
+ * 【목적】
+ * - 카테고리별 드롭다운 메뉴를 제공하는 네비게이션 바
+ * - Header.jsx와 유사한 기능이지만 현재는 사용되지 않음
+ *
+ * 【현재 상태】
+ * ⚠️ 이 컴포넌트는 현재 애플리케이션에서 사용되지 않습니다.
+ * Header.jsx가 동일한 기능을 더 완전하게 구현하고 있습니다.
+ *
+ * 【구조】
+ * - 마우스 hover 시 드롭다운 메뉴 표시
+ * - 여성, 남성, 키즈, 럭셔리, 백&슈즈, 스포츠, 골프, 뷰티, 라이프, 아울렛
+ *
+ * 【Header.jsx와의 차이점】
+ * - Header.jsx: 메가메뉴 시스템, 브랜드 링크, 검색 기능 포함
+ * - NavBar.jsx: 단순한 드롭다운 메뉴만 제공
+ *
+ * @component
+ * @deprecated 현재 사용되지 않음. Header.jsx 사용 권장
+ * @author Claude Code
+ * @since 2025-11-02
+ */
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./NavBar.css";
 
 export default function NavBar() {
+  // 현재 활성화된 메뉴 ('women', 'men', 등)
   const [activeMenu, setActiveMenu] = useState(null);
 
+  /**
+   * handleMouseEnter - 메뉴 호버 핸들러
+   * @param {string} menu - 활성화할 메뉴 ID
+   */
   const handleMouseEnter = (menu) => {
     setActiveMenu(menu);
   };
 
+  /**
+   * handleMouseLeave - 마우스 벗어남 핸들러
+   */
   const handleMouseLeave = () => {
     setActiveMenu(null);
   };
@@ -16,6 +51,7 @@ export default function NavBar() {
   return (
     <nav className="navbar" onMouseLeave={handleMouseLeave}>
       <ul className="navbar-list">
+        {/* ==================== 여성 카테고리 ==================== */}
         <li onMouseEnter={() => handleMouseEnter("women")}>
           <Link to="/women">여성</Link>
           {activeMenu === "women" && (
@@ -42,6 +78,7 @@ export default function NavBar() {
           )}
         </li>
 
+        {/* ==================== 남성 카테고리 ==================== */}
         <li onMouseEnter={() => handleMouseEnter("men")}>
           <Link to="/men">남성</Link>
           {activeMenu === "men" && (
@@ -68,6 +105,7 @@ export default function NavBar() {
           )}
         </li>
 
+        {/* ==================== 키즈 카테고리 ==================== */}
         <li onMouseEnter={() => handleMouseEnter("kids")}>
           <Link to="/kids">키즈</Link>
           {activeMenu === "kids" && (
@@ -89,6 +127,7 @@ export default function NavBar() {
           )}
         </li>
 
+        {/* ==================== 럭셔리 카테고리 ==================== */}
         <li onMouseEnter={() => handleMouseEnter("luxury")}>
           <Link to="/luxury">럭셔리</Link>
           {activeMenu === "luxury" && (
@@ -112,6 +151,7 @@ export default function NavBar() {
           )}
         </li>
 
+        {/* ==================== 백&슈즈 카테고리 ==================== */}
         <li onMouseEnter={() => handleMouseEnter("shoes")}>
           <Link to="/shoes">백&슈즈</Link>
           {activeMenu === "shoes" && (
@@ -133,6 +173,7 @@ export default function NavBar() {
           )}
         </li>
 
+        {/* ==================== 스포츠 카테고리 ==================== */}
         <li onMouseEnter={() => handleMouseEnter("sports")}>
           <Link to="/sports">스포츠</Link>
           {activeMenu === "sports" && (
@@ -155,6 +196,7 @@ export default function NavBar() {
           )}
         </li>
 
+        {/* ==================== 골프 카테고리 ==================== */}
         <li onMouseEnter={() => handleMouseEnter("golf")}>
           <Link to="/golf">골프</Link>
           {activeMenu === "golf" && (
@@ -177,6 +219,7 @@ export default function NavBar() {
           )}
         </li>
 
+        {/* ==================== 뷰티 카테고리 ==================== */}
         <li onMouseEnter={() => handleMouseEnter("beauty")}>
           <Link to="/beauty">뷰티</Link>
           {activeMenu === "beauty" && (
@@ -198,6 +241,7 @@ export default function NavBar() {
           )}
         </li>
 
+        {/* ==================== 라이프 카테고리 ==================== */}
         <li onMouseEnter={() => handleMouseEnter("life")}>
           <Link to="/life">라이프</Link>
           {activeMenu === "life" && (
@@ -218,6 +262,7 @@ export default function NavBar() {
           )}
         </li>
 
+        {/* ==================== 아울렛 카테고리 ==================== */}
         <li onMouseEnter={() => handleMouseEnter("outlet")}>
           <Link to="/outlet">아울렛</Link>
           {activeMenu === "outlet" && (

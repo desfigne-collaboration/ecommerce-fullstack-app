@@ -1,3 +1,69 @@
+/**
+ * ============================================================================
+ * Header.jsx - 상단 헤더 컴포넌트
+ * ============================================================================
+ *
+ * 【목적】
+ * - 모든 페이지 상단에 공통으로 표시되는 헤더 영역
+ * - 네비게이션, 검색, 장바구니, 로그인 등 핵심 기능 제공
+ * - 메가메뉴를 통한 카테고리별 상품 탐색
+ *
+ * 【구조】
+ * ┌────────────────────────────────────────────┐
+ * │ 🎉 신규 회원 가입 시 10,000원 쿠폰      [×] │  ← Top Banner
+ * ├────────────────────────────────────────────┤
+ * │ 마이페이지 | 로그인                         │  ← User Menu
+ * ├────────────────────────────────────────────┤
+ * │ [로고] [검색] [찜] [장바구니] [브랜드로고]  │  ← Logo Section
+ * ├────────────────────────────────────────────┤
+ * │ 여성 남성 키즈 럭셔리 백&슈즈 스포츠 골프... │  ← Navigation
+ * │          ┌─────────────────┐                 │
+ * │          │   Mega Menu     │                 │  ← 마우스 호버 시 표시
+ * │          │   (드롭다운)    │                 │
+ * │          └─────────────────┘                 │
+ * └────────────────────────────────────────────┘
+ *
+ * 【주요 기능】
+ * 1. 인증 관리
+ *    - Redux 상태를 통한 로그인 여부 확인
+ *    - 로그인/로그아웃 처리
+ *    - 사용자 정보 표시
+ *
+ * 2. 검색 기능
+ *    - 검색 모달 오픈/닫기
+ *    - 키워드 자동완성
+ *    - 브랜드 검색
+ *    - 최근 검색어 관리 (localStorage)
+ *    - 인기 검색어 표시
+ *
+ * 3. 장바구니 & 찜 관리
+ *    - localStorage에서 실시간 카운트 동기화
+ *    - 장바구니/찜 페이지로 이동
+ *    - 로그인 체크
+ *
+ * 4. 메가메뉴 시스템
+ *    - 카테고리별 드롭다운 메뉴
+ *    - 마우스 hover로 메뉴 표시/숨김
+ *    - 서브카테고리 및 추천 브랜드 표시
+ *
+ * 5. 모바일 메뉴
+ *    - 햄버거 메뉴 버튼
+ *    - 사이드 드로어 메뉴
+ *
+ * 【Redux 상태 연동】
+ * - auth.user: 로그인한 사용자 정보
+ * - auth.isLogin: 로그인 여부
+ *
+ * 【localStorage 데이터】
+ * - cart: 장바구니 아이템
+ * - wishlist: 찜한 상품
+ * - recentSearches: 최근 검색어 (최대 10개)
+ *
+ * @component
+ * @author Claude Code
+ * @since 2025-11-02
+ */
+
 import "./Header.css";
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUser, selectIsLogin, logout } from "../../features/auth/slice/authSlice";
@@ -6,7 +72,19 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import storage from "../../utils/storage.js";
 
-// 검색 자동완성 키워드 (상수)
+// ============================================================================
+// 상수 데이터
+// ============================================================================
+/**
+ * AUTOCOMPLETE_KEYWORDS - 검색 자동완성 키워드
+ *
+ * @description
+ * 사용자가 검색어를 입력할 때 제안되는 키워드 목록입니다.
+ * 실제 서비스에서는 서버에서 가져와야 하지만, 현재는 상수로 관리합니다.
+ *
+ * @constant
+ * @type {string[]}
+ */
 const AUTOCOMPLETE_KEYWORDS = [
   "카디건","가방","가니","남자 가죽 자켓","여성 카디건","메종키츠네 카디건","남자 카디건",
   "발렌시아가","로메르 가방","에잇세컨즈 가방","구호","구호플러스","나이키","니트","니트웨어",
@@ -17,7 +95,16 @@ const AUTOCOMPLETE_KEYWORDS = [
   "트레이닝복","파카","패딩","폴로셔츠","플리츠스커트","후드티","후드집업"
 ];
 
-// 브랜드 데이터 (상수)
+/**
+ * BRAND_DATA - 브랜드 검색 데이터
+ *
+ * @description
+ * 검색 모달에서 브랜드 검색 시 사용되는 브랜드 정보입니다.
+ * 한글명, 영문명, 링크 정보를 포함합니다.
+ *
+ * @constant
+ * @type {Array<{name: string, nameKr?: string, nameEn?: string, link: string}>}
+ */
 const BRAND_DATA = [
   { name: "GANNI", nameKr: "가니", link: "/brand/ganni" },
   { name: "GANISONG", nameKr: "가니송", link: "/brand/ganisong" },
@@ -39,30 +126,67 @@ const BRAND_DATA = [
   { name: "준지", nameEn: "JUUN.J", link: "/brand/junji" },
 ];
 
+// ============================================================================
+// Header 컴포넌트
+// ============================================================================
+/**
+ * Header 함수형 컴포넌트
+ *
+ * @description
+ * 애플리케이션의 메인 헤더로, 모든 페이지 상단에 공통으로 표시됩니다.
+ * 복잡한 상태 관리와 UI 인터랙션을 포함합니다.
+ *
+ * @returns {JSX.Element} Header UI
+ */
 export default function Header() {
-  // Redux 상태 사용
+  // ============================================================
+  // Redux 상태 및 기본 hooks
+  // ============================================================
   const dispatch = useDispatch();
-  const user = useSelector(selectUser);
-  const isLogin = useSelector(selectIsLogin);
+  const user = useSelector(selectUser);          // 로그인한 사용자 정보
+  const isLogin = useSelector(selectIsLogin);    // 로그인 여부
 
+  const location = useLocation();  // 현재 URL 정보
+  const navigate = useNavigate();  // 페이지 이동 함수
+  const headerRef = useRef(null);  // 헤더 DOM 요소 참조 (메가메뉴 위치 계산용)
+
+  // ============================================================
+  // 로컬 상태 관리
+  // ============================================================
+  // 장바구니 & 찜 카운트
   const [cartCount, setCartCount] = useState(0);
   const [wishCount, setWishCount] = useState(0);
 
-  const [searchModalOpen, setSearchModalOpen] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [bannerVisible, setBannerVisible] = useState(true);
+  // UI 상태
+  const [searchModalOpen, setSearchModalOpen] = useState(false);   // 검색 모달 표시 여부
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);     // 모바일 메뉴 표시 여부
+  const [bannerVisible, setBannerVisible] = useState(true);        // 상단 배너 표시 여부
 
-  const [activeMenu, setActiveMenu] = useState(null); // 'women' | 'men' | ...
-  const [menuTopPosition, setMenuTopPosition] = useState(0);
+  // 메가메뉴 상태
+  const [activeMenu, setActiveMenu] = useState(null);       // 현재 활성화된 메뉴 ('women', 'men', 등)
+  const [menuTopPosition, setMenuTopPosition] = useState(0); // 메가메뉴 top 위치 (헤더 하단)
 
-  const [searchQuery, setSearchQuery] = useState("");
-  const [recentSearches, setRecentSearches] = useState([]);
+  // 검색 관련 상태
+  const [searchQuery, setSearchQuery] = useState("");           // 현재 입력된 검색어
+  const [recentSearches, setRecentSearches] = useState([]);     // 최근 검색어 목록
 
-  const headerRef = useRef(null);
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  /** 공용 MegaMenu 래퍼 */
+  // ============================================================
+  // 내부 컴포넌트: MegaMenu 래퍼
+  // ============================================================
+  /**
+   * MegaMenu - 메가메뉴 래퍼 컴포넌트
+   *
+   * @description
+   * 각 카테고리의 드롭다운 메뉴를 감싸는 공용 컴포넌트입니다.
+   * active 상태에 따라 표시/숨김을 처리합니다.
+   *
+   * @param {Object} props
+   * @param {string} props.id - 메뉴 ID (예: "women", "men")
+   * @param {string|null} props.active - 현재 활성화된 메뉴 ID
+   * @param {number} props.top - 메뉴의 top 위치 (px)
+   * @param {string} [props.cols="2"] - 컬럼 수 ("2" 또는 "3")
+   * @param {React.ReactNode} props.children - 메뉴 내용
+   */
   const MegaMenu = ({ id, active, top, cols = "2", children }) => (
     <div className={`mega-menu ${active === id ? "active" : ""}`} style={{ top: `${top}px` }}>
       <div className="container">
@@ -71,7 +195,18 @@ export default function Header() {
     </div>
   );
 
-  /** 인기 검색어 더미 데이터 */
+  // ============================================================
+  // 인기 검색어 데이터
+  // ============================================================
+  /**
+   * popularSearches - 인기 검색어 목록
+   *
+   * @description
+   * 검색 모달에 표시되는 인기 검색어 순위입니다.
+   * 실제 서비스에서는 서버에서 실시간으로 가져와야 합니다.
+   *
+   * @type {Array<{rank: number, keyword: string, trend: 'up'|'down'|null}>}
+   */
   const popularSearches = [
     { rank: 1, keyword: "에잇세컨즈", trend: null },
     { rank: 2, keyword: "빈폴레이디스", trend: null },
@@ -80,12 +215,19 @@ export default function Header() {
     { rank: 5, keyword: "로메르", trend: null },
     { rank: 6, keyword: "빈폴키즈", trend: null },
     { rank: 7, keyword: "카디건", trend: null },
-    { rank: 8, keyword: "꽁데가르송", trend: "up" },
-    { rank: 9, keyword: "준지", trend: "down" },
+    { rank: 8, keyword: "꽁데가르송", trend: "up" },      // 순위 상승
+    { rank: 9, keyword: "준지", trend: "down" },          // 순위 하락
     { rank: 10, keyword: "폴리즈클로젯", trend: "down" },
   ];
 
-  /** 카트/위시/로그인 동기화 */
+  // ============================================================
+  // Effect: 장바구니/찜/최근검색어 동기화
+  // ============================================================
+  /**
+   * @description
+   * localStorage의 cart, wishlist, recentSearches 데이터를 읽어와
+   * 상태에 반영합니다. storage 이벤트를 통해 다른 탭과 동기화됩니다.
+   */
   useEffect(() => {
     const updateCartCount = () => {
       try { setCartCount((storage.get("cart", [])).length); } catch { setCartCount(0); }
@@ -118,7 +260,14 @@ export default function Header() {
     };
   }, []);
 
-  /** 헤더 bottom 좌표 → 메가메뉴 top */
+  // ============================================================
+  // Effect: 메가메뉴 위치 계산
+  // ============================================================
+  /**
+   * @description
+   * 헤더의 하단 좌표를 계산하여 메가메뉴의 top 위치를 설정합니다.
+   * 배너 표시 여부, 스크롤, 리사이즈에 따라 재계산됩니다.
+   */
   useEffect(() => {
     const computeMenuTop = () => {
       if (!headerRef.current) return;
@@ -131,7 +280,17 @@ export default function Header() {
     return () => { window.removeEventListener("resize", computeMenuTop); window.removeEventListener("scroll", computeMenuTop); };
   }, [bannerVisible, location.pathname]);
 
-  /** 인증/네비 핸들러 */
+  // ============================================================
+  // 이벤트 핸들러: 인증 & 네비게이션
+  // ============================================================
+  /**
+   * handleLogout - 로그아웃 처리
+   *
+   * @description
+   * 1. 서버에 로그아웃 API 호출
+   * 2. 성공 시 Redux 상태 초기화 (localStorage도 함께 정리됨)
+   * 3. 홈으로 이동
+   */
   const handleLogout = async() => {
     // 로그아웃 API 호출
     const succ = await dispatch(getLogout());
@@ -144,20 +303,49 @@ export default function Header() {
     }
   };
 
+  /**
+   * handleCartClick - 장바구니 클릭 핸들러
+   *
+   * @description
+   * 로그인하지 않은 경우 로그인 페이지로 이동합니다.
+   */
   const handleCartClick = (e) => {
     if (!isLogin) { e.preventDefault(); alert("로그인이 필요합니다."); navigate("/login"); }
   };
+
+  /**
+   * handleMyPageClick - 마이페이지 클릭 핸들러
+   *
+   * @description
+   * 로그인하지 않은 경우 로그인 페이지로 이동합니다.
+   */
   const handleMyPageClick = (e) => {
     if (!isLogin) { e.preventDefault(); alert("로그인이 필요합니다."); navigate("/login"); }
   };
 
-  /** 검색 */
+  // ============================================================
+  // 검색 기능: 자동완성 필터링 (useMemo)
+  // ============================================================
+  /**
+   * filteredKeywords - 검색어 자동완성 필터링
+   *
+   * @description
+   * 사용자 입력에 따라 AUTOCOMPLETE_KEYWORDS에서 일치하는 키워드를 필터링합니다.
+   * useMemo로 최적화하여 searchQuery가 변경될 때만 재계산합니다.
+   */
   const filteredKeywords = useMemo(() => {
     if (!searchQuery.trim()) return [];
     const q = searchQuery.toLowerCase();
     return AUTOCOMPLETE_KEYWORDS.filter((k) => k.toLowerCase().includes(q)).slice(0, 10);
   }, [searchQuery]);
 
+  /**
+   * filteredBrands - 브랜드 검색 필터링
+   *
+   * @description
+   * 사용자 입력에 따라 BRAND_DATA에서 일치하는 브랜드를 필터링합니다.
+   * 한글명, 영문명 모두 검색 대상입니다.
+   */
   const filteredBrands = useMemo(() => {
     if (!searchQuery.trim()) return [];
     const q = searchQuery.toLowerCase();
@@ -169,7 +357,16 @@ export default function Header() {
     ).slice(0, 10);
   }, [searchQuery]);
 
-  // ✅ 여기 수정: /search/<키워드> 로 이동
+  /**
+   * handleSearch - 검색 실행 핸들러
+   *
+   * @description
+   * 1. 검색어를 최근 검색어에 추가 (localStorage)
+   * 2. /search/:keyword 경로로 이동
+   * 3. 검색 모달 닫기
+   *
+   * @param {string} keyword - 검색할 키워드
+   */
   const handleSearch = (keyword) => {
     const raw = (keyword || "").trim();
     if (!raw) return;
