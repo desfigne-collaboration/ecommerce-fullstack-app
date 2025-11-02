@@ -1,6 +1,48 @@
+/**
+ * ============================================================================
+ * HelpPage.jsx - 고객센터 페이지
+ * ============================================================================
+ *
+ * 【목적】
+ * - 자주 묻는 질문(FAQ) 제공으로 고객 셀프 서비스 지원
+ * - 고객센터 연락처 안내 (전화, 이메일, 카카오톡)
+ * - 1:1 문의하기로 추가 상담 채널 제공
+ *
+ * 【주요 기능】
+ * 1. **카테고리 탭**: 주문/배송, 취소/환불, 회원/포인트, 상품/사이즈 4개 탭
+ * 2. **FAQ 아코디언**: 질문 클릭 시 답변 펼침/접힘 토글
+ * 3. **고객센터 연락처**: 전화, 이메일, 카카오톡 상담 시간 및 채널 정보
+ * 4. **1:1 문의**: FAQ에서 답변을 찾지 못한 경우 추가 문의 유도
+ *
+ * 【데이터 구조】
+ * - faqData: 카테고리별 FAQ 항목 배열
+ *   - category: 카테고리명 (예: "주문/배송")
+ *   - items: { q: 질문, a: 답변 } 배열
+ *
+ * 【상태 관리】
+ * - activeCategory: 현재 선택된 카테고리 (기본값: "주문/배송")
+ * - openIndex: 현재 펼쳐진 FAQ 항목 인덱스 (null이면 모두 접힘)
+ *
+ * @component
+ * @author Claude Code
+ * @since 2025-11-02
+ */
+
 import React, { useState } from "react";
 import "./HelpPage.css";
 
+/**
+ * faqData - FAQ 데이터 구조
+ *
+ * @description
+ * 카테고리별로 분류된 자주 묻는 질문과 답변 데이터입니다.
+ *
+ * 【카테고리】
+ * 1. 주문/배송: 배송 기간, 배송 조회, 배송비 정책
+ * 2. 취소/환불: 주문 취소, 환불 기간, 교환 가능 여부
+ * 3. 회원/포인트: 회원가입 혜택, 포인트 사용법, 회원 등급
+ * 4. 상품/사이즈: 사이즈 교환, 사이즈 가이드, 재입고 알림
+ */
 const faqData = [
   {
     category: "주문/배송",
@@ -36,14 +78,52 @@ const faqData = [
   }
 ];
 
+/**
+ * HelpPage - 고객센터 페이지 컴포넌트
+ *
+ * @description
+ * FAQ, 고객센터 연락처, 1:1 문의 안내를 제공하는 고객 지원 페이지입니다.
+ *
+ * 【구성 요소】
+ * 1. help-contact: 전화/이메일/카카오톡 연락처 카드
+ * 2. faq-section: 카테고리 탭 + FAQ 아코디언
+ * 3. inquiry-box: 1:1 문의하기 CTA
+ *
+ * 【상태 관리】
+ * - activeCategory: 현재 선택된 FAQ 카테고리
+ * - openIndex: 펼쳐진 FAQ 항목 인덱스
+ *
+ * 【상호작용】
+ * - 탭 클릭: setActiveCategory로 카테고리 전환
+ * - FAQ 질문 클릭: toggleFaq로 답변 펼침/접힘
+ *
+ * @returns {JSX.Element} 고객센터 페이지 전체 레이아웃
+ *
+ * @example
+ * // App.jsx 또는 라우터에서 사용:
+ * <Route path="/help" element={<HelpPage />} />
+ */
 export default function HelpPage() {
   const [activeCategory, setActiveCategory] = useState("주문/배송");
   const [openIndex, setOpenIndex] = useState(null);
 
+  /**
+   * toggleFaq - FAQ 아코디언 토글
+   *
+   * @description
+   * 클릭한 FAQ 항목을 펼치거나 접습니다.
+   * 이미 펼쳐진 항목을 다시 클릭하면 접힙니다.
+   *
+   * @param {number} index - 클릭한 FAQ 항목의 인덱스
+   *
+   * @example
+   * <button onClick={() => toggleFaq(0)}>Q. 배송은 얼마나 걸리나요?</button>
+   */
   const toggleFaq = (index) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
+  // 현재 선택된 카테고리의 FAQ 데이터
   const currentFaq = faqData.find((cat) => cat.category === activeCategory);
 
   return (

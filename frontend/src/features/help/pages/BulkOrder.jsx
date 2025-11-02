@@ -1,7 +1,80 @@
+/**
+ * ============================================================================
+ * BulkOrder.jsx - 단체주문 문의 페이지
+ * ============================================================================
+ *
+ * 【목적】
+ * - 기업/단체 고객의 대량 주문 문의 접수
+ * - 문의자 정보 및 주문 요구사항 수집
+ * - 개인정보 수집 동의 및 알림 수신 설정
+ *
+ * 【주요 기능】
+ * 1. **문의 폼**: 문의자명, 업체명, 연락처, 이메일 등 필수 정보 수집
+ * 2. **주문 상세**: 요청브랜드, 상품번호, 구매희망수량, 필요일자 입력
+ * 3. **필수 항목 검증**: 문의자명/업체명/연락처/이메일 필수 체크
+ * 4. **개인정보 동의**: 필수 동의 체크박스 (미동의 시 제출 불가)
+ * 5. **답변 알림**: 선택적 SMS/알림톡 수신 동의
+ * 6. **localStorage 저장**: createBulkOrder API로 문의 데이터 저장
+ *
+ * 【데이터 구조】
+ * - form 상태:
+ *   - inquirerName: 문의자명 (필수)
+ *   - companyName: 업체명 (필수)
+ *   - phone: 연락처 (필수)
+ *   - email: 이메일 (필수)
+ *   - requestBrand: 요청브랜드 (선택)
+ *   - productNo: 상품번호 (선택)
+ *   - quantity: 구매희망수량 (선택)
+ *   - needDate: 필요일자 (선택)
+ *   - message: 문의내용 (선택)
+ *   - agree: 개인정보 동의 (필수)
+ *   - replyNotify: 답변알림 수신 (선택)
+ *
+ * 【검증 규칙】
+ * - 필수 항목 누락 시 alert로 안내
+ * - 개인정보 동의 미체크 시 제출 불가
+ * - 제출 성공 시 접수번호 표시 및 폼 초기화
+ *
+ * @component
+ * @author Claude Code
+ * @since 2025-11-02
+ */
+
 import React, { useState } from "react";
 import { createBulkOrder } from "../../order/api/orders";
 import "./BulkOrder.css";
 
+/**
+ * BulkOrder - 단체주문 문의 페이지 컴포넌트
+ *
+ * @description
+ * 기업 및 단체 고객이 대량 주문 문의를 남길 수 있는 폼 페이지입니다.
+ *
+ * 【처리 흐름】
+ * 1. 사용자가 폼 입력
+ * 2. 제출 버튼 클릭 시 onSubmit 핸들러 실행
+ * 3. 필수 항목 검증 (문의자명/업체명/연락처/이메일/개인정보 동의)
+ * 4. createBulkOrder API 호출로 localStorage에 저장
+ * 5. 성공 시 접수번호 alert 표시 및 폼 초기화
+ * 6. 실패 시 오류 메시지 표시
+ *
+ * 【스타일링】
+ * - bulk-grid: 라벨(좌측) + 입력(우측) 2열 그리드 레이아웃
+ * - bulk-label.required: 빨간 별표(*) 표시
+ * - bulk-privacy-box: 스크롤 가능한 개인정보 동의 박스
+ *
+ * 【연동 API】
+ * - createBulkOrder(form): localStorage에 bulkOrders 배열로 저장
+ *   - 새 ID 생성 (타임스탬프 기반)
+ *   - 문의 접수 시간(createdAt) 자동 추가
+ *   - 접수 ID 반환
+ *
+ * @returns {JSX.Element} 단체주문 문의 폼 페이지
+ *
+ * @example
+ * // App.jsx 또는 라우터에서 사용:
+ * <Route path="/bulk-order" element={<BulkOrder />} />
+ */
 export default function BulkOrder() {
   const [form, setForm] = useState({
     inquirerName: "",      // 문의자명
@@ -17,11 +90,43 @@ export default function BulkOrder() {
     replyNotify: false,    // 답변등록 알림톡/SMS 수신
   });
 
+  /**
+   * onChange - 폼 입력 핸들러
+   *
+   * @description
+   * 텍스트 입력 및 체크박스 변경 시 form 상태를 업데이트합니다.
+   *
+   * @param {Event} e - 입력 이벤트
+   * - e.target.name: 입력 필드명
+   * - e.target.value: 입력 값
+   * - e.target.type: 입력 타입 (checkbox/text/email 등)
+   * - e.target.checked: 체크박스 체크 여부
+   */
   const onChange = (e) => {
     const { name, value, type, checked } = e.target;
     setForm((s) => ({ ...s, [name]: type === "checkbox" ? checked : value }));
   };
 
+  /**
+   * onSubmit - 문의 제출 핸들러
+   *
+   * @description
+   * 폼 제출 시 필수 항목 검증 후 createBulkOrder API를 호출하여 저장합니다.
+   *
+   * 【검증 단계】
+   * 1. 문의자명/업체명/연락처/이메일 필수 체크
+   * 2. 개인정보 동의 체크 확인
+   * 3. createBulkOrder 호출로 localStorage 저장
+   * 4. 성공 시 접수번호 표시 및 폼 초기화
+   * 5. 실패 시 오류 메시지 표시
+   *
+   * @param {Event} e - 폼 제출 이벤트
+   *
+   * @example
+   * // 폼 제출 성공 시:
+   * // alert("단체주문 문의가 접수되었습니다.\n접수번호: 1730556789123")
+   * // 폼 초기화되어 빈 입력 상태로 리셋
+   */
   const onSubmit = (e) => {
     e.preventDefault();
 
