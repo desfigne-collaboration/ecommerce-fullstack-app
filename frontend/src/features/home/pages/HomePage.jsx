@@ -1,3 +1,59 @@
+/**
+ * ============================================================================
+ * HomePage.jsx - 홈 페이지 메인
+ * ============================================================================
+ *
+ * 【목적】
+ * - e커머스 사이트 메인 랜딩 페이지
+ * - 프로모션 슬라이드, 브랜드 그리드, 상품 목록, 랭킹, 이벤트 섹션 통합
+ *
+ * 【주요 기능】
+ * 1. **3장 슬라이드 캐러셀**: 9개 슬라이드를 3장씩 묶어 표시, 5초 자동 회전
+ * 2. **인기 브랜드 그리드**: 35개 브랜드를 12개씩 3페이지로 분할 표시
+ * 3. **이벤트 배너**: 첫 구매 할인, 쿠폰 등 프로모션 카드
+ * 4. **상품 그리드**: 위시리스트 토글 기능 포함 (Set 기반 성능 최적화)
+ * 5. **랭킹 섹션**: 카테고리별 인기 상품 4개 표시
+ * 6. **주목할 브랜드**: 기획전 소개 카드
+ * 7. **브랜드 이슈**: 이 주의 브랜드 스토리 4개
+ *
+ * 【데이터 구조】
+ * ```javascript
+ * // 슬라이드 데이터
+ * slides = [
+ *   { title: "8SECONDS", subtitle: "...", desc: "...", image: "https://..." },
+ *   ...
+ * ]
+ *
+ * // 브랜드 데이터
+ * brandData = [
+ *   { logo: "https://...", name: "에잇세컨즈", link: "/brand/8seconds", isImage: true },
+ *   ...
+ * ]
+ *
+ * // 상품 데이터
+ * homeProducts = [
+ *   { id: "P-ANGGAE-1", brand: "anggae", name: "...", image: "...", price: 159000 },
+ *   ...
+ * ]
+ * ```
+ *
+ * 【상태 관리】
+ * - page: 슬라이드 현재 페이지 (0~2)
+ * - activeProductTab: 상품 카테고리 탭 (0~5)
+ * - activeRankingTab: 랭킹 카테고리 탭 (0~8)
+ * - brandPage: 브랜드 페이지 (0~2)
+ * - wishIds: 위시리스트 상품 ID Set (성능 최적화)
+ *
+ * 【위시리스트 처리】
+ * - Set을 사용하여 O(1) 검색 성능
+ * - toggleWishlist() 시 localStorage 업데이트 및 StorageEvent 발행
+ * - Header 위시리스트 카운트 자동 업데이트
+ *
+ * @component
+ * @author Claude Code
+ * @since 2025-11-02
+ */
+
 import React, { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import storage from "../../../utils/storage.js";
@@ -40,13 +96,38 @@ const brandGanni = "https://desfigne.synology.me/data/image/thejoeun/brands/bran
 const brandRagBone = "https://desfigne.synology.me/data/image/thejoeun/brands/brand_rag-and-bone.webp";
 const brandSandsound = "https://desfigne.synology.me/data/image/thejoeun/brands/brand_sand-sound.webp";
 
+/**
+ * Home 함수형 컴포넌트
+ *
+ * @description
+ * e커머스 사이트 메인 홈 페이지. 7개 주요 섹션으로 구성됩니다.
+ *
+ * 【처리 흐름】
+ * 1. **초기 로드**: localStorage에서 wishlist 읽기 → Set 변환
+ * 2. **자동 회전**: 5초마다 슬라이드 페이지 증가 (useEffect)
+ * 3. **위시리스트 토글**:
+ *    - isWishlisted(id) → Set.has() O(1) 검색
+ *    - toggleWishlist(product) → localStorage 업데이트 + StorageEvent 발행
+ * 4. **브랜드 페이지네이션**: 12개씩 3페이지로 분할 표시
+ *
+ * 【섹션 구조】
+ * 1. tri-hero: 3장씩 보이는 슬라이드 캐러셀
+ * 2. popular-brands: 인기 브랜드 12개 (페이지네이션)
+ * 3. event-banner: 이벤트 카드 3개
+ * 4. product-section: 상품 그리드 (위시리스트 토글)
+ * 5. ranking-section: 랭킹 상품 4개
+ * 6. featured-brands: 주목할 브랜드 기획전
+ * 7. brand-story: 이 주의 브랜드 이슈 4개
+ *
+ * @returns {JSX.Element} 홈 페이지 전체 UI
+ */
 export default function Home() {
   const [page, setPage] = useState(0);
   const [activeProductTab, setActiveProductTab] = useState(0);
   const [activeRankingTab, setActiveRankingTab] = useState(0);
   const [brandPage, setBrandPage] = useState(0);
 
-  // ---- NEW: 위시리스트 상태 (id 셋만 캐시해서 빠르게 렌더) ----
+  // ---- 위시리스트 상태 (id 셋만 캐시해서 빠르게 렌더) ----
   const [wishIds, setWishIds] = useState(() => {
     try {
       const w = storage.get("wishlist", []);
@@ -58,6 +139,18 @@ export default function Home() {
 
   const totalPages = 3; // 9장 / 3장씩
 
+  /**
+   * slides - 슬라이드 데이터 (9개)
+   *
+   * @description
+   * 9개 프로모션 슬라이드를 3페이지로 구성. 각 페이지는 3장씩 표시됩니다.
+   *
+   * 【슬라이드 구조】
+   * - title: 브랜드명
+   * - subtitle: 프로모션 제목
+   * - desc: 프로모션 설명
+   * - image: 이미지 URL
+   */
   const slides = useMemo(
     () => [
       { title: "8SECONDS", subtitle: "리즈와 함께면 지금이 리즈", desc: "BEYOND THE REBELS · 2nd Drop", image: "https://desfigne.synology.me/data/image/thejoeun/icons/main1.webp" },
@@ -75,18 +168,34 @@ export default function Home() {
     []
   );
 
+  /**
+   * 슬라이드 자동 회전 (5초마다)
+   */
   useEffect(() => {
     const t = setInterval(() => setPage((p) => (p + 1) % totalPages), 5000);
     return () => clearInterval(t);
   }, []);
 
+  /**
+   * prev - 이전 슬라이드로 이동
+   */
   const prev = () => setPage((p) => (p - 1 + totalPages) % totalPages);
+
+  /**
+   * next - 다음 슬라이드로 이동
+   */
   const next = () => setPage((p) => (p + 1) % totalPages);
 
   const productCategories = ["니트 카디건", "백 & 슈즈", "쥬얼리 & 액세서리", "뷰티 & 향수", "코스메틱", "키즈 & 베이비"];
   const rankingCategories = ["여성", "남성", "키즈", "럭셔리", "백&슈즈", "스포츠", "골프", "뷰티", "라이프"];
 
-  // ---- NEW: 홈 상품 데이터 (아이디/가격/할인/이미지 포함) ----
+  /**
+   * homeProducts - 홈 상품 데이터 (5개)
+   *
+   * @description
+   * 홈 페이지 상품 그리드에 표시할 상품 목록.
+   * 위시리스트 토글 기능을 위해 id, brand, name, image, price 포함.
+   */
   const homeProducts = useMemo(
     () => [
       {
@@ -134,9 +243,31 @@ export default function Home() {
     []
   );
 
-  // ---- NEW: 위시리스트 헬퍼 ----
+  /**
+   * isWishlisted - 위시리스트 포함 여부 확인
+   *
+   * @param {string} id - 상품 ID
+   * @returns {boolean} 위시리스트에 포함되어 있으면 true
+   */
   const isWishlisted = (id) => wishIds.has(id);
 
+  /**
+   * toggleWishlist - 위시리스트 토글
+   *
+   * @description
+   * 상품을 위시리스트에 추가하거나 제거합니다.
+   * localStorage 업데이트 후 StorageEvent를 발행하여 Header 카운트를 업데이트합니다.
+   *
+   * 【처리 흐름】
+   * 1. localStorage에서 wishlist 읽기
+   * 2. 존재 여부 확인 (some)
+   * 3. 존재하면 제거, 없으면 추가
+   * 4. localStorage 저장
+   * 5. wishIds Set 업데이트
+   * 6. StorageEvent 발행
+   *
+   * @param {Object} product - 상품 객체 { id, name, brand, image, price, ... }
+   */
   const toggleWishlist = (product) => {
     try {
       let list = storage.get("wishlist", []);
@@ -168,7 +299,13 @@ export default function Home() {
     }
   };
 
-  // 브랜드 데이터 (총 35개 브랜드)
+  /**
+   * brandData - 브랜드 목록 (35개)
+   *
+   * @description
+   * 인기 브랜드 섹션에 표시할 브랜드 목록.
+   * 12개씩 3페이지로 분할하여 페이지네이션 처리합니다.
+   */
   const brandData = [
     // Page 1 (1-12)
     { logo: brand8Seconds, name: "에잇세컨즈", link: "/brand/8seconds", isImage: true },
@@ -216,15 +353,26 @@ export default function Home() {
   const totalBrandPages = Math.ceil(brandData.length / brandsPerPage);
   const currentBrands = brandData.slice(brandPage * brandsPerPage, (brandPage + 1) * brandsPerPage);
 
+  /**
+   * handleBrandPrev - 브랜드 페이지 이전으로
+   */
   const handleBrandPrev = () => {
     setBrandPage((prev) => (prev - 1 + totalBrandPages) % totalBrandPages);
   };
 
+  /**
+   * handleBrandNext - 브랜드 페이지 다음으로
+   */
   const handleBrandNext = () => {
     setBrandPage((prev) => (prev + 1) % totalBrandPages);
   };
 
-  // 가격 포맷
+  /**
+   * formatPrice - 가격 포맷팅
+   *
+   * @param {number|string} n - 가격
+   * @returns {string} 천 단위 구분자 적용
+   */
   const formatPrice = (n) => (typeof n === "number" ? n.toLocaleString() : n);
 
   return (
@@ -345,7 +493,7 @@ export default function Home() {
             <div className="section-header">
               <h2 className="section-title">고마움과 안부, 마음껏 전할 시간</h2>
 
-              {/* ---- NEW: 위시리스트 페이지로 가는 링크 ---- */}
+              {/* ---- 위시리스트 페이지로 가는 링크 ---- */}
               <div className="category-tabs">
                 {productCategories.map((category, index) => (
                   <button
@@ -369,7 +517,7 @@ export default function Home() {
                   <div className="product-card" key={p.id}>
                     <div className="product-image">
                       <img src={p.image} alt={p.name} />
-                      {/* ---- NEW: 하트 버튼 (토글) ---- */}
+                      {/* ---- 하트 버튼 (토글) ---- */}
                       <button
                         className={`wishlist-btn ${wished ? "active" : ""}`}
                         aria-pressed={wished}
