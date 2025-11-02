@@ -69,3 +69,13 @@ lpt[0-9]
 # Large reference files
 **/presentations/
 **/reference/
+
+# Environment variables (security)
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+**/.env
+**/.env.*
+!.env.example
