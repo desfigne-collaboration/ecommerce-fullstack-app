@@ -358,17 +358,14 @@
     transition: all 0.3s ease;
     cursor: pointer;
     position: relative;
-    border: 1px solid #eee;
 }
 
 .product-card:hover {
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
     transform: translateY(-5px);
 }
 
 .product-image {
     position: relative;
-    padding-bottom: 125%;
     overflow: hidden;
     background: var(--bg-secondary);
 }
