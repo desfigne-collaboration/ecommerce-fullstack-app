@@ -37,6 +37,8 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useLocation, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToCart as addToCartAction } from "../../cart/slice/cartSlice.js";
 import storage from "../../../utils/storage.js";
 import "./ProductDetail.css";
 
@@ -51,6 +53,7 @@ export default function ProductDetail() {
   // ============================================================================
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
   // eslint-disable-next-line no-unused-vars
   const { id } = useParams(); // URL 파라미터 (현재 미사용, 상품 데이터는 state로 전달됨)
 
@@ -149,28 +152,16 @@ export default function ProductDetail() {
       return;
     }
     try {
-      const itemId = `${product.id}-${size}`;
-      const cart = storage.get("cart", []);
-      const idx = cart.findIndex((c) => c.id === itemId);
-      if (idx >= 0) {
-        const cur = Number(cart[idx].qty) || 1;
-        const add = Number(qty) || 1;
-        cart[idx].qty = Math.min(99, cur + add);
-      } else {
-        cart.push({
-          id: itemId,
-          product: {
-            id: product.id,
-            name: product.name || "",
-            image: product.image || product.img,
-            price: normalizedPrice,
-          },
-          size,
-          qty: Number(qty) || 1,
-        });
-      }
-      storage.set("cart", cart);
-      window.dispatchEvent(new StorageEvent("storage", { key: "cart", newValue: JSON.stringify(cart) }));
+      // Redux 액션으로 장바구니에 추가
+      dispatch(addToCartAction({
+        id: product.id,
+        name: product.name || "",
+        image: product.image || product.img,
+        price: normalizedPrice,
+        selectedSize: size,
+        quantity: Number(qty) || 1,
+      }));
+
       alert("장바구니에 담았습니다.");
     } catch (e) {
       console.error(e);

@@ -72,20 +72,51 @@ export const cartItemKey = (item) => {
 
 /**
  * localStorage에서 초기 장바구니 상태 로드
+ *
+ * @description
+ * 기존 형식과 새로운 형식을 모두 지원합니다.
+ * - 기존: { id: "product123-L", product: {...}, size: "L", qty: 2 }
+ * - 새로운: { id: "product123", selectedSize: "L", quantity: 2, name: "...", price: ... }
  */
 const loadCartFromStorage = () => {
   try {
     const saved = localStorage.getItem('cart');
     if (saved) {
       const parsed = JSON.parse(saved);
+      let items = [];
+
       // 배열 형태로 저장된 경우
       if (Array.isArray(parsed)) {
-        return parsed;
+        items = parsed;
       }
       // 객체 형태로 저장된 경우 (items 필드 확인)
-      if (parsed.items && Array.isArray(parsed.items)) {
-        return parsed.items;
+      else if (parsed.items && Array.isArray(parsed.items)) {
+        items = parsed.items;
       }
+
+      // 기존 형식을 새로운 형식으로 변환
+      return items.map(item => {
+        // 이미 새로운 형식인 경우 (quantity, selectedSize 존재)
+        if (item.quantity !== undefined && item.selectedSize !== undefined) {
+          return item;
+        }
+
+        // 기존 형식인 경우 (product 객체, qty, size 존재)
+        if (item.product) {
+          return {
+            id: item.product.id || item.id?.split('-')[0] || item.id,
+            name: item.product.name || "",
+            price: item.product.price || 0,
+            image: item.product.image || item.product.img || "",
+            selectedSize: item.size || "",
+            selectedColor: item.color || "",
+            quantity: item.qty || 1,
+          };
+        }
+
+        // 알 수 없는 형식은 그대로 반환
+        return item;
+      });
     }
   } catch (error) {
     console.error('Failed to load cart from localStorage:', error);

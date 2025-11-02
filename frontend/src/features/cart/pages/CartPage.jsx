@@ -41,8 +41,9 @@
 
 import React, { useEffect, useMemo, useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { selectIsLogin } from "features/auth/slice/authSlice.js";
+import { selectCartItems, updateCartQuantity, removeFromCart, clearCart } from "../slice/cartSlice.js";
 import storage from "../../../utils/storage.js";
 import "./CartPage.css";
 
@@ -56,9 +57,10 @@ export default function CartPage() {
   // Hooks & State
   // ============================================================================
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  /** cart - 장바구니 아이템 목록 (localStorage에서 로드) */
-  const [cart, setCart] = useState([]);
+  /** cart - 장바구니 아이템 목록 (Redux에서 로드) */
+  const cart = useSelector(selectCartItems);
 
   /** selected - 각 아이템의 선택 상태 { id: boolean } */
   const [selected, setSelected] = useState({});
@@ -86,58 +88,33 @@ export default function CartPage() {
   }, [isLogin, navigate]);
 
   /**
-   * localStorage에서 장바구니 데이터 로드
+   * 선택 상태 초기화
    *
    * @description
    * 컴포넌트 마운트 시 실행됩니다.
-   * 1. localStorage에서 장바구니 데이터를 가져옵니다.
-   * 2. 모든 아이템을 기본적으로 선택 상태(true)로 초기화합니다.
-   * 3. JSON 파싱 오류 시 빈 배열로 초기화합니다.
+   * Redux에서 장바구니 데이터를 가져와 모든 아이템을 기본 선택 상태로 초기화합니다.
    */
   useEffect(() => {
-    try {
-      const saved = storage.get("cart", []);
-      setCart(saved);
-
-      // 모든 아이템을 기본 선택 상태로 설정
-      const initSel = {};
-      saved.forEach((i) => {
-        initSel[i.id] = true; // 모두 체크된 상태
-      });
-      setSelected(initSel);
-    } catch {
-      // localStorage 오류 시 초기화
-      setCart([]);
-      setSelected({});
-    }
-  }, []); // 마운트 시 1회만 실행
+    // 모든 아이템을 기본 선택 상태로 설정
+    const initSel = {};
+    cart.forEach((i) => {
+      // cartSlice의 키 생성 방식에 맞춰 고유 키 생성
+      const key = `${i.id}_${i.selectedSize || 'nosize'}_${i.selectedColor || 'nocolor'}`;
+      initSel[key] = true; // 모두 체크된 상태
+    });
+    setSelected(initSel);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cart.length]); // cart 길이 변경 시에만 실행 (의도적으로 cart.length만 사용)
 
   // ============================================================================
-  // Cart Operations (장바구니 조작 함수)
+  // Cart Operations (장바구니 조작 함수) - Redux 사용
   // ============================================================================
 
   /**
-   * saveCart - 장바구니 저장 (state + localStorage + 이벤트 발생)
-   *
-   * @description
-   * 장바구니가 변경될 때마다 호출됩니다.
-   * 1. React state 업데이트 (리렌더링 트리거)
-   * 2. localStorage 저장 (브라우저 새로고침 대비)
-   * 3. StorageEvent 발생 (Header의 장바구니 뱃지 실시간 업데이트)
-   *
-   * @param {Array} next - 새로운 장바구니 배열
-   *
-   * @example
-   * // 상품 1개 삭제
-   * const next = cart.filter(i => i.id !== "product123");
-   * saveCart(next);
-   * // → state 업데이트 + localStorage 저장 + Header 뱃지 업데이트
+   * getItemKey - cartSlice와 동일한 키 생성 함수
    */
-  const saveCart = (next) => {
-    setCart(next); // React state 업데이트
-    storage.set("cart", next); // localStorage 저장
-    // Header 컴포넌트의 storage 이벤트 리스너가 이 이벤트를 감지
-    window.dispatchEvent(new StorageEvent("storage", { key: "cart", newValue: JSON.stringify(next) }));
+  const getItemKey = (item) => {
+    return `${item.id}_${item.selectedSize || 'nosize'}_${item.selectedColor || 'nocolor'}`;
   };
 
   // ============================================================================
@@ -147,10 +124,10 @@ export default function CartPage() {
   /**
    * toggleOne - 개별 아이템 선택/해제 토글
    *
-   * @param {string} id - 아이템 ID
+   * @param {string} key - 아이템 키
    */
-  const toggleOne = (id) =>
-    setSelected((prev) => ({ ...prev, [id]: !prev[id] }));
+  const toggleOne = (key) =>
+    setSelected((prev) => ({ ...prev, [key]: !prev[key] }));
 
   /**
    * allChecked - 전체 선택 여부 (useMemo로 캐싱)
@@ -162,7 +139,7 @@ export default function CartPage() {
    * @type {boolean}
    */
   const allChecked = useMemo(
-    () => cart.length > 0 && cart.every((i) => selected[i.id]),
+    () => cart.length > 0 && cart.every((i) => selected[getItemKey(i)]),
     [cart, selected]
   );
 
@@ -175,7 +152,7 @@ export default function CartPage() {
   const toggleAll = () => {
     const next = {};
     cart.forEach((i) => {
-      next[i.id] = !allChecked; // 현재 전체선택 상태의 반대로 설정
+      next[getItemKey(i)] = !allChecked; // 현재 전체선택 상태의 반대로 설정
     });
     setSelected(next);
   };
@@ -206,104 +183,93 @@ export default function CartPage() {
   }, []);
 
   /**
-   * unitPrice - 상품의 단가 추출
+   * unitPrice - 상품의 단가 추출 (Redux 형식에 맞춰 수정)
    *
-   * @param {Object} p - product 객체
+   * @param {Object} item - 장바구니 아이템
    * @returns {number} 단가
    */
-  const unitPrice = useCallback((p) => parsePrice(p?.price), [parsePrice]);
+  const unitPrice = useCallback((item) => parsePrice(item?.price), [parsePrice]);
 
   /**
-   * linePrice - 상품별 소계 계산 (단가 × 수량)
+   * linePrice - 상품별 소계 계산 (단가 × 수량) (Redux 형식에 맞춰 수정)
    *
-   * @param {Object} i - 장바구니 아이템
+   * @param {Object} item - 장바구니 아이템
    * @returns {number} 소계
    *
    * @example
    * // 단가 50,000원 × 수량 3개 = 150,000원
-   * linePrice({ product: { price: 50000 }, qty: 3 }) // → 150000
+   * linePrice({ price: 50000, quantity: 3 }) // → 150000
    */
-  const linePrice = useCallback((i) => unitPrice(i.product) * Number(i.qty || 1), [unitPrice]);
+  const linePrice = useCallback((item) => unitPrice(item) * Number(item.quantity || 1), [unitPrice]);
 
-  // ✅ 수량 변경 함수들
-  const inc = (id) => {
-    const next = cart.map((i) =>
-      i.id === id
-        ? { ...i, qty: Math.min(99, (Number(i.qty) || 1) + 1) }
-        : i
-    );
-    saveCart(next);
+  // ✅ 수량 변경 함수들 (Redux 사용)
+  const inc = (item) => {
+    const newQty = Math.min(99, (Number(item.quantity) || 1) + 1);
+    dispatch(updateCartQuantity({ item, quantity: newQty }));
   };
 
-  const dec = (id) => {
-    const next = cart.map((i) =>
-      i.id === id
-        ? { ...i, qty: Math.max(1, (Number(i.qty) || 1) - 1) }
-        : i
-    );
-    saveCart(next);
+  const dec = (item) => {
+    const newQty = Math.max(1, (Number(item.quantity) || 1) - 1);
+    dispatch(updateCartQuantity({ item, quantity: newQty }));
   };
 
-  const changeQty = (id, v) => {
+  const changeQty = (item, v) => {
     const n = Math.max(1, Math.min(99, Number(v) || 1));
-    const next = cart.map((i) =>
-      i.id === id ? { ...i, qty: n } : i
-    );
-    saveCart(next);
+    dispatch(updateCartQuantity({ item, quantity: n }));
   };
 
-  // ✅ 삭제
-  const removeOne = (id) => {
-    const next = cart.filter((i) => i.id !== id);
-    saveCart(next);
+  // ✅ 삭제 (Redux 사용)
+  const removeOne = (item) => {
+    const key = getItemKey(item);
+    dispatch(removeFromCart(item));
     setSelected((prev) => {
       const p = { ...prev };
-      delete p[id];
+      delete p[key];
       return p;
     });
   };
 
   const removeSelected = () => {
-    const next = cart.filter((i) => !selected[i.id]);
-    saveCart(next);
-    const ns = {};
-    next.forEach((i) => {
-      ns[i.id] = true;
+    cart.forEach((item) => {
+      const key = getItemKey(item);
+      if (selected[key]) {
+        dispatch(removeFromCart(item));
+      }
     });
-    setSelected(ns);
-  };
-
-  const clearAll = () => {
-    saveCart([]);
     setSelected({});
   };
 
-  // ✅ 선택 상품 필터
+  const clearAllCart = () => {
+    dispatch(clearCart());
+    setSelected({});
+  };
+
+  // ✅ 선택 상품 필터 (Redux 형식에 맞춰 수정)
   const selectedItems = useMemo(
-    () => cart.filter((i) => selected[i.id]),
+    () => cart.filter((item) => selected[getItemKey(item)]),
     [cart, selected]
   );
 
   // ✅ 총합 계산
   const totalPrice = useMemo(
-    () => selectedItems.reduce((s, i) => s + linePrice(i), 0),
+    () => selectedItems.reduce((s, item) => s + linePrice(item), 0),
     [selectedItems, linePrice]
   );
 
-  // ✅ 결제 페이지 이동
+  // ✅ 결제 페이지 이동 (Redux 형식에 맞춰 수정)
   const proceed = () => {
     if (selectedItems.length === 0) {
       alert("결제할 상품을 선택해주세요.");
       return;
     }
 
-    const payload = selectedItems.map((i) => ({
-      id: i.id,
-      name: i.product?.name || "",
-      image: i.product?.image || i.product?.img || "",
-      price: parsePrice(i.product?.price),
-      qty: Number(i.qty || 1),
-      size: i.size || "",
+    const payload = selectedItems.map((item) => ({
+      id: item.id,
+      name: item.name || "",
+      image: item.image || "",
+      price: parsePrice(item.price),
+      qty: Number(item.quantity || 1),
+      size: item.selectedSize || "",
     }));
 
     if (payload.length === 0) {
@@ -341,51 +307,52 @@ export default function CartPage() {
               <button className="btn" onClick={removeSelected}>
                 선택삭제
               </button>
-              <button className="btn-danger" onClick={clearAll}>
+              <button className="btn-danger" onClick={clearAllCart}>
                 전체삭제
               </button>
             </div>
           </div>
 
           <div className="cart-list">
-            {cart.map((i) => {
-              const unit = unitPrice(i.product);
-              const sub = linePrice(i);
-              const imgSrc = i.product?.image || i.product?.img;
+            {cart.map((item) => {
+              const itemKey = getItemKey(item);
+              const unit = unitPrice(item);
+              const sub = linePrice(item);
+              const imgSrc = item.image;
 
               return (
-                <div className="cart-item" key={i.id}>
+                <div className="cart-item" key={itemKey}>
                   <label className="chk">
                     <input
                       type="checkbox"
-                      checked={!!selected[i.id]}
-                      onChange={() => toggleOne(i.id)}
+                      checked={!!selected[itemKey]}
+                      onChange={() => toggleOne(itemKey)}
                     />
                   </label>
 
                   <img
                     className="cart-img"
                     src={imgSrc || "/images/placeholder.png"}
-                    alt={i.product?.name}
+                    alt={item.name}
                   />
 
                   <div className="cart-info">
                     <div className="cart-name">
-                      {i.product?.name || "상품"}
+                      {item.name || "상품"}
                     </div>
-                    <div className="cart-meta">사이즈: {i.size}</div>
+                    <div className="cart-meta">사이즈: {item.selectedSize || "-"}</div>
                     <div className="cart-meta">
                       단가: ₩{unit.toLocaleString()}
                     </div>
                   </div>
 
                   <div className="cart-qty">
-                    <button onClick={() => dec(i.id)}>-</button>
+                    <button onClick={() => dec(item)}>-</button>
                     <input
-                      value={i.qty}
-                      onChange={(e) => changeQty(i.id, e.target.value)}
+                      value={item.quantity}
+                      onChange={(e) => changeQty(item, e.target.value)}
                     />
-                    <button onClick={() => inc(i.id)}>+</button>
+                    <button onClick={() => inc(item)}>+</button>
                   </div>
 
                   <div className="cart-sub">
@@ -394,7 +361,7 @@ export default function CartPage() {
 
                   <button
                     className="btn-danger"
-                    onClick={() => removeOne(i.id)}
+                    onClick={() => removeOne(item)}
                   >
                     삭제
                   </button>
