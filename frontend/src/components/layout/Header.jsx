@@ -67,6 +67,7 @@
 import "./Header.css";
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUser, selectIsLogin, logout } from "../../features/auth/slice/authSlice";
+import { selectCartCount } from "../../features/cart/slice/cartSlice";
 import { getLogout } from "../../features/auth/api/authAPI.js";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import React, { useEffect, useState, useRef, useMemo } from "react";
@@ -145,6 +146,7 @@ export default function Header() {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);          // 로그인한 사용자 정보
   const isLogin = useSelector(selectIsLogin);    // 로그인 여부
+  const cartCount = useSelector(selectCartCount); // 장바구니 아이템 개수 (Redux에서 가져옴)
 
   const location = useLocation();  // 현재 URL 정보
   const navigate = useNavigate();  // 페이지 이동 함수
@@ -153,8 +155,7 @@ export default function Header() {
   // ============================================================
   // 로컬 상태 관리
   // ============================================================
-  // 장바구니 & 찜 카운트
-  const [cartCount, setCartCount] = useState(0);
+  // 찜 카운트
   const [wishCount, setWishCount] = useState(0);
 
   // UI 상태
@@ -221,17 +222,15 @@ export default function Header() {
   ];
 
   // ============================================================
-  // Effect: 장바구니/찜/최근검색어 동기화
+  // Effect: 찜/최근검색어 동기화
   // ============================================================
   /**
    * @description
-   * localStorage의 cart, wishlist, recentSearches 데이터를 읽어와
+   * localStorage의 wishlist, recentSearches 데이터를 읽어와
    * 상태에 반영합니다. storage 이벤트를 통해 다른 탭과 동기화됩니다.
+   * (장바구니는 Redux store에서 자동 관리)
    */
   useEffect(() => {
-    const updateCartCount = () => {
-      try { setCartCount((storage.get("cart", [])).length); } catch { setCartCount(0); }
-    };
     const updateWishCount = () => {
       try { setWishCount((storage.get("wishlist", [])).length); } catch { setWishCount(0); }
     };
@@ -241,12 +240,11 @@ export default function Header() {
     const sync = (e) => {
       // StorageEvent를 통한 동기화
       if (e && e.key) {
-        if (e.key === "cart") updateCartCount();
-        else if (e.key === "wishlist") updateWishCount();
+        if (e.key === "wishlist") updateWishCount();
+        // cart는 Redux가 자동으로 처리하므로 제거
         // auth 관련은 Redux가 자동으로 처리하므로 제거
       } else {
-        // 초기 로드 시 카트/위시만 동기화
-        updateCartCount();
+        // 초기 로드 시 위시만 동기화
         updateWishCount();
       }
     };

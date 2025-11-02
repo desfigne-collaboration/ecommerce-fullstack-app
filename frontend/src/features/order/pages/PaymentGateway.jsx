@@ -1,6 +1,8 @@
 // src/pages/order/PaymentGateway.jsx
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { clearCart } from "../../../features/cart/slice/cartSlice.js";
 import storage from "../../../utils/storage.js";
 
 // 금액 포맷/숫자화 유틸
@@ -11,6 +13,7 @@ const toNumber = (v) =>
 export default function PaymentGateway() {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
   const [method, setMethod] = useState(""); // toss / kakao / naver
   const [processing, setProcessing] = useState(false);
   const [secLeft, setSecLeft] = useState(5);
@@ -105,11 +108,8 @@ export default function PaymentGateway() {
       storage.remove("cartCheckout");
       storage.remove("lastPayment");
 
-      // 장바구니 비우기 (헤더 카운트 갱신 이벤트 발송)
-      storage.set("cart", []);
-      try {
-        window.dispatchEvent(new StorageEvent("storage", { key: "cart", newValue: "[]" }));
-      } catch {}
+      // 장바구니 비우기 (Redux를 통해 자동으로 localStorage 저장 & 헤더 카운트 갱신)
+      dispatch(clearCart());
 
       // 4) 성공 페이지로 이동
       navigate("/order/success", { state: { order } });
