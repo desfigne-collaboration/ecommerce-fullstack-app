@@ -1,10 +1,58 @@
+/**
+ * ============================================================================
+ * BrandDetail.jsx - 브랜드 상세 페이지
+ * ============================================================================
+ *
+ * 【목적】
+ * - 브랜드별 상세 정보 표시 (타이틀, 설명, 혜택 등)
+ * - 브랜드별 추천 상품 목록 (바로구매 지원)
+ * - LOOKBOOK 이미지 갤러리
+ * - 오프라인 매장 정보
+ *
+ * 【주요 기능】
+ * 1. **브랜드 데이터 로드**: brands.json에서 brandId로 브랜드 정보 조회
+ * 2. **HERO 섹션**: 브랜드 배지, 타이틀, 설명, CTA 버튼
+ * 3. **추천 상품**: 상품 카드 + 사이즈 선택 + 바로구매 (buyNow 유틸 사용)
+ * 4. **혜택/쿠폰**: 신규 회원 웰컴 쿠폰, 멤버십 혜택, 배송/반품 정책
+ * 5. **LOOKBOOK**: 시즌별 스타일링 이미지 갤러리
+ * 6. **오프라인 매장**: 플래그십 스토어 정보 + 길찾기 링크
+ *
+ * 【사이즈 선택 UI】
+ * - 각 상품 카드마다 독립적인 사이즈 선택 박스
+ * - "바로구매" 버튼 클릭 시 사이즈 선택 박스 토글
+ * - 사이즈 선택 후 "구매 진행" 버튼 활성화
+ * - buyNow() 유틸로 즉시 구매 플로우 진행
+ *
+ * 【경로 예시】
+ * - /brand/nike → Nike 브랜드 상세 페이지
+ * - /brand/adidas → Adidas 브랜드 상세 페이지
+ *
+ * 【State 관리】
+ * - openSku: 현재 사이즈 선택 박스가 열려있는 상품 ID
+ * - pickedSize: { [상품ID]: "M" } 형태로 각 상품의 선택된 사이즈 저장
+ *
+ * @component
+ * @author Claude Code
+ * @since 2025-11-02
+ */
+
 import React, { useMemo, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import brandsData from "../data/brands.json";
 import { buyNow } from "../../../utils/buynow";
 import "./BrandDetail.css";
 
-/** 외부/내부 이미지 경로 안전 보정 */
+/**
+ * srcOf - 외부/내부 이미지 경로 안전 보정
+ *
+ * @description
+ * 이미지 경로를 절대 URL로 변환합니다.
+ * 외부 URL은 그대로 반환하고, 로컬 경로는 PUBLIC_URL 기준으로 변환합니다.
+ * 이미지가 없으면 Unsplash 기본 이미지를 반환합니다.
+ *
+ * @param {string} raw - 원본 이미지 경로
+ * @returns {string} 절대 이미지 URL
+ */
 const srcOf = (raw) => {
   const s = String(raw || "").trim();
   if (!s)
@@ -13,9 +61,46 @@ const srcOf = (raw) => {
   return `${process.env.PUBLIC_URL || ""}/${s.replace(/^\/+/, "")}`;
 };
 
-// 간단 사이즈
+/**
+ * SIZES - 사이즈 옵션 배열
+ *
+ * @constant {string[]}
+ * @description 바로구매 시 선택 가능한 사이즈 목록
+ */
 const SIZES = ["XS", "S", "M", "L", "XL"];
 
+/**
+ * BrandDetail 함수형 컴포넌트
+ *
+ * @description
+ * 브랜드 상세 정보, 추천 상품, LOOKBOOK, 오프라인 매장 정보를 표시하는 페이지.
+ *
+ * 【처리 흐름】
+ * 1. **브랜드 데이터 로드**: useParams로 brandId 추출 → brandsData에서 조회
+ * 2. **상품 총액 계산**: useMemo로 브랜드 상품 가격 합계 계산
+ * 3. **사이즈 선택 관리**: openSku, pickedSize state로 각 상품별 사이즈 선택 추적
+ * 4. **바로구매 처리**: buyNow() 유틸로 즉시 구매 플로우 진행
+ * 5. **렌더링**: HERO + 추천 상품 + 혜택 + LOOKBOOK + 오프라인 매장
+ *
+ * 【주요 함수】
+ * - openPicker: 사이즈 선택 박스 토글
+ * - onPickSize: 사이즈 선택 시 상태 업데이트
+ * - onBuy: buyNow() 호출하여 즉시 구매 플로우 시작
+ *
+ * 【바로구매 플로우】
+ * 1. "바로구매" 버튼 클릭 → openPicker() → 사이즈 선택 박스 열림
+ * 2. 사이즈 선택 → onPickSize() → pickedSize state 업데이트
+ * 3. "구매 진행" 버튼 클릭 → onBuy() → buyNow() 호출
+ * 4. buyNow()가 pendingCheckout을 localStorage에 저장
+ * 5. /order/checkout?mode=buynow로 navigate
+ *
+ * @returns {JSX.Element} 브랜드 상세 페이지 UI
+ *
+ * @example
+ * // /brand/nike 경로 접근 시
+ * <BrandDetail />
+ * // → Nike 브랜드 정보, 추천 상품, LOOKBOOK 표시
+ */
 export default function BrandDetail() {
   const navigate = useNavigate();
   const { brandId } = useParams();

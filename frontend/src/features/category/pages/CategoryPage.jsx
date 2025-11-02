@@ -1,3 +1,40 @@
+/**
+ * ============================================================================
+ * CategoryPage.jsx - 카테고리별 상품 목록 페이지
+ * ============================================================================
+ *
+ * 【목적】
+ * - 카테고리(women, men, kids 등) 및 서브카테고리(outer, jacket 등)별 상품 목록 표시
+ * - Redux 기반 위시리스트 통합 (실시간 토글)
+ * - Breadcrumb 네비게이션 제공
+ * - 상품 클릭 시 상세 페이지 이동
+ *
+ * 【주요 기능】
+ * 1. **경로 기반 카테고리 감지**: URL pathname에서 카테고리/서브카테고리 추출
+ * 2. **CATEGORY_DATA 기반 메타 정보**: 탭, 제목, 상품 개수 등
+ * 3. **Redux Wishlist 연동**: selectWishlistItems로 찜 목록 조회, toggleWishlistAction으로 토글
+ * 4. **상품 데이터 로드**: getProductsByCategory()로 카테고리별 상품 배열 가져오기
+ * 5. **Breadcrumb**: Home > 카테고리 > 서브카테고리
+ * 6. **이미지 폴백**: onError 핸들러로 placeholder 표시
+ *
+ * 【경로 예시】
+ * - /women → women 전체 (main)
+ * - /women/outer → women 아우터
+ * - /men/jacket → men 재킷
+ *
+ * 【Redux State】
+ * - wishlistItems: Redux에서 관리하는 위시리스트 배열
+ * - toggleWishlistAction: 위시리스트 추가/제거 액션
+ *
+ * 【주요 함수】
+ * - toggleWishlist: 위시리스트 토글 (Redux 액션 디스패치)
+ * - goToProductDetail: 상품 상세 페이지 이동 (localStorage 저장 + navigate)
+ *
+ * @component
+ * @author Claude Code
+ * @since 2025-11-02
+ */
+
 // src/pages/CategoryPage.jsx
 import React, { useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -9,7 +46,16 @@ import storage from "../../../utils/storage.js";
 import "../../../styles/Page.css";
 import "../../../styles/CategoryPage.css";
 
-// 이미지 경로 보정(그대로)
+/**
+ * srcOf - 이미지 경로 보정 (간소화 버전)
+ *
+ * @description
+ * 상품 객체에서 이미지 경로를 추출하고 절대 URL로 변환합니다.
+ * 외부 URL은 그대로 반환하고, 로컬 경로는 PUBLIC_URL 기준으로 변환합니다.
+ *
+ * @param {Object} p - 상품 객체 (image 또는 img 속성 포함)
+ * @returns {string} 절대 이미지 URL
+ */
 const srcOf = (p) => {
   const url = p?.image || p?.img || "";
   if (!url) return `${process.env.PUBLIC_URL}/images/placeholder.png`;
@@ -20,15 +66,54 @@ const srcOf = (p) => {
     : `${process.env.PUBLIC_URL}/images/${cleaned}`;
 };
 
-// 가격 포맷(그대로)
+/**
+ * formatPrice - 가격 포맷팅
+ *
+ * @description
+ * 숫자 또는 문자열 가격을 한국 원화 형식으로 변환합니다.
+ * 천 단위 콤마를 추가하고 "원" 단위를 붙입니다.
+ *
+ * @param {string|number} v - 가격 값
+ * @returns {string} "50,000원" 형태의 포맷된 가격
+ */
 const formatPrice = (v) => {
   const n = typeof v === "number" ? v : Number(String(v).replace(/[^\d]/g, "")) || 0;
   return n.toLocaleString() + "원";
 };
 
-// id 없을 수 있으니 보정
+/**
+ * pidOf - 상품 ID 추출/생성
+ *
+ * @description
+ * 상품 객체에서 ID를 추출합니다. 여러 속성을 우선순위에 따라 시도하고,
+ * 모두 없으면 productKey 헬퍼 또는 인덱스 기반 ID를 생성합니다.
+ *
+ * @param {Object} p - 상품 객체
+ * @param {number} idx - 배열 인덱스 (폴백용)
+ * @returns {string} 상품 ID
+ */
 const pidOf = (p, idx) => p?.id ?? p?.code ?? p?.pid ?? productKey(p) ?? `cat-${idx}`;
 
+/**
+ * CategoryPage 함수형 컴포넌트
+ *
+ * @description
+ * 카테고리별 상품 목록을 표시하는 메인 페이지 컴포넌트.
+ * Redux 위시리스트 통합, 경로 기반 카테고리 감지, Breadcrumb 네비게이션 제공.
+ *
+ * 【처리 흐름】
+ * 1. **경로 파싱**: pathname에서 categoryKey, subcategoryKey 추출
+ * 2. **데이터 로드**: CATEGORY_DATA에서 메타 정보 가져오기
+ * 3. **상품 로드**: getProductsByCategory()로 상품 배열 가져오기
+ * 4. **위시리스트 연동**: Redux에서 위시리스트 상태 조회
+ * 5. **렌더링**: Breadcrumb + 탭 + 상품 그리드
+ *
+ * 【State】
+ * - activeTab: 현재 활성 탭 ("전체", "아우터" 등)
+ * - products: 현재 카테고리의 상품 배열
+ *
+ * @returns {JSX.Element} 카테고리 페이지 UI
+ */
 export default function CategoryPage() {
   const location = useLocation();
   const navigate = useNavigate();
