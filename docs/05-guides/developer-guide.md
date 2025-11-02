@@ -1,7 +1,7 @@
 # E-commerce Fullstack App - 개발자 가이드
 
 > **Version:** 1.0.0
-> **Last Updated:** 2025-10-22
+> **Last Updated:** 2025-11-02
 > **Target Audience:** 신규 개발자, 기여자, DevOps 엔지니어
 
 ---
@@ -1097,5 +1097,5 @@ mysql -u root -p -e "SELECT 1"
 ---
 
 **문서 관리자:** 개발팀
-**최종 수정일:** 2025-10-22
+**최종 수정일:** 2025-11-02
 **문의:** dev-team@ecommerce-app.com

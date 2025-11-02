@@ -3,9 +3,9 @@
 SSF Shop을 벤치마킹한 **풀스택 쇼핑몰 프로젝트** (React + Redux + Spring Boot)
 
 [![Java](https://img.shields.io/badge/Java-21-007396?logo=java)](https://www.oracle.com/java/)
-[![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.5.6-6DB33F?logo=spring-boot)](https://spring.io/projects/spring-boot)
+[![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.5.7-6DB33F?logo=spring-boot)](https://spring.io/projects/spring-boot)
 [![React](https://img.shields.io/badge/React-19.1.1-61DAFB?logo=react)](https://reactjs.org)
-[![Redux](https://img.shields.io/badge/Redux-2.9.0-764ABC?logo=redux)](https://redux-toolkit.js.org/)
+[![Redux](https://img.shields.io/badge/Redux-2.9.2-764ABC?logo=redux)](https://redux-toolkit.js.org/)
 [![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?logo=mysql)](https://www.mysql.com/)
 
 ---
@@ -14,7 +14,7 @@ SSF Shop을 벤치마킹한 **풀스택 쇼핑몰 프로젝트** (React + Redux 
 
 본 프로젝트는 패션 쇼핑몰 **[SSF Shop](https://www.ssfshop.com)**을 모델로 구현한 **Multi-module Gradle 풀스택 웹 애플리케이션**입니다.
 
-Spring Boot 3.5.6 기반 백엔드와 React 19.1.1 + Redux Toolkit 2.9.0 기반 프론트엔드로 구성되어 있으며, 실무 수준의 쇼핑몰 구현과 협업형 개발 프로세스 경험을 목표로 합니다.
+Spring Boot 3.5.7 기반 백엔드와 React 19.1.1 + Redux Toolkit 2.9.2 기반 프론트엔드로 구성되어 있으며, 실무 수준의 쇼핑몰 구현과 협업형 개발 프로세스 경험을 목표로 합니다.
 
 **프로젝트 특징**:
 - **멀티 모듈 구조**: Gradle 기반 backend + frontend 통합 프로젝트
@@ -42,13 +42,13 @@ Spring Boot 3.5.6 기반 백엔드와 React 19.1.1 + Redux Toolkit 2.9.0 기반 
 | 구분 | 기술명 | 버전 |
 |------|--------|------|
 | **프로그래밍 언어** | Java | 21 |
-| **프레임워크** | Spring Boot | 3.5.6 |
+| **프레임워크** | Spring Boot | 3.5.7 |
 | **빌드 도구** | Gradle | 7.x+ |
 | **데이터베이스** | MySQL | 8.0 |
 | **JDBC 드라이버** | MySQL Connector | 8.0.31 |
-| **보안** | Spring Security | 3.5.6 |
+| **보안** | Spring Security | 3.5.7 |
 | **데이터 액세스** | Spring JDBC (JdbcTemplate) | - |
-| **유틸리티** | Lombok | 1.18.34 |
+| **유틸리티** | Lombok | 1.18.42 |
 
 **주요 의존성**:
 ```gradle
@@ -64,7 +64,7 @@ compileOnly 'org.projectlombok:lombok:1.18.34'
 | 구분 | 기술명 | 버전 |
 |------|--------|------|
 | **프레임워크** | React | 19.1.1 |
-| **상태 관리** | Redux Toolkit | 2.9.0 |
+| **상태 관리** | Redux Toolkit | 2.9.2 |
 | **라우팅** | React Router | 7.9.1 |
 | **HTTP 클라이언트** | Axios | 1.12.2 |
 | **아이콘** | React Icons | 5.5.0 |
@@ -378,5 +378,5 @@ SSF Shop을 벤치마킹 대상으로 선정하여 실무 수준의 쇼핑몰 �
 ---
 
 **프로젝트 버전**: 1.0.0
-**최종 업데이트**: 2025-10-31
+**최종 업데이트**: 2025-11-02
 **벤치마킹**: [SSF Shop](https://www.ssfshop.com)

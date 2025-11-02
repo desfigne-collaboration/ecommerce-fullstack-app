@@ -5,7 +5,7 @@ React 19 + Redux Toolkit 기반의 이커머스 프론트엔드 애플리케이�
 ## 기술 스택
 
 - **React** 19.1.1
-- **Redux Toolkit** 2.9.0
+- **Redux Toolkit** 2.9.2
 - **React Router** 7.9.1
 - **Axios** 1.12.2
 - **React Icons** 5.5.0
