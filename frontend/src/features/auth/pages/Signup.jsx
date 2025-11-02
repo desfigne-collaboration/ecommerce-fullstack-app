@@ -1,4 +1,49 @@
-// src/pages/auth/Signup.jsx
+/**
+ * ============================================================================
+ * Signup.jsx - 회원가입 페이지 컴포넌트
+ * ============================================================================
+ *
+ * 【목적】
+ * - 신규 사용자 회원가입 UI 제공
+ * - 실시간 폼 유효성 검증 (이메일 중복 체크, 비밀번호 강도 검사)
+ * - 이용약관 동의 관리 (필수/선택 약관 구분)
+ * - 마케팅 수신 동의 채널별 관리
+ *
+ * 【주요 기능】
+ * 1. **복잡한 상태 관리**: 5개의 독립적인 useState 훅 사용
+ *    - form: 입력 필드 데이터
+ *    - agreements: 약관 동의 체크박스
+ *    - marketingChannels: 마케팅 수신 채널 (SMS/이메일/DM/TM)
+ *    - validation: 실시간 유효성 검증 결과
+ *    - passwordChecks: 비밀번호 조건 체크 (조합/길이)
+ *
+ * 2. **실시간 유효성 검증**:
+ *    - 이메일: 형식 검증 + localStorage 중복 체크
+ *    - 비밀번호: 2가지 이상 조합 (영문/숫자/특수문자) + 4자 이상
+ *    - 비밀번호 확인: 원본 비밀번호와 일치 여부
+ *
+ * 3. **Prefill 기능**: 휴대폰 인증 페이지에서 전달된 이름/번호 자동 입력
+ *
+ * 4. **약관 계층 구조**:
+ *    - 필수 전체 동의 → 만 14세, 이용약관, 개인정보, 멤버십 일괄 체크
+ *    - 마케팅 동의 → SMS/이메일/DM/TM 하위 채널 연동
+ *
+ * 5. **신규 가입 쿠폰**: 회원가입 성공 시 자동으로 10,000원 쿠폰 발급
+ *
+ * 【상태 관리 복잡도】
+ * - useState 총 9개 사용 (form, agreements, marketingChannels, etc.)
+ * - useEffect 2개: prefill 처리, 마케팅 채널 <-> 마케팅 동의 동기화
+ *
+ * 【라우팅】
+ * - 경로: /signup
+ * - 회원가입 성공 시 → "/login" (아이디 prefill 전달)
+ * - 휴대폰 인증에서 이동 시 → location.state로 이름/번호 자동 입력
+ *
+ * @component
+ * @author Claude Code
+ * @since 2025-11-02
+ */
+
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from 'react-redux';
@@ -7,11 +52,37 @@ import { issueWelcomeCoupon } from "../slice/authSlice";
 import "./Signup.css";
 import { getSignup } from '../api/authAPI.js';
 
+/**
+ * Signup 함수형 컴포넌트
+ *
+ * @returns {JSX.Element} 회원가입 페이지 UI
+ */
 export default function Signup() {
+  // ============================================================================
+  // Hooks
+  // ============================================================================
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
+  const location = useLocation(); // 휴대폰 인증에서 전달된 데이터 수신용
 
+  // ============================================================================
+  // State: Form Data (사용자 입력 데이터)
+  // ============================================================================
+  /**
+   * form - 회원가입 폼 입력 데이터
+   *
+   * @description
+   * 사용자가 입력하는 모든 필드를 관리합니다.
+   * Controlled Component 패턴으로 실시간 업데이트됩니다.
+   *
+   * @type {Object}
+   * @property {string} name - 이름 (필수, 2자 이상)
+   * @property {string} email - 이메일 (필수, 중복 체크)
+   * @property {string} password - 비밀번호 (필수, 4자 이상, 2가지 조합)
+   * @property {string} passwordCheck - 비밀번호 확인 (필수, password와 일치)
+   * @property {string} phone - 휴대폰 번호 (선택, 10-11자리)
+   * @property {string} referralId - 추천인 ID (선택)
+   */
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -21,6 +92,23 @@ export default function Signup() {
     referralId: "",
   });
 
+  // ============================================================================
+  // State: Agreements (약관 동의)
+  // ============================================================================
+  /**
+   * agreements - 이용약관 동의 상태
+   *
+   * @description
+   * 회원가입 시 필수/선택 약관 동의 여부를 관리합니다.
+   * 필수 항목이 모두 체크되지 않으면 가입 불가능합니다.
+   *
+   * @type {Object}
+   * @property {boolean} age14 - [필수] 만 14세 이상
+   * @property {boolean} termsOfUse - [필수] 온라인사이트 이용약관
+   * @property {boolean} privacy - [필수] 개인정보 수집 및 이용동의
+   * @property {boolean} membership - [필수] 멤버십 이용약관
+   * @property {boolean} marketing - [선택] 마케팅 정보 수집 및 이용동의
+   */
   const [agreements, setAgreements] = useState({
     age14: false,
     termsOfUse: false,
@@ -29,6 +117,23 @@ export default function Signup() {
     marketing: false,
   });
 
+  // ============================================================================
+  // State: Marketing Channels (마케팅 수신 채널)
+  // ============================================================================
+  /**
+   * marketingChannels - 마케팅 정보 수신 채널 선택
+   *
+   * @description
+   * 마케팅 정보를 받을 채널을 개별 선택합니다.
+   * 모든 채널이 체크되면 agreements.marketing도 자동 체크됩니다.
+   * (useEffect로 동기화)
+   *
+   * @type {Object}
+   * @property {boolean} sms - SMS 및 알림톡
+   * @property {boolean} email - 이메일
+   * @property {boolean} dm - DM (우편물)
+   * @property {boolean} tm - TM (전화)
+   */
   const [marketingChannels, setMarketingChannels] = useState({
     sms: false,
     email: false,
@@ -36,6 +141,16 @@ export default function Signup() {
     tm: false,
   });
 
+  // ============================================================================
+  // State: UI Interaction (UI 인터랙션)
+  // ============================================================================
+  /**
+   * expandedTerms - 약관 내용 펼침/접힘 상태
+   *
+   * @description
+   * 각 약관의 상세 내용을 보여줄지 여부를 관리합니다.
+   * 토글 버튼 클릭 시 true/false 전환됩니다.
+   */
   const [expandedTerms, setExpandedTerms] = useState({
     termsOfUse: false,
     privacy: false,
@@ -44,15 +159,45 @@ export default function Signup() {
     marketingChannels: false,
   });
 
+  /** showPassword - 비밀번호 표시/숨김 토글 */
   const [showPassword, setShowPassword] = useState(false);
+
+  /** showPasswordCheck - 비밀번호 확인 표시/숨김 토글 */
   const [showPasswordCheck, setShowPasswordCheck] = useState(false);
+
+  // ============================================================================
+  // State: Validation (실시간 유효성 검증 결과)
+  // ============================================================================
+  /**
+   * validation - 입력 필드 유효성 검증 결과
+   *
+   * @description
+   * 각 필드의 유효성 검사 결과를 저장합니다.
+   * valid: null (미검증), true (통과), false (실패)
+   * message: 사용자에게 표시할 안내 메시지
+   *
+   * @type {Object}
+   * @property {Object} email - 이메일 검증 결과
+   * @property {Object} password - 비밀번호 검증 결과
+   * @property {Object} passwordCheck - 비밀번호 확인 검증 결과
+   */
   const [validation, setValidation] = useState({
     email: { valid: null, message: "" },
     password: { valid: null, message: "" },
     passwordCheck: { valid: null, message: "" },
   });
 
-  // 조건별 체크 상태
+  /**
+   * passwordChecks - 비밀번호 조건별 체크 상태
+   *
+   * @description
+   * 비밀번호 입력 시 각 조건의 만족 여부를 실시간으로 표시합니다.
+   * UI에서 체크마크로 시각화됩니다.
+   *
+   * @type {Object}
+   * @property {boolean} combination - 영문/숫자/특수문자 중 2가지 이상 조합
+   * @property {boolean} minLength - 4자 이상
+   */
   const [passwordChecks, setPasswordChecks] = useState({
     combination: false,
     minLength: false,
