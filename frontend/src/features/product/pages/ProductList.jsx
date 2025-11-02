@@ -634,8 +634,8 @@ export default function ProductList() {
           )}
         </div>
 
-        {/* Brand Logos */}
-        {!isSearchMode && (
+        {/* Brand Logos - 임시 비활성화 (이미지 파일 없음) */}
+        {/* {!isSearchMode && (
           <div className="brand-logos-section">
             {brandLogos.map((brand, idx) => {
               const { src, candidates } = srcOf(brand.img);
@@ -652,7 +652,7 @@ export default function ProductList() {
               );
             })}
           </div>
-        )}
+        )} */}
 
         {/* Tabs */}
         {!isSearchMode && (
