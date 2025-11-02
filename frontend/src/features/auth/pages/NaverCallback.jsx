@@ -1,9 +1,55 @@
+/**
+ * ============================================================================
+ * NaverCallback.jsx - 네이버 OAuth 로그인 콜백 처리 페이지
+ * ============================================================================
+ *
+ * 【목적】
+ * - 네이버 OAuth 2.0 인증 흐름의 리다이렉트 엔드포인트
+ * - 네이버 로그인 SDK를 통한 자동 로그인 처리
+ * - HashRouter 환경에서 access_token 추출
+ *
+ * 【OAuth 2.0 흐름 (Implicit Grant)】
+ * 1. 사용자가 NaverLoginButton 클릭
+ * 2. 네이버 로그인 페이지로 리다이렉트
+ * 3. 사용자 동의 후 이 페이지로 리다이렉트 (URL fragment에 access_token 포함)
+ * 4. URL에서 access_token 추출
+ * 5. 네이버 SDK로 사용자 정보 조회
+ * 6. Redux 로그인 처리 + 메인 페이지 이동
+ *
+ * 【특수 처리: HashRouter 대응】
+ * React HashRouter 사용 시 URL이 `#/naver/callback#access_token=...` 형태가 됨
+ * 정규식으로 직접 access_token을 추출하여 SDK에 수동 설정
+ *
+ * 【환경 변수】
+ * - REACT_APP_NAVER_CLIENT_ID: 네이버 클라이언트 ID
+ * - REACT_APP_NAVER_CALLBACK_URL: 이 페이지 URL
+ *
+ * 【Fallback 처리】
+ * - SDK 없음 → 기본 사용자 정보로 로그인 (개발 환경용)
+ * - SDK 실패 → access_token 기반 기본 사용자 생성
+ *
+ * 【네이버 SDK 메서드】
+ * - new window.naver.LoginWithNaverId(): SDK 초기화
+ * - naverLogin.init(): SDK 시작
+ * - naverLogin.getLoginStatus(): 로그인 상태 및 사용자 정보 조회
+ * - naverLogin.user.getEmail/getName/getId(): 사용자 정보 추출
+ *
+ * @component
+ * @author Claude Code
+ * @since 2025-11-02
+ */
+
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import storage from "../../../utils/storage.js";
 import { login } from "../slice/authSlice";
 
+/**
+ * NaverCallback 함수형 컴포넌트
+ *
+ * @returns {JSX.Element} 로딩 화면 UI
+ */
 export default function NaverCallback() {
   const navigate = useNavigate();
   const dispatch = useDispatch();

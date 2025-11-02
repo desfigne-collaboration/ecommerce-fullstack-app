@@ -1,9 +1,55 @@
+/**
+ * ============================================================================
+ * KakaoCallback.jsx - 카카오 OAuth 로그인 콜백 처리 페이지
+ * ============================================================================
+ *
+ * 【목적】
+ * - 카카오 OAuth 2.0 인증 흐름의 리다이렉트 엔드포인트
+ * - 인가 코드를 받아 액세스 토큰으로 교환
+ * - 사용자 정보를 가져와 자동 로그인 처리
+ *
+ * 【OAuth 2.0 흐름】
+ * 1. 사용자가 KakaoLoginButton 클릭
+ * 2. 카카오 로그인 페이지로 리다이렉트
+ * 3. 사용자 동의 후 이 페이지로 리다이렉트 (code 파라미터 포함)
+ * 4. 인가 코드 → 액세스 토큰 교환 (POST /oauth/token)
+ * 5. 액세스 토큰으로 사용자 정보 조회 (GET /v2/user/me)
+ * 6. Redux 로그인 처리 + 메인 페이지 이동
+ *
+ * 【환경 변수】
+ * - REACT_APP_KAKAO_REST_API_KEY: 카카오 REST API 키
+ * - REACT_APP_KAKAO_CLIENT_SECRET: 카카오 클라이언트 시크릿
+ * - REACT_APP_KAKAO_REDIRECT_URI: 이 페이지 URL
+ *
+ * 【API 엔드포인트】
+ * - 토큰 발급: https://kauth.kakao.com/oauth/token
+ * - 사용자 정보: https://kapi.kakao.com/v2/user/me
+ *
+ * 【디버깅】
+ * - 상세한 console.log로 각 단계 추적 가능
+ * - 7단계 프로세스를 시각적으로 표시
+ *
+ * 【에러 처리】
+ * - 인가 코드 없음 → 로그인 페이지 이동
+ * - 토큰 발급 실패 → alert + 로그인 페이지 이동
+ * - 사용자 정보 조회 실패 → alert + 로그인 페이지 이동
+ *
+ * @component
+ * @author Claude Code
+ * @since 2025-11-02
+ */
+
 import React, { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../slice/authSlice";
 import storage from "../../../utils/storage.js";
 
+/**
+ * KakaoCallback 함수형 컴포넌트
+ *
+ * @returns {JSX.Element} 로딩 화면 UI
+ */
 export default function KakaoCallback() {
   const navigate = useNavigate();
   const location = useLocation();

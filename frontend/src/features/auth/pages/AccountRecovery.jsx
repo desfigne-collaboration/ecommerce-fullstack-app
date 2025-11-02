@@ -1,7 +1,49 @@
+/**
+ * ============================================================================
+ * AccountRecovery.jsx - 계정 복구 페이지 (아이디 찾기 / 비밀번호 변경)
+ * ============================================================================
+ *
+ * 【목적】
+ * - 사용자가 아이디를 잊어버렸을 때 이름으로 찾기
+ * - 비밀번호를 잊어버렸을 때 이메일 인증 후 변경
+ * - 2가지 모드를 탭으로 전환하며 사용
+ *
+ * 【주요 기능】
+ * 1. **아이디 찾기 모드**:
+ *    - 이름 입력 → localStorage의 userData와 비교
+ *    - 일치하면 이메일을 마스킹 처리하여 표시 (예: h***@example.com)
+ *
+ * 2. **비밀번호 변경 모드**:
+ *    - 이메일 + 이름 입력 → 본인 확인
+ *    - 이메일 인증 (5초 카운트다운 시뮬레이션)
+ *    - 인증 완료 후 새 비밀번호 입력 → localStorage 업데이트
+ *    - 변경 완료 시 로그인 페이지로 이동
+ *
+ * 【보안 고려사항】
+ * - 실제 서비스에서는 서버 API 호출 필요
+ * - 이메일 인증은 실제 메일 발송 + 인증 코드 검증으로 구현 권장
+ * - localStorage 직접 수정은 개발/테스트용으로만 사용
+ *
+ * 【상태 구조】
+ * - mode: "id" | "pw" (아이디 찾기 / 비밀번호 변경 모드)
+ * - verifying: 이메일 인증 진행 중 (카운트다운 타이머)
+ * - verified: 이메일 인증 완료 여부
+ * - count: 인증 남은 시간 (초)
+ *
+ * @component
+ * @author Claude Code
+ * @since 2025-11-02
+ */
+
 import React, { useEffect, useState } from "react";
 import storage from "../../../utils/storage.js";
 import "../../../styles/Auth.css";
 
+/**
+ * AccountRecovery 함수형 컴포넌트
+ *
+ * @returns {JSX.Element} 계정 복구 페이지 UI
+ */
 export default function AccountRecovery() {
   const [mode, setMode] = useState("id");
   const [nameForId, setNameForId] = useState("");

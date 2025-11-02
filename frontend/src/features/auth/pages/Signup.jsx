@@ -203,7 +203,26 @@ export default function Signup() {
     minLength: false,
   });
 
-  // 휴대폰 인증에서 넘어온 경우 번호 및 이름 자동 입력
+  // ============================================================================
+  // useEffect: Prefill & Sync (데이터 자동 입력 및 동기화)
+  // ============================================================================
+
+  /**
+   * 휴대폰 인증 페이지에서 전달된 데이터 자동 입력
+   *
+   * @description
+   * 휴대폰 본인인증을 완료한 후 회원가입 페이지로 넘어온 경우,
+   * location.state에 저장된 인증된 전화번호와 이름을 자동으로 입력합니다.
+   *
+   * @example
+   * // PhoneVerification.jsx에서 전달
+   * navigate("/signup", {
+   *   state: {
+   *     verifiedPhone: "01012345678",
+   *     verifiedName: "홍길동"
+   *   }
+   * });
+   */
   useEffect(() => {
     if (location.state?.verifiedPhone) {
       setForm((prev) => ({
@@ -214,7 +233,18 @@ export default function Signup() {
     }
   }, [location.state]);
 
-  // 마케팅 채널 변경 시 마케팅 동의 상태 자동 업데이트
+  /**
+   * 마케팅 채널과 마케팅 동의 양방향 동기화
+   *
+   * @description
+   * 사용자가 마케팅 수신 채널(SMS/이메일/DM/TM)을 개별 선택할 때,
+   * 전체 마케팅 동의 체크박스도 자동으로 동기화합니다.
+   *
+   * 동기화 규칙:
+   * - 모든 채널 체크 → 마케팅 동의 자동 체크
+   * - 모든 채널 해제 → 마케팅 동의 자동 해제
+   * - 일부만 체크 → 마케팅 동의 상태 유지
+   */
   useEffect(() => {
     const allChannelsChecked = marketingChannels.sms && marketingChannels.email && marketingChannels.dm && marketingChannels.tm;
     const anyChannelChecked = marketingChannels.sms || marketingChannels.email || marketingChannels.dm || marketingChannels.tm;
@@ -229,6 +259,27 @@ export default function Signup() {
     }
   }, [marketingChannels, agreements.marketing]);
 
+  // ============================================================================
+  // Event Handlers: Form Input (폼 입력 처리)
+  // ============================================================================
+
+  /**
+   * onChange - 입력 필드 변경 이벤트 핸들러
+   *
+   * @description
+   * 사용자가 입력 필드에 값을 입력할 때마다 호출됩니다.
+   * Controlled Component 패턴으로 state를 실시간 업데이트하며,
+   * 특정 필드(이메일, 비밀번호)는 실시간 유효성 검증을 수행합니다.
+   *
+   * @param {Event} e - 입력 이벤트 객체
+   *
+   * @example
+   * // 이메일 입력 시: 형식 검증 + 중복 체크
+   * <input name="email" onChange={onChange} />
+   *
+   * // 비밀번호 입력 시: 조합 + 길이 체크 + 비밀번호 확인 재검증
+   * <input name="password" onChange={onChange} />
+   */
   const onChange = (e) => {
     const { name, value } = e.target;
     setForm((p) => ({ ...p, [name]: value }));
@@ -247,7 +298,18 @@ export default function Signup() {
     }
   };
 
-  // 입력 필드 지우기
+  /**
+   * clearField - 입력 필드 초기화 (X 버튼 클릭 시)
+   *
+   * @description
+   * 각 입력 필드 옆의 X 버튼을 클릭하면 해당 필드를 비웁니다.
+   * 비밀번호/이메일 필드는 유효성 검증 상태도 함께 초기화합니다.
+   *
+   * @param {string} fieldName - 초기화할 필드명 (name, email, password, etc.)
+   *
+   * @example
+   * <button onClick={() => clearField("email")}>✕</button>
+   */
   const clearField = (fieldName) => {
     setForm((p) => ({ ...p, [fieldName]: "" }));
     if (fieldName === "password") {
@@ -258,7 +320,28 @@ export default function Signup() {
     }
   };
 
-  // 비밀번호 유효성 검사
+  // ============================================================================
+  // Validation Functions (실시간 유효성 검증 함수)
+  // ============================================================================
+
+  /**
+   * validatePassword - 비밀번호 실시간 유효성 검증
+   *
+   * @description
+   * 비밀번호 입력 시 다음 조건을 실시간으로 검사합니다:
+   * 1. **조합**: 영문/숫자/특수문자 중 2가지 이상 조합
+   * 2. **길이**: 4자 이상
+   *
+   * 검증 결과는 passwordChecks와 validation 상태에 저장되어
+   * UI에서 시각적 피드백(체크마크, 메시지)으로 표시됩니다.
+   *
+   * @param {string} value - 검증할 비밀번호 문자열
+   *
+   * @example
+   * validatePassword("abc1") // → combination: true, minLength: true
+   * validatePassword("abc")  // → combination: false, minLength: false
+   * validatePassword("abc123!@") // → combination: true (3가지), minLength: true
+   */
   const validatePassword = (value) => {
     const hasLetter = /[a-zA-Z]/.test(value);
     const hasNumber = /[0-9]/.test(value);
@@ -295,7 +378,21 @@ export default function Signup() {
     }
   };
 
-  // 이메일 유효성 및 중복 검사
+  /**
+   * validateEmail - 이메일 형식 및 중복 검사
+   *
+   * @description
+   * 이메일 입력 시 다음 2단계 검증을 수행합니다:
+   * 1. **형식 검증**: 정규식으로 이메일 형식 확인
+   * 2. **중복 검증**: localStorage의 users 배열에서 중복 확인
+   *
+   * @param {string} value - 검증할 이메일 주소
+   *
+   * @example
+   * validateEmail("test@example.com") // → 형식 OK, 중복 체크
+   * validateEmail("invalid")          // → "올바른 이메일 형식이 아닙니다."
+   * validateEmail("existing@test.com") // → "이미 가입된 이메일입니다."
+   */
   const validateEmail = (value) => {
     if (!value) {
       setValidation((prev) => ({ ...prev, email: { valid: null, message: "" } }));
@@ -329,7 +426,20 @@ export default function Signup() {
     }
   };
 
-  // 비밀번호 확인 검사
+  /**
+   * validatePasswordCheck - 비밀번호 확인 일치 검사
+   *
+   * @description
+   * "비밀번호 확인" 필드가 원본 비밀번호와 일치하는지 확인합니다.
+   * 사용자가 비밀번호를 수정하면 비밀번호 확인 필드도 자동 재검증됩니다.
+   *
+   * @param {string} checkValue - 비밀번호 확인 필드 값
+   * @param {string} passwordValue - 원본 비밀번호 값
+   *
+   * @example
+   * validatePasswordCheck("abc123", "abc123") // → "비밀번호가 일치합니다."
+   * validatePasswordCheck("abc123", "xyz789") // → "비밀번호가 일치하지 않습니다."
+   */
   const validatePasswordCheck = (checkValue, passwordValue) => {
     if (!checkValue) {
       setValidation((prev) => ({ ...prev, passwordCheck: { valid: null, message: "" } }));
@@ -349,7 +459,24 @@ export default function Signup() {
     }
   };
 
-  // 필수 전체 동의
+  // ============================================================================
+  // Event Handlers: Agreements (약관 동의 처리)
+  // ============================================================================
+
+  /**
+   * handleRequiredAgreements - "[필수] 전체동의" 체크박스 핸들러
+   *
+   * @description
+   * 필수 전체동의 체크박스를 클릭하면 4개의 필수 약관을 일괄 체크/해제합니다.
+   * - 만 14세 이상
+   * - 온라인사이트 이용약관
+   * - 개인정보 수집 및 이용동의
+   * - 멤버십 이용약관
+   *
+   * 선택 항목(마케팅 동의)는 영향받지 않습니다.
+   *
+   * @param {boolean} checked - 전체동의 체크 여부
+   */
   const handleRequiredAgreements = (checked) => {
     setAgreements({
       age14: checked,
@@ -360,7 +487,20 @@ export default function Signup() {
     });
   };
 
-  // 개별 약관 동의
+  /**
+   * handleAgreementChange - 개별 약관 체크박스 핸들러
+   *
+   * @description
+   * 각 약관의 개별 체크박스를 클릭했을 때 호출됩니다.
+   * 특별히 "마케팅 동의"를 체크/해제하면 하위 4개 채널도 함께 체크/해제됩니다.
+   *
+   * @param {string} name - 약관 이름 (age14, termsOfUse, privacy, membership, marketing)
+   * @param {boolean} checked - 체크 여부
+   *
+   * @example
+   * handleAgreementChange("marketing", true)
+   * // → SMS, 이메일, DM, TM 모두 체크됨
+   */
   const handleAgreementChange = (name, checked) => {
     setAgreements((prev) => ({ ...prev, [name]: checked }));
 
@@ -375,17 +515,61 @@ export default function Signup() {
     }
   };
 
-  // 마케팅 채널 동의
+  /**
+   * handleMarketingChannel - 마케팅 채널 개별 선택 핸들러
+   *
+   * @description
+   * SMS/이메일/DM/TM 개별 채널 체크박스를 클릭했을 때 호출됩니다.
+   * useEffect에 의해 전체 마케팅 동의와 자동 동기화됩니다.
+   *
+   * @param {string} name - 채널 이름 (sms, email, dm, tm)
+   * @param {boolean} checked - 체크 여부
+   */
   const handleMarketingChannel = (name, checked) => {
     setMarketingChannels((prev) => ({ ...prev, [name]: checked }));
   };
 
-  // 약관 펼치기/접기
+  /**
+   * toggleTerm - 약관 내용 펼치기/접기 토글
+   *
+   * @description
+   * 각 약관 옆의 화살표 버튼을 클릭하면 상세 내용을 펼치거나 접습니다.
+   *
+   * @param {string} name - 약관 이름
+   */
   const toggleTerm = (name) => {
     setExpandedTerms((prev) => ({ ...prev, [name]: !prev[name] }));
   };
 
-  // 회원가입 처리
+  // ============================================================================
+  // Submit Handler (회원가입 제출 처리)
+  // ============================================================================
+
+  /**
+   * handleSignup - 회원가입 폼 제출 핸들러
+   *
+   * @description
+   * 회원가입 버튼 클릭 시 다음 순서로 처리됩니다:
+   *
+   * 1. **필수 항목 체크**: 이름, 이메일, 비밀번호, 비밀번호 확인
+   * 2. **이름 검증**: 2자 이상
+   * 3. **비밀번호 일치 확인**: password === passwordCheck
+   * 4. **유효성 검증 확인**: validation.password.valid === true
+   * 5. **이메일 중복 확인**: validation.email.valid !== false
+   * 6. **필수 약관 동의 확인**: 4개 필수 약관 모두 체크
+   * 7. **전화번호 형식 확인**: (선택 항목이지만 입력했다면 검증)
+   * 8. **웰컴 쿠폰 발급**: Redux action (issueWelcomeCoupon)
+   * 9. **회원가입 API 호출**: authAPI.getSignup()
+   * 10. **성공 시 로그인 페이지 이동**: navigate("/login")
+   *
+   * @param {Event} e - 폼 제출 이벤트
+   *
+   * @example
+   * <form onSubmit={handleSignup}>
+   *   ...
+   *   <button type="submit">가입하기</button>
+   * </form>
+   */
   const handleSignup = async (e) => {
     e.preventDefault();
 
