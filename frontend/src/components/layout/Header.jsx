@@ -411,7 +411,7 @@ export default function Header() {
                 마이페이지{isLogin && user?.name ? ` (${user.name}님)` : ""}
               </Link>
               {/* 관리자 대시보드 메뉴 */}
-              {isLogin && user?.userId === "admin" && (
+              {isLogin && user?.id === "admin" && (
                 <Link to="/admin" style={{ marginLeft: '0', color: '#5e37f4', fontWeight: 'bold' }}>
                   관리자 대시보드
                 </Link>
@@ -434,7 +434,7 @@ export default function Header() {
               </Link>
 
               {/* 관리자가 아닐 때만 검색/찜/장바구니/브랜드 로고 표시 */}
-              {user?.userId !== "admin" && (
+              {user?.id !== "admin" && (
                 <div className="header-right">
                   <div className="header-actions">
                     <button className="search-btn" aria-label="검색" onClick={() => setSearchModalOpen(true)}>
@@ -484,7 +484,7 @@ export default function Header() {
 
         {/* ===================== NAVIGATION ===================== */}
         {/* 관리자가 아닐 때만 네비게이션 표시 */}
-        {user?.userId !== "admin" && (
+        {user?.id !== "admin" && (
           <div className="nav-section">
             <div className="container">
               <div className="nav-wrapper">
