@@ -165,7 +165,7 @@ export const reportError = (error, errorInfo) => {
   }
 };
 
-export default {
+const errorHandler = {
   getErrorMessage,
   logError,
   handleError,
@@ -174,3 +174,5 @@ export default {
   safeJsonParse,
   reportError,
 };
+
+export default errorHandler;

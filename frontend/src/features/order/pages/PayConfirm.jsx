@@ -1,5 +1,5 @@
 // src/pages/order/PayConfirm.jsx
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import storage from "../../../utils/storage.js";
 import "./PayConfirm.css";
@@ -32,6 +32,9 @@ const normalizeItem = (raw) => {
   };
 };
 
+// QR 코드 이미지 경로 (상수)
+const QR_CANDIDATES = ["/icons/qr.svg", "https://desfigne.synology.me/data/image/thejoeun/icons/qr.webp"];
+
 export default function PayConfirm() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -61,8 +64,7 @@ export default function PayConfirm() {
   const total = Math.max(0, subtotal - effectiveDiscount + shipping);
 
   // QR 경로
-  const qrCandidates = ["/icons/qr.svg", "https://desfigne.synology.me/data/image/thejoeun/icons/qr.webp"];
-  const qrSrc0 = useMemo(() => srcOf(qrCandidates[0]), []);
+  const qrSrc0 = useMemo(() => srcOf(QR_CANDIDATES[0]), []);
 
   const [paying, setPaying] = useState(false);
 

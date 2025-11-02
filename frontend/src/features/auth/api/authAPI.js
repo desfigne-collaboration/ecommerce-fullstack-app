@@ -1,6 +1,6 @@
 import { login, logout } from '../slice/authSlice.js';
 import { axiosPost } from '../../../utils/dataFetch.js';
-import { validateFormCheck, validateSignupFormCheck } from '../../../utils/validate.js';
+import { validateFormCheck } from '../../../utils/validate.js';
 import { handleError } from '../../../utils/errorHandler.js';
 
 /** Signup */

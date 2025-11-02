@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { logError, handleError } from './errorHandler.js';
+import { logError } from './errorHandler.js';
 
 /**
  *  fetch 함수를 이용하여 데이터 가져오기

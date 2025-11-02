@@ -6,6 +6,39 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import storage from "../../utils/storage.js";
 
+// 검색 자동완성 키워드 (상수)
+const AUTOCOMPLETE_KEYWORDS = [
+  "카디건","가방","가니","남자 가죽 자켓","여성 카디건","메종키츠네 카디건","남자 카디건",
+  "발렌시아가","로메르 가방","에잇세컨즈 가방","구호","구호플러스","나이키","니트","니트웨어",
+  "단톤","데님","데님팬츠","드레스","띠어리","로고","로퍼","맨투맨","면바지","목도리","무스탕",
+  "반팔티","발렌시아가 가방","백팩","뱀부백","부츠","블라우스","빈폴","빈폴레이디스","빈폴키즈",
+  "사파리재킷","셔츠","스니커즈","슬랙스","아우터","앵클부츠","야상","에코백","원피스","울코트",
+  "자켓","재킷","정장","조끼","청바지","체크셔츠","카라티","코트","크로스백","티셔츠","트렌치코트",
+  "트레이닝복","파카","패딩","폴로셔츠","플리츠스커트","후드티","후드집업"
+];
+
+// 브랜드 데이터 (상수)
+const BRAND_DATA = [
+  { name: "GANNI", nameKr: "가니", link: "/brand/ganni" },
+  { name: "GANISONG", nameKr: "가니송", link: "/brand/ganisong" },
+  { name: "Wilhelmina Garcia", nameKr: "빌헬미나 가르시아", link: "/brand/wilhelmina-garcia" },
+  { name: "에잇세컨즈", nameEn: "8SECONDS", link: "/brand/8seconds" },
+  { name: "빈폴", nameEn: "BEANPOLE", link: "/brand/beanpole" },
+  { name: "빈폴레이디스", nameEn: "BEANPOLE LADIES", link: "/brand/beanpole-ladies" },
+  { name: "빈폴키즈", nameEn: "BEANPOLE KIDS", link: "/brand/beanpole-kids" },
+  { name: "구호", nameEn: "KUHO", link: "/brand/kuho" },
+  { name: "구호플러스", nameEn: "KUHO PLUS", link: "/brand/kuho-plus" },
+  { name: "메종키츠네", nameEn: "MAISON KITSUNE", link: "/brand/maison-kitsune" },
+  { name: "아미", nameEn: "AMI", link: "/brand/ami" },
+  { name: "단톤", nameEn: "DANTON", link: "/brand/danton" },
+  { name: "띠어리", nameEn: "THEORY", link: "/brand/theory" },
+  { name: "로메르", nameEn: "LEMAIRE", link: "/brand/lemaire" },
+  { name: "발렌시아가", nameEn: "BALENCIAGA", link: "/brand/balenciaga" },
+  { name: "토리버치", nameEn: "TORY BURCH", link: "/brand/tory-burch" },
+  { name: "꽁데가르송", nameEn: "COMME DES GARCONS", link: "/brand/comme-des-garcons" },
+  { name: "준지", nameEn: "JUUN.J", link: "/brand/junji" },
+];
+
 export default function Header() {
   // Redux 상태 사용
   const dispatch = useDispatch();
@@ -38,7 +71,7 @@ export default function Header() {
     </div>
   );
 
-  /** 검색/브랜드 더미 데이터 */
+  /** 인기 검색어 더미 데이터 */
   const popularSearches = [
     { rank: 1, keyword: "에잇세컨즈", trend: null },
     { rank: 2, keyword: "빈폴레이디스", trend: null },
@@ -50,35 +83,6 @@ export default function Header() {
     { rank: 8, keyword: "꽁데가르송", trend: "up" },
     { rank: 9, keyword: "준지", trend: "down" },
     { rank: 10, keyword: "폴리즈클로젯", trend: "down" },
-  ];
-  const autocompleteKeywords = [
-    "카디건","가방","가니","남자 가죽 자켓","여성 카디건","메종키츠네 카디건","남자 카디건",
-    "발렌시아가","로메르 가방","에잇세컨즈 가방","구호","구호플러스","나이키","니트","니트웨어",
-    "단톤","데님","데님팬츠","드레스","띠어리","로고","로퍼","맨투맨","면바지","목도리","무스탕",
-    "반팔티","발렌시아가 가방","백팩","뱀부백","부츠","블라우스","빈폴","빈폴레이디스","빈폴키즈",
-    "사파리재킷","셔츠","스니커즈","슬랙스","아우터","앵클부츠","야상","에코백","원피스","울코트",
-    "자켓","재킷","정장","조끼","청바지","체크셔츠","카라티","코트","크로스백","티셔츠","트렌치코트",
-    "트레이닝복","파카","패딩","폴로셔츠","플리츠스커트","후드티","후드집업"
-  ];
-  const brandData = [
-    { name: "GANNI", nameKr: "가니", link: "/brand/ganni" },
-    { name: "GANISONG", nameKr: "가니송", link: "/brand/ganisong" },
-    { name: "Wilhelmina Garcia", nameKr: "빌헬미나 가르시아", link: "/brand/wilhelmina-garcia" },
-    { name: "에잇세컨즈", nameEn: "8SECONDS", link: "/brand/8seconds" },
-    { name: "빈폴", nameEn: "BEANPOLE", link: "/brand/beanpole" },
-    { name: "빈폴레이디스", nameEn: "BEANPOLE LADIES", link: "/brand/beanpole-ladies" },
-    { name: "빈폴키즈", nameEn: "BEANPOLE KIDS", link: "/brand/beanpole-kids" },
-    { name: "구호", nameEn: "KUHO", link: "/brand/kuho" },
-    { name: "구호플러스", nameEn: "KUHO PLUS", link: "/brand/kuho-plus" },
-    { name: "메종키츠네", nameEn: "MAISON KITSUNE", link: "/brand/maison-kitsune" },
-    { name: "아미", nameEn: "AMI", link: "/brand/ami" },
-    { name: "단톤", nameEn: "DANTON", link: "/brand/danton" },
-    { name: "띠어리", nameEn: "THEORY", link: "/brand/theory" },
-    { name: "로메르", nameEn: "LEMAIRE", link: "/brand/lemaire" },
-    { name: "발렌시아가", nameEn: "BALENCIAGA", link: "/brand/balenciaga" },
-    { name: "토리버치", nameEn: "TORY BURCH", link: "/brand/tory-burch" },
-    { name: "꽁데가르송", nameEn: "COMME DES GARCONS", link: "/brand/comme-des-garcons" },
-    { name: "준지", nameEn: "JUUN.J", link: "/brand/junji" },
   ];
 
   /** 카트/위시/로그인 동기화 */
@@ -151,13 +155,13 @@ export default function Header() {
   const filteredKeywords = useMemo(() => {
     if (!searchQuery.trim()) return [];
     const q = searchQuery.toLowerCase();
-    return autocompleteKeywords.filter((k) => k.toLowerCase().includes(q)).slice(0, 10);
+    return AUTOCOMPLETE_KEYWORDS.filter((k) => k.toLowerCase().includes(q)).slice(0, 10);
   }, [searchQuery]);
 
   const filteredBrands = useMemo(() => {
     if (!searchQuery.trim()) return [];
     const q = searchQuery.toLowerCase();
-    return brandData.filter(
+    return BRAND_DATA.filter(
       (b) =>
         b.name.toLowerCase().includes(q) ||
         (b.nameKr && b.nameKr.toLowerCase().includes(q)) ||

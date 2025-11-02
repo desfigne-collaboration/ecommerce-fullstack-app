@@ -1,9 +1,8 @@
 import "../../../styles/Auth.css";
 import { useState, useRef, useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { getLogin } from '../api/authAPI.js';
-import { login as loginAction } from "../slice/authSlice";
 import storage from "../../../utils/storage.js";
 import NaverLoginButton from "../components/NaverLoginButton";
 import KakaoLoginButton from "../components/KakaoLoginButton";

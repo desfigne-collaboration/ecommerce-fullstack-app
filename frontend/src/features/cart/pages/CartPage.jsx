@@ -1,5 +1,5 @@
 // src/pages/cart/CartPage.jsx
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectIsLogin } from "features/auth/slice/authSlice.js";
@@ -62,14 +62,14 @@ export default function CartPage() {
   };
 
   // ✅ 가격 파싱 유틸 (₩, , 제거)
-  const parsePrice = (val) => {
+  const parsePrice = useCallback((val) => {
     if (!val) return 0;
     if (typeof val === "number") return val;
     return Number(String(val).replace(/[^\d]/g, "")) || 0;
-  };
+  }, []);
 
-  const unitPrice = (p) => parsePrice(p?.price);
-  const linePrice = (i) => unitPrice(i.product) * Number(i.qty || 1);
+  const unitPrice = useCallback((p) => parsePrice(p?.price), [parsePrice]);
+  const linePrice = useCallback((i) => unitPrice(i.product) * Number(i.qty || 1), [unitPrice]);
 
   // ✅ 수량 변경 함수들
   const inc = (id) => {
@@ -133,7 +133,7 @@ export default function CartPage() {
   // ✅ 총합 계산
   const totalPrice = useMemo(
     () => selectedItems.reduce((s, i) => s + linePrice(i), 0),
-    [selectedItems]
+    [selectedItems, linePrice]
   );
 
   // ✅ 결제 페이지 이동

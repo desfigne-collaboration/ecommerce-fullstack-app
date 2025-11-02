@@ -106,17 +106,17 @@ export default function Footer() {
             <p>
               주소: {companyInfo.address} ㅣ 대표 : {companyInfo.ceo} ㅣ
               사업자 등록번호: {companyInfo.businessNumber}{" "}
-              <a href="#" className="info-link">
+              <button type="button" className="info-link" onClick={() => alert('사업자정보 조회 기능은 준비 중입니다.')}>
                 사업자정보확인
-              </a>{" "}
+              </button>{" "}
               ㅣ 통신판매업 신고번호: {companyInfo.ecommerceNumber} ㅣ 호스팅서비스:{" "}
               {companyInfo.hosting}
             </p>
             <p>
               {companyInfo.escrow}{" "}
-              <a href="#" className="info-link">
+              <button type="button" className="info-link" onClick={() => alert('에스크로 서비스 안내 페이지는 준비 중입니다.')}>
                 {companyInfo.escrowLink}
-              </a>{" "}
+              </button>{" "}
               {companyInfo.escrowDesc}
             </p>
             <p>

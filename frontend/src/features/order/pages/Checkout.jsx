@@ -186,6 +186,7 @@ const goPaymentMethod = () => {
   };
 
   // 주문 완료 처리 (PaymentSuccess 페이지 등에서 호출하는 게 일반적)
+  // eslint-disable-next-line no-unused-vars
   const placeOrderForDemo = () => {
     markCouponUsed(selectedCoupon);
     // 장바구니 비우기 (선택 결제였다면 cartCheckout만 비우는 것이 좋음)

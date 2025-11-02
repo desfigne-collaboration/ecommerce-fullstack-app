@@ -7,6 +7,7 @@ import "./ProductDetail.css";
 export default function ProductDetail() {
   const navigate = useNavigate();
   const location = useLocation();
+  // eslint-disable-next-line no-unused-vars
   const { id } = useParams();
   const fromState = location.state?.product || null;
 
@@ -22,7 +23,7 @@ export default function ProductDetail() {
     } catch {
       return null;
     }
-  }, [fromState, id]);
+  }, [fromState]);
 
   const clampQty = (v) => (v < 1 ? 1 : v > 99 ? 99 : v);
 

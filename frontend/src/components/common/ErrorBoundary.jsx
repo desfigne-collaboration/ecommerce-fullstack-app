@@ -21,11 +21,10 @@ class ErrorBoundary extends React.Component {
     console.error('Error Info:', errorInfo);
 
     // 에러 정보 저장
-    this.state = {
-      ...this.state,
+    this.setState({
       error,
       errorInfo
-    };
+    });
 
     // 프로덕션에서는 에러 리포팅 서비스로 전송
     // 예: Sentry, LogRocket 등

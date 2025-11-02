@@ -1,24 +1,13 @@
 // src/pages/CategoryPage.jsx
 import React, { useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import { CATEGORY_DATA } from "../data/categoryData";
 import { getProductsByCategory } from "../../product/data/productData";
-import { productKey } from "../../wishlist/hooks/useWishlist";
+import { productKey, selectWishlistItems, toggleWishlist as toggleWishlistAction } from "../../wishlist/slice/wishlistSlice";
 import storage from "../../../utils/storage.js";
 import "../../../styles/Page.css";
 import "../../../styles/CategoryPage.css";
-
-// 홈과 동일한 로컬스토리지 키
-const WISHLIST_KEY = "wishlist";
-
-// 홈과 동일한 포맷으로 읽기/쓰기
-const readWishlist = () => {
-  try { return storage.get(WISHLIST_KEY, []); }
-  catch { return []; }
-};
-const writeWishlist = (arr) => {
-  storage.set(WISHLIST_KEY, arr);
-};
 
 // 이미지 경로 보정(그대로)
 const srcOf = (p) => {
@@ -43,6 +32,7 @@ const pidOf = (p, idx) => p?.id ?? p?.code ?? p?.pid ?? productKey(p) ?? `cat-${
 export default function CategoryPage() {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const pathname = location.pathname;
   const pathParts = pathname.split("/").filter(Boolean);
@@ -52,12 +42,11 @@ export default function CategoryPage() {
   const categoryData = CATEGORY_DATA[categoryKey];
 
   const [activeTab, setActiveTab] = useState("");
-  const [sortBy, setSortBy] = useState("인기상품순(전체)");
   const [products, setProducts] = useState([]);
 
-  // ✅ 홈과 똑같이: wishlist를 상태로 들고, 로컬스토리지에도 저장
-  const [wishlist, setWishlist] = useState(() => readWishlist());
-  const wishSet = useMemo(() => new Set(wishlist.map((it) => it.id)), [wishlist]);
+  // ✅ Redux wishlist 사용
+  const wishlistItems = useSelector(selectWishlistItems);
+  const wishSet = useMemo(() => new Set(wishlistItems.map((it) => it.id)), [wishlistItems]);
 
   useEffect(() => {
     if (!categoryData) return;
@@ -66,32 +55,19 @@ export default function CategoryPage() {
     setProducts(getProductsByCategory(categoryKey, subcategoryKey) || []);
   }, [pathname, categoryKey, subcategoryKey, categoryData]);
 
-  // ✅ 홈과 동일: 토글 함수 (딱 이거만 같으면 동작도 같음)
- const toggleWishlist = (p, idx) => {
-  const id = pidOf(p, idx);
-  setWishlist((prev) => {
-    const exists = prev.some((it) => it.id === id);
-    let next;
-    if (exists) {
-      next = prev.filter((it) => it.id !== id);
-    } else {
-      const normalized = {
-        id,
-        name: p.name || "상품명",
-        image: p.image || p.img || "",
-        price: typeof p.price === "number" ? p.price : Number(String(p.price).replace(/[^\d]/g, "")) || 0,
-        desc: p.desc || "",
-        brand: p.brand || p.brandName || "",
-      };
-      next = [...prev, normalized];
-    }
-
-    // ✅ 홈처럼 로컬스토리지 저장
-    storage.set("wishlist", next);
-
-    return next;
-  });
-};
+  // ✅ Redux 토글 함수
+  const toggleWishlist = (p, idx) => {
+    const id = pidOf(p, idx);
+    const normalized = {
+      id,
+      name: p.name || "상품명",
+      image: p.image || p.img || "",
+      price: typeof p.price === "number" ? p.price : Number(String(p.price).replace(/[^\d]/g, "")) || 0,
+      desc: p.desc || "",
+      brand: p.brand || p.brandName || "",
+    };
+    dispatch(toggleWishlistAction(normalized));
+  };
 
   const goToProductDetail = (p, idx) => {
     const normalized = {
