@@ -15,8 +15,7 @@
  * 3. **위시리스트**: localStorage 기반 찜 기능 (실시간 토글)
  * 4. **정렬**: 가격순, 할인율순, 리뷰많은순 등
  * 5. **이미지 폴백**: 여러 후보 경로 시도 (인코딩/소문자/PUBLIC_URL 조합)
- * 6. **브랜드 로고**: 카테고리 페이지 상단에 브랜드 로고 표시
- * 7. **Breadcrumb 네비게이션**: Home > 카테고리 > 서브카테고리
+ * 6. **Breadcrumb 네비게이션**: Home > 카테고리 > 서브카테고리
  *
  * 【경로 예시】
  * - /women/outer → 여성 아우터 카테고리
@@ -44,6 +43,7 @@ import React, { useMemo, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import storage from "../../../utils/storage.js";
 import "../../../styles/CategoryPage.css";
+import "../components/ProductCard.css";
 
 /**
  * toNumberPrice - 가격 문자열을 숫자로 변환
@@ -565,22 +565,6 @@ export default function ProductList() {
   const [sortBy, setSortBy] = useState("인기상품순(전체)");
   const [refresh, setRefresh] = useState(0); // 위시 토글 반영용
 
-  // 브랜드 로고(디자인 유지용)
-  const brandLogos = [
-    { name: "아미", img: "/icons/brand_아미.png" },
-    { name: "메종키츠네", img: "/icons/brand_메종키츠네.webp" },
-    { name: "시에", img: "/icons/brand_시에.webp" },
-    { name: "이세이미야케", img: "/icons/brand_이세이미야케.webp" },
-    { name: "타미힐피거", img: "/icons/brand_타미힐피거.png" },
-    { name: "디애퍼처", img: "/icons/brand_디애퍼처.webp" },
-    { name: "르베이지", img: "/icons/brand_르베이지.png" },
-    { name: "준지", img: "/icons/brand_준지.png" },
-    { name: "단톤", img: "/icons/brand_단톤.png" },
-    { name: "가니", img: "/icons/brand_가니.png" },
-    { name: "토리버치", img: "/icons/brand_토리버치.jpg" },
-    { name: "라코스테", img: "/icons/brand_라코스테.png" },
-  ];
-
   // 카테고리/탭 메타 (Header의 모든 카테고리 지원)
   const categoryInfo = {
     women: { name: "여성", nameEn: "WOMEN" },
@@ -819,26 +803,6 @@ export default function ProductList() {
             </h1>
           )}
         </div>
-
-        {/* Brand Logos */}
-        {!isSearchMode && (
-          <div className="brand-logos-section">
-            {brandLogos.map((brand, idx) => {
-              const { src, candidates } = srcOf(brand.img);
-              return (
-                <div key={idx} className="brand-logo-item">
-                  <img
-                    src={src}
-                    alt={brand.name}
-                    loading="lazy"
-                    data-candidates={JSON.stringify(candidates)}
-                    onError={handleImgError}
-                  />
-                </div>
-              );
-            })}
-          </div>
-        )}
 
         {/* Tabs */}
         {!isSearchMode && (
