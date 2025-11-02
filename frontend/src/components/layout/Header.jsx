@@ -1102,8 +1102,8 @@ export default function Header() {
                   <li><Link to="/ranking">랭킹</Link></li>
                   <li><Link to="/brands">브랜드</Link></li>
                   <li><Link to="/magazine">매거진</Link></li>
-                  <li><Link to="/special" className="nav-link-special">기획전</Link></li>
-                  <li><Link to="/event" className="nav-link-special">이벤트</Link></li>
+                  <li><Link to="/special">기획전</Link></li>
+                  <li><Link to="/event">이벤트</Link></li>
                 </ul>
               </nav>
             </div>

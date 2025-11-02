@@ -567,16 +567,30 @@ export default function ProductList() {
 
   // 카테고리/탭 메타 (Header의 모든 카테고리 지원)
   const categoryInfo = {
-    women: { name: "여성", nameEn: "WOMEN" },
-    men: { name: "남성", nameEn: "MEN" },
-    kids: { name: "키즈", nameEn: "KIDS" },
-    beauty: { name: "뷰티", nameEn: "BEAUTY" },
-    sports: { name: "스포츠", nameEn: "SPORTS" },
-    golf: { name: "골프", nameEn: "GOLF" },
-    life: { name: "라이프", nameEn: "LIFE" },
-    luxury: { name: "럭셔리", nameEn: "LUXURY" },
-    "bags-shoes": { name: "백&슈즈", nameEn: "BAGS & SHOES" },
-    outlet: { name: "아울렛", nameEn: "OUTLET" },
+    women: {
+      name: "여성",
+      nameEn: "WOMEN",
+      subcategories: [
+        { name: "전체", path: "/women" },
+        { name: "아우터", path: "/women/outer" },
+        { name: "재킷/베스트", path: "/women/jacket" },
+        { name: "니트웨어", path: "/women/knit" },
+        { name: "셔츠/블라우스", path: "/women/shirt" },
+        { name: "티셔츠", path: "/women/tshirt" },
+        { name: "원피스", path: "/women/onepiece" },
+        { name: "팬츠", path: "/women/pants" },
+        { name: "스커트", path: "/women/skirt" },
+      ]
+    },
+    men: { name: "남성", nameEn: "MEN", subcategories: [] },
+    kids: { name: "키즈", nameEn: "KIDS", subcategories: [] },
+    beauty: { name: "뷰티", nameEn: "BEAUTY", subcategories: [] },
+    sports: { name: "스포츠", nameEn: "SPORTS", subcategories: [] },
+    golf: { name: "골프", nameEn: "GOLF", subcategories: [] },
+    life: { name: "라이프", nameEn: "LIFE", subcategories: [] },
+    luxury: { name: "럭셔리", nameEn: "LUXURY", subcategories: [] },
+    "bags-shoes": { name: "백&슈즈", nameEn: "BAGS & SHOES", subcategories: [] },
+    outlet: { name: "아울렛", nameEn: "OUTLET", subcategories: [] },
   };
 
   const subcategoryInfo = {
@@ -822,18 +836,32 @@ export default function ProductList() {
           )}
         </div>
 
-        {/* Tabs */}
-        {!isSearchMode && subcategory && subcategory !== "all" && subcategory !== "new" && (
+        {/* Tabs / Subcategory Links */}
+        {!isSearchMode && (
           <div className="category-tabs">
-            {(currentSubcategory.tabs || ["전체"]).map((tab) => (
-              <button
-                key={tab}
-                className={`tab ${activeTab === tab ? "active" : ""}`}
-                onClick={() => setActiveTab(tab)}
-              >
-                {tab}
-              </button>
-            ))}
+            {(!subcategory || subcategory === "" || subcategory === "all") ? (
+              // 전체 페이지: 서브카테고리 링크 표시
+              (currentCategory.subcategories || []).map((sub) => (
+                <Link
+                  key={sub.name}
+                  to={sub.path}
+                  className="tab"
+                >
+                  {sub.name}
+                </Link>
+              ))
+            ) : (
+              // 특정 서브카테고리 페이지: 탭 버튼 표시 (subcategory !== "new"일 때만)
+              subcategory !== "new" && (currentSubcategory.tabs || ["전체"]).map((tab) => (
+                <button
+                  key={tab}
+                  className={`tab ${activeTab === tab ? "active" : ""}`}
+                  onClick={() => setActiveTab(tab)}
+                >
+                  {tab}
+                </button>
+              ))
+            )}
           </div>
         )}
 
@@ -843,27 +871,27 @@ export default function ProductList() {
             <div className="filter-buttons">
               <div className="filter-dropdown">
                 <button className="filter-btn">
-                  브랜드 <span className="arrow">∨</span>
+                  브랜드 ▾
                 </button>
               </div>
               <div className="filter-dropdown">
                 <button className="filter-btn">
-                  가격 <span className="arrow">∨</span>
+                  가격 ▾
                 </button>
               </div>
               <div className="filter-dropdown">
                 <button className="filter-btn">
-                  사이즈 <span className="arrow">∨</span>
+                  사이즈 ▾
                 </button>
               </div>
               <div className="filter-dropdown">
                 <button className="filter-btn">
-                  색상 <span className="arrow">∨</span>
+                  색상 ▾
                 </button>
               </div>
               <div className="filter-dropdown">
                 <button className="filter-btn">
-                  혜택/배송 <span className="arrow">∨</span>
+                  혜택/배송 ▾
                 </button>
               </div>
             </div>

@@ -41,7 +41,7 @@
 .product-nav > ul { display: flex; list-style: none; gap: 14px; margin: 0; padding: 0; }
 .product-nav > ul > li { position: relative; padding-bottom: 14px; margin-bottom: -14px; }
 .product-nav > ul > li > a {
-  font-size: var(--base); font-weight: var(--font-weight-medium); color: var(--text-primary);
+  font-size: var(--base); font-weight: var(--font-weight-normal); color: var(--text-primary);
   position: relative; padding: 0; display: block; text-decoration: none; line-height: var(--line-height-base);
 }
 .product-nav > ul > li:hover > a { color: var(--primary-color); }
