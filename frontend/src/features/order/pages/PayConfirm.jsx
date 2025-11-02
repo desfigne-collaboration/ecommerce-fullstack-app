@@ -1,3 +1,52 @@
+/**
+ * ============================================================================
+ * PayConfirm.jsx - 결제 확인 및 QR 스캔 페이지
+ * ============================================================================
+ *
+ * 【목적】
+ * - 결제 최종 확인 및 QR 코드 표시
+ * - 주문 생성 및 저장 (localStorage)
+ * - 쿠폰 사용 처리, 장바구니 아이템 제거
+ * - 결제 완료 후 주문 내역 페이지로 이동
+ *
+ * 【주요 기능】
+ * 1. **QR 코드 표시**: 선택한 결제 수단 (toss/kakao/naver)의 QR 이미지
+ * 2. **주문 요약**: 상품 목록, 금액, 할인, 배송비, 최종 결제 금액
+ * 3. **쿠폰 처리**: markCouponUsed()로 쿠폰 사용 처리 (used: true, usedAt 기록)
+ * 4. **주문 저장**: saveOrders()로 각 상품당 1개 주문 생성 (관리자/마이페이지 호환)
+ * 5. **장바구니 정리**: removeItemsFromCart()로 결제한 상품만 장바구니에서 제거
+ * 6. **임시 데이터 정리**: clearTemp()로 payPayload, pendingOrder, cartCheckout 삭제
+ *
+ * 【데이터 흐름】
+ * PaySelect → PayConfirm → (결제 완료) → /orders (MyOrders 페이지)
+ *
+ * 【할인 분배】
+ * - 비례 분배: 각 상품의 금액 비율에 따라 쿠폰 할인 분배
+ * - 배송비: 첫 번째 상품에만 부과
+ *
+ * 【주문 데이터 구조】
+ * ```javascript
+ * order = {
+ *   id: "ORD-1699999999999-0",
+ *   createdAt: "2025-11-02T12:34:56.789Z",
+ *   buyer: { id, name, email },
+ *   product: { id, name, image, price },
+ *   option: { size },
+ *   qty: 1,
+ *   subtotal: 50000,
+ *   discount: 5000,
+ *   shipping: 3000,
+ *   total: 48000,
+ *   method: "토스페이",
+ *   status: "결제완료"
+ * }
+ * ```
+ *
+ * @component
+ * @author Claude Code
+ * @since 2025-11-02
+ */
+
 // src/pages/order/PayConfirm.jsx
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -16,7 +65,15 @@ const srcOf = (raw) => {
   return `${process.env.PUBLIC_URL || ""}/${s.replace(/^\/+/, "")}`;
 };
 
-// 다양한 형태의 item을 한 형태로 표준화
+/**
+ * normalizeItem - 상품 아이템 정규화
+ *
+ * @description
+ * 다양한 형태의 item 객체를 표준 형식으로 변환합니다.
+ *
+ * @param {Object} raw - 원본 아이템 객체
+ * @returns {Object|null} 정규화된 아이템 { product, option, qty }
+ */
 const normalizeItem = (raw) => {
   if (!raw) return null;
   const p = raw.product || raw;
@@ -35,6 +92,26 @@ const normalizeItem = (raw) => {
 // QR 코드 이미지 경로 (상수)
 const QR_CANDIDATES = ["/icons/qr.svg", "https://desfigne.synology.me/data/image/thejoeun/icons/qr.webp"];
 
+/**
+ * PayConfirm 함수형 컴포넌트
+ *
+ * @description
+ * 결제 최종 확인 및 QR 스캔 페이지. 주문 생성, 쿠폰 처리, 장바구니 정리를 담당합니다.
+ *
+ * 【처리 흐름】
+ * 1. **Payload 복구**: location.state → payPayload 순으로 시도
+ * 2. **안전 가드**: incoming 또는 items 없으면 /order/checkout으로 리다이렉트
+ * 3. **금액 계산**: 상품 금액 합계, 쿠폰 할인, 배송비, 최종 결제 금액
+ * 4. **QR 표시**: 선택한 결제 수단의 QR 이미지
+ * 5. **결제 완료 버튼 클릭 시**:
+ *    - markCouponUsed(): 쿠폰 사용 처리
+ *    - saveOrders(): 주문 생성 (각 상품당 1개)
+ *    - removeItemsFromCart(): 결제한 상품만 장바구니에서 제거
+ *    - clearTemp(): 임시 데이터 삭제
+ *    - /orders로 navigate
+ *
+ * @returns {JSX.Element} 결제 확인 페이지 UI
+ */
 export default function PayConfirm() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -68,6 +145,13 @@ export default function PayConfirm() {
 
   const [paying, setPaying] = useState(false);
 
+  /**
+   * markCouponUsed - 쿠폰 사용 처리
+   *
+   * @description
+   * localStorage에서 쿠폰 목록을 가져와 해당 쿠폰을 사용 처리합니다.
+   * used: true, usedAt: ISO 날짜 문자열로 설정합니다.
+   */
   const markCouponUsed = () => {
     const c = incoming?.coupon;
     if (!c) return;
@@ -78,7 +162,15 @@ export default function PayConfirm() {
     storage.set("coupons", next);
   };
 
-  // 주문 저장: 각 상품 당 한 건씩(관리자/마이페이지 호환)
+  /**
+   * saveOrders - 주문 저장
+   *
+   * @description
+   * 각 상품당 1개의 주문 객체를 생성하여 localStorage에 저장합니다.
+   * 할인은 비례 분배하고, 배송비는 첫 번째 상품에만 부과합니다.
+   *
+   * @returns {string[]} 생성된 주문 ID 배열
+   */
   const saveOrders = () => {
     const user = storage.get("loginUser", null);
     const buyer = user
@@ -123,6 +215,13 @@ export default function PayConfirm() {
     return perItemOrders.map(o => o.id);
   };
 
+  /**
+   * removeItemsFromCart - 결제한 상품만 장바구니에서 제거
+   *
+   * @description
+   * 현재 장바구니에서 결제한 상품(ID + 사이즈 일치)만 제거하고 나머지는 유지합니다.
+   * StorageEvent를 발행하여 Header의 장바구니 뱃지를 업데이트합니다.
+   */
   const removeItemsFromCart = () => {
     // 현재 장바구니 읽기
     const currentCart = storage.get("cart", []);
@@ -149,12 +248,29 @@ export default function PayConfirm() {
     window.dispatchEvent(new StorageEvent("storage", { key: "cart", newValue: JSON.stringify(remainingCart) }));
   };
 
+  /**
+   * clearTemp - 임시 데이터 정리
+   *
+   * @description
+   * 결제 완료 후 더 이상 필요 없는 임시 데이터를 localStorage에서 삭제합니다.
+   */
   const clearTemp = () => {
     storage.remove("payPayload");
     storage.remove("pendingOrder");
     storage.remove("cartCheckout");
   };
 
+  /**
+   * onClickPay - 결제 완료 버튼 핸들러
+   *
+   * @description
+   * 결제 완료 처리를 수행합니다.
+   * 1. 쿠폰 사용 처리
+   * 2. 주문 생성 및 저장
+   * 3. 장바구니에서 결제한 상품 제거
+   * 4. 임시 데이터 정리
+   * 5. 주문 내역 페이지로 이동
+   */
   const onClickPay = () => {
     if (paying) return;
     setPaying(true);
