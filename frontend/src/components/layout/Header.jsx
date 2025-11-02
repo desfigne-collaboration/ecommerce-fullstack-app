@@ -408,12 +408,12 @@ export default function Header() {
           <div className="container">
             <div className="user-menu">
               <Link to="/mypage" onClick={handleMyPageClick}>
-                마이페이지{isLogin && user?.name ? ` (${user.name}님)` : ""}
+                마이페이지{isLogin && user?.id === "admin" ? " (관리자님)" : isLogin && user?.name ? ` (${user.name}님)` : ""}
               </Link>
               {/* 관리자 대시보드 메뉴 */}
               {isLogin && user?.id === "admin" && (
-                <Link to="/admin" style={{ marginLeft: '0', color: '#5e37f4', fontWeight: 'bold' }}>
-                  관리자 대시보드
+                <Link to="/admin" style={{ marginLeft: '0' }}>
+                  대시보드 (관리자)
                 </Link>
               )}
               {isLogin ? (
