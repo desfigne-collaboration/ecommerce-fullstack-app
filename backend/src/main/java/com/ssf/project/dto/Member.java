@@ -8,7 +8,7 @@ public class Member {
 
     private String userKey;     // 회원고유번호
 
-    @JsonProperty("email")
+    @JsonProperty("id")
     private String email;       // 이메일
 
     @JsonProperty("name")

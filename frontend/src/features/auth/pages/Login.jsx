@@ -1,40 +1,3 @@
-/**
- * ============================================================================
- * Login.jsx - 로그인 페이지 컴포넌트
- * ============================================================================
- *
- * 【목적】
- * - 사용자 로그인 UI 제공 (회원/비회원 구분)
- * - 일반 로그인 + SNS 로그인 (Naver, Kakao) 지원
- * - 아이디 저장, 비밀번호 표시/숨김 기능 제공
- * - 회원가입 직후 아이디 자동 입력 (prefill) 기능
- *
- * 【주요 기능】
- * 1. **탭 네비게이션**: 회원 로그인 / 비회원 주문조회 구분
- * 2. **폼 상태 관리**: useState + useRef 조합 (유효성 검증용)
- * 3. **자동 로그인**: 체크박스로 아이디 localStorage 저장
- * 4. **비밀번호 토글**: 눈 아이콘 클릭으로 비밀번호 표시/숨김
- * 5. **Prefill 기능**: 회원가입 후 location.state로 아이디 자동 입력
- * 6. **SNS 로그인**: Kakao, Naver 로그인 버튼 컴포넌트 통합
- * 7. **계정 복구**: 아이디 찾기, 비밀번호 찾기 링크
- *
- * 【라우팅】
- * - 경로: /login
- * - 로그인 성공 시 → "/" (메인 페이지)
- * - 회원가입 링크 → "/signup"
- * - 아이디/비밀번호 찾기 → "/find-id", "/find-password"
- *
- * 【상태 흐름】
- * 1. 컴포넌트 마운트 → useEffect로 prefill 데이터 확인
- * 2. 폼 입력 → onChange로 form 상태 업데이트
- * 3. 로그인 버튼 클릭 → onSubmit → getLogin API 호출
- * 4. 로그인 성공 → Redux 상태 업데이트 → 메인 페이지 이동
- *
- * @component
- * @author Claude Code
- * @since 2025-11-02
- */
-
 import "./Auth.css";
 import { useState, useRef, useEffect } from "react";
 import { useDispatch } from 'react-redux';
@@ -44,24 +7,8 @@ import storage from "../../../utils/storage.js";
 import NaverLoginButton from "../components/NaverLoginButton";
 import KakaoLoginButton from "../components/KakaoLoginButton";
 
-/**
- * Login 함수형 컴포넌트
- *
- * @returns {JSX.Element} 로그인 페이지 UI
- */
 export default function Login() {
 
-  // ============================================================================
-  // Hooks & State
-  // ============================================================================
-
-  /**
-   * location - React Router의 현재 위치 정보
-   *
-   * @description
-   * 회원가입 후 navigate("/login", { state: { prefill: { id: "newuser" } } })
-   * 형태로 전달된 데이터를 받아옵니다.
-   */
   const location = useLocation();
 
   /** navigate - 페이지 이동 함수 */
@@ -88,26 +35,7 @@ export default function Login() {
   /** form - 로그인 폼 데이터 { id, password } */
   const [form, setForm] = useState({ id: "", password: "" });
 
-  // ============================================================================
-  // useEffect: 초기 데이터 로드 (prefill, 저장된 아이디)
-  // ============================================================================
-  /**
-   * 컴포넌트 마운트 시 실행되는 초기화 로직
-   *
-   * @description
-   * 두 가지 자동 입력 시나리오를 처리합니다:
-   *
-   * 1. **Prefill (회원가입 후 아이디 자동 입력)**
-   *    - 우선순위 1: location.state.prefill (navigate로 전달된 데이터)
-   *    - 우선순위 2: localStorage의 prefillLogin (새로고침 대비)
-   *    - 회원가입 완료 후 로그인 페이지로 이동 시 아이디가 미리 입력됨
-   *
-   * 2. **자동 로그인 (저장된 아이디 불러오기)**
-   *    - localStorage에 savedLoginId가 있으면 자동으로 아이디 입력
-   *    - rememberMe 체크박스도 자동으로 체크 상태로 설정
-   *
-   * @listens location.state - 라우터 네비게이션 시 전달된 state 변경 감지
-   */
+  
   useEffect(() => {
     // ========================================
     // 1. Prefill 데이터 확인 (회원가입 후)
