@@ -410,6 +410,12 @@ export default function Header() {
               <Link to="/mypage" onClick={handleMyPageClick}>
                 마이페이지{isLogin && user?.name ? ` (${user.name}님)` : ""}
               </Link>
+              {/* 관리자 대시보드 메뉴 */}
+              {isLogin && user?.userId === "admin" && (
+                <Link to="/admin" style={{ marginLeft: '0', color: '#5e37f4', fontWeight: 'bold' }}>
+                  관리자 대시보드
+                </Link>
+              )}
               {isLogin ? (
                 <button onClick={handleLogout} className="logout-btn">로그아웃</button>
               ) : (
@@ -427,27 +433,26 @@ export default function Header() {
                 <img src="https://ext.same-assets.com/947818454/418726284.svg" alt="SSF SHOP" />
               </Link>
 
-              <div className="header-right">
-                <div className="header-actions">
-                  <button className="search-btn" aria-label="검색" onClick={() => setSearchModalOpen(true)}>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                      <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="2" />
-                      <path d="M21 21l-4.35-4.35" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                    </svg>
-                  </button>
+              {/* 관리자가 아닐 때만 검색/찜/장바구니/브랜드 로고 표시 */}
+              {user?.userId !== "admin" && (
+                <div className="header-right">
+                  <div className="header-actions">
+                    <button className="search-btn" aria-label="검색" onClick={() => setSearchModalOpen(true)}>
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="2" />
+                        <path d="M21 21l-4.35-4.35" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                      </svg>
+                    </button>
 
-                  {/* Wish → /wishlist (관리자는 숨김) */}
-                  {user?.userId !== "admin" && (
+                    {/* Wish → /wishlist */}
                     <Link to="/wishlist" className="wishlist-btn" aria-label="위시리스트">
                       {wishCount > 0 && <span className="cart-count">{wishCount}</span>}
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     </Link>
-                  )}
 
-                  {/* Cart → /cart (관리자는 숨김) */}
-                  {user?.userId !== "admin" && (
+                    {/* Cart → /cart */}
                     <Link to="/cart" className="cart-btn" aria-label="장바구니" onClick={handleCartClick}>
                       <span className="cart-count">{cartCount}</span>
                       <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -456,32 +461,34 @@ export default function Header() {
                         <path d="M1 1h4l2.68 13.39c.09.46.34.874.71 1.168.37.294.83.45 1.3.442h9.72c.47.009.928-.147 1.294-.442.366-.294.616-.708.708-1.168L23 6H6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     </Link>
-                  )}
-                </div>
+                  </div>
 
-                <div className="nav-divider"></div>
+                  <div className="nav-divider"></div>
 
-                <div className="brand-logos">
-                  <Link to="/brand/10-corso-como">
-                    <img src="https://ext.same-assets.com/947818454/451353350.svg" alt="10 CORSO COMO" />
-                  </Link>
-                  <Link to="/brand/beaker">
-                    <img src="https://ext.same-assets.com/947818454/863943049.svg" alt="BEAKER" />
-                  </Link>
-                  <Link to="/brand/another">
-                    <img src="https://ext.same-assets.com/947818454/2516667277.svg" alt="ANOTHER#" />
-                  </Link>
+                  <div className="brand-logos">
+                    <Link to="/brand/10-corso-como">
+                      <img src="https://ext.same-assets.com/947818454/451353350.svg" alt="10 CORSO COMO" />
+                    </Link>
+                    <Link to="/brand/beaker">
+                      <img src="https://ext.same-assets.com/947818454/863943049.svg" alt="BEAKER" />
+                    </Link>
+                    <Link to="/brand/another">
+                      <img src="https://ext.same-assets.com/947818454/2516667277.svg" alt="ANOTHER#" />
+                    </Link>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
 
         {/* ===================== NAVIGATION ===================== */}
-        <div className="nav-section">
-          <div className="container">
-            <div className="nav-wrapper">
-              <nav className="product-nav" onMouseLeave={() => setActiveMenu(null)}>
+        {/* 관리자가 아닐 때만 네비게이션 표시 */}
+        {user?.userId !== "admin" && (
+          <div className="nav-section">
+            <div className="container">
+              <div className="nav-wrapper">
+                <nav className="product-nav" onMouseLeave={() => setActiveMenu(null)}>
                 <ul>
                   {/* 여성 */}
                   <li className={`nav-item ${activeMenu === "women" ? "open" : ""}`} onMouseEnter={() => setActiveMenu("women")}>
@@ -1111,9 +1118,10 @@ export default function Header() {
                   <li><Link to="/event">이벤트</Link></li>
                 </ul>
               </nav>
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </header>
 
       {/* Mobile Menu Button */}
