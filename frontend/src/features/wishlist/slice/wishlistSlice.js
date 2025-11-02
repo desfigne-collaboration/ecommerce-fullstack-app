@@ -1,10 +1,70 @@
-// src/features/wishlist/slice/wishlistSlice.js
+/**
+ * ============================================================================
+ * wishlistSlice.js - 찜 목록 Redux Slice
+ * ============================================================================
+ *
+ * 【목적】
+ * - 사용자가 찜한 상품 목록을 Redux로 관리
+ * - localStorage와 동기화하여 새로고침 후에도 데이터 유지
+ * - 하트 버튼 토글 기능 제공
+ *
+ * 【상태 구조】
+ * state.wishlist = {
+ *   items: [
+ *     {
+ *       id: "product123",
+ *       name: "상품명",
+ *       price: 50000,
+ *       image: "...",
+ *       __key: "product123"  // 내부 키 (중복 체크용)
+ *     },
+ *     ...
+ *   ]
+ * }
+ *
+ * 【주요 기능】
+ * 1. addToWishlist: 찜 목록에 상품 추가 (중복 방지)
+ * 2. removeFromWishlist: 찜 목록에서 상품 제거
+ * 3. toggleWishlist: 찜 상태 토글 (있으면 제거, 없으면 추가)
+ * 4. clearWishlist: 찜 목록 비우기
+ * 5. setWishlist: 찜 목록 전체 교체 (동기화용)
+ *
+ * 【고유 키 생성 전략】
+ * 상품 ID를 기본으로 사용하지만, ID가 없는 경우
+ * name + image + price 조합으로 fallback 키를 생성합니다.
+ *
+ * @module wishlistSlice
+ * @author Claude Code
+ * @since 2025-11-02
+ */
+
 import { createSlice } from '@reduxjs/toolkit';
 
+// ============================================================================
+// Helper Functions
+// ============================================================================
 /**
- * 위시리스트 상품 고유 키 생성
- * @param {Object} product - 상품 정보
- * @returns {string} - 고유 키
+ * productKey - 위시리스트 상품 고유 키 생성
+ *
+ * @description
+ * 상품의 고유 키를 생성합니다.
+ * 우선순위: id > productId > (name + image + price 조합)
+ *
+ * @param {Object} p - 상품 정보
+ * @param {string} [p.id] - 상품 ID
+ * @param {string} [p.productId] - 상품 ID (대체)
+ * @param {string} [p.name] - 상품명
+ * @param {string} [p.image] - 이미지 URL
+ * @param {string} [p.img] - 이미지 URL (대체)
+ * @param {number} [p.price] - 가격
+ * @returns {string} 고유 키
+ *
+ * @example
+ * productKey({ id: "p123" })
+ * // → "p123"
+ *
+ * productKey({ name: "티셔츠", image: "img.jpg", price: 29000 })
+ * // → "티셔츠::img.jpg::29000"
  */
 export const productKey = (p = {}) => (
   (p.id ?? p.productId ?? "").toString() ||

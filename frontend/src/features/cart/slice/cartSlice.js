@@ -1,10 +1,69 @@
-// src/features/cart/slice/cartSlice.js
+/**
+ * ============================================================================
+ * cartSlice.js - 장바구니 Redux Slice
+ * ============================================================================
+ *
+ * 【목적】
+ * - 장바구니 상품 목록을 Redux로 관리
+ * - localStorage와 동기화하여 새로고침 후에도 데이터 유지
+ * - 사이즈/색상별로 동일 상품을 구분하여 관리
+ *
+ * 【상태 구조】
+ * state.cart = {
+ *   items: [
+ *     {
+ *       id: "product123",
+ *       name: "상품명",
+ *       price: 50000,
+ *       image: "...",
+ *       selectedSize: "L",
+ *       selectedColor: "Black",
+ *       quantity: 2
+ *     },
+ *     ...
+ *   ]
+ * }
+ *
+ * 【주요 기능】
+ * 1. addToCart: 장바구니에 상품 추가 (기존 상품이면 수량 증가)
+ * 2. removeFromCart: 장바구니에서 상품 제거
+ * 3. updateCartQuantity: 상품 수량 변경
+ * 4. clearCart: 장바구니 비우기
+ * 5. setCart: 장바구니 전체 교체 (동기화용)
+ *
+ * 【고유 키 생성 전략】
+ * 동일 상품이라도 사이즈/색상이 다르면 별도 아이템으로 관리합니다.
+ * 예: "상품A (L, Black)"과 "상품A (M, Black)"은 서로 다른 아이템
+ *
+ * @module cartSlice
+ * @author Claude Code
+ * @since 2025-11-02
+ */
+
 import { createSlice } from '@reduxjs/toolkit';
 
+// ============================================================================
+// Helper Functions
+// ============================================================================
 /**
- * 장바구니 아이템 고유 키 생성
- * @param {Object} item - 상품 정보 (id, selectedSize, selectedColor)
- * @returns {string} - 고유 키
+ * cartItemKey - 장바구니 아이템 고유 키 생성
+ *
+ * @description
+ * 상품 ID + 사이즈 + 색상을 조합하여 고유한 키를 생성합니다.
+ * 동일 상품이라도 사이즈/색상이 다르면 다른 키를 가집니다.
+ *
+ * @param {Object} item - 상품 정보
+ * @param {string} item.id - 상품 ID
+ * @param {string} [item.selectedSize] - 선택된 사이즈
+ * @param {string} [item.selectedColor] - 선택된 색상
+ * @returns {string} 고유 키 (예: "product123_L_Black")
+ *
+ * @example
+ * cartItemKey({ id: "p1", selectedSize: "L", selectedColor: "Black" })
+ * // → "p1_L_Black"
+ *
+ * cartItemKey({ id: "p1" })
+ * // → "p1_nosize_nocolor"
  */
 export const cartItemKey = (item) => {
   const { id, selectedSize, selectedColor } = item;
