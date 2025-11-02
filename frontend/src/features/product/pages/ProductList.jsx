@@ -1,20 +1,90 @@
+/**
+ * ============================================================================
+ * ProductList.jsx - 상품 목록 / 카테고리 / 검색 결과 통합 페이지
+ * ============================================================================
+ *
+ * 【목적】
+ * - 카테고리별 상품 목록 표시 (/women/outer, /men/jacket 등)
+ * - 검색 결과 표시 (/search/:keyword 또는 /search?q=키워드)
+ * - 위시리스트 토글 기능 통합
+ * - 정렬/필터링 UI 제공
+ *
+ * 【주요 기능】
+ * 1. **경로 파싱**: 카테고리/서브카테고리 추출, 검색 모드 감지
+ * 2. **데이터 소스**: 로컬 하드코딩 상품 데이터 (women/outer, women/jacket 등)
+ * 3. **위시리스트**: localStorage 기반 찜 기능 (실시간 토글)
+ * 4. **정렬**: 가격순, 할인율순, 리뷰많은순 등
+ * 5. **이미지 폴백**: 여러 후보 경로 시도 (인코딩/소문자/PUBLIC_URL 조합)
+ * 6. **브랜드 로고**: 카테고리 페이지 상단에 브랜드 로고 표시
+ * 7. **Breadcrumb 네비게이션**: Home > 카테고리 > 서브카테고리
+ *
+ * 【경로 예시】
+ * - /women/outer → 여성 아우터 카테고리
+ * - /search/자켓 → "자켓" 검색 결과
+ * - /search?q=티셔츠 → "티셔츠" 검색 결과
+ *
+ * 【이미지 폴백 시스템】
+ * - 이미지 로드 실패 시 여러 후보 경로를 순차적으로 시도
+ * - 후보: PUBLIC_URL+인코딩, PUBLIC_URL+비인코딩, 소문자 변형, 루트 경로
+ * - 모든 시도 실패 시 placeholder.png 표시
+ *
+ * 【데이터 구조】
+ * - local_women_outer: 여성 아우터 6개 상품 (하드코딩)
+ * - local_women_jacket: 여성 재킷 6개 상품 (하드코딩)
+ * - sampleProducts: 외부 샘플 1개 상품
+ * - localByCategory: 카테고리별 상품 테이블
+ *
+ * @component
+ * @author Claude Code
+ * @since 2025-11-02
+ */
+
 // src/pages/ProductList.jsx
 import React, { useMemo, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import storage from "../../../utils/storage.js";
 import "../../../styles/CategoryPage.css";
 
-// 가격 → 숫자
+/**
+ * toNumberPrice - 가격 문자열을 숫자로 변환
+ *
+ * @param {string|number} val - 가격 값 ("₩50,000" 또는 50000)
+ * @returns {number} 순수 숫자 가격
+ *
+ * @example
+ * toNumberPrice("₩50,000") // → 50000
+ * toNumberPrice(50000) // → 50000
+ */
 const toNumberPrice = (val) =>
   typeof val === "number" ? val : Number(String(val).replace(/[^\d]/g, "")) || 0;
 
-/** 이미지 후보 경로 생성기 (안전장치)
- * - PUBLIC_URL + encodeURI(원본)
- * - PUBLIC_URL + 원본(비인코딩)
- * - PUBLIC_URL + 파일명 소문자화
- * - 루트(/) + encodeURI(원본)
- * - 루트(/) + 파일명 소문자화
- * - 마지막: placeholder
+/**
+ * buildImageCandidates - 이미지 후보 경로 생성기 (안전장치)
+ *
+ * @description
+ * 이미지 로드 실패 시 여러 후보 경로를 순차적으로 시도하기 위한 배열 생성.
+ * 한글 파일명, 대소문자, PUBLIC_URL 유무 등 다양한 조합을 시도합니다.
+ *
+ * 【후보 경로 우선순위】
+ * 1. PUBLIC_URL + encodeURI(원본)
+ * 2. PUBLIC_URL + 원본(비인코딩)
+ * 3. PUBLIC_URL + 파일명 소문자화 + 인코딩
+ * 4. PUBLIC_URL + 파일명 소문자화
+ * 5. 루트(/) + encodeURI(원본)
+ * 6. 루트(/) + 원본(비인코딩)
+ *
+ * @param {string} raw - 원본 이미지 경로
+ * @returns {string[]} 중복 제거된 후보 경로 배열
+ *
+ * @example
+ * buildImageCandidates("/images/상품1.jpg")
+ * // → [
+ * //   "http://localhost:3000/images/%EC%83%81%ED%92%881.jpg",
+ * //   "http://localhost:3000/images/상품1.jpg",
+ * //   "http://localhost:3000/images/%EC%83%81%ED%92%881.jpg",
+ * //   "/images/%EC%83%81%ED%92%881.jpg",
+ * //   "/images/상품1.jpg"
+ * // ]
  */
 const buildImageCandidates = (raw) => {
   const PUBLIC = process.env.PUBLIC_URL || "";
@@ -42,8 +112,27 @@ const buildImageCandidates = (raw) => {
   return Array.from(new Set(candidates));
 };
 
-/** 이미지 src 계산 (http/https는 그대로, 그 외는 후보 배열 생성)
- *  - 반환: { src, candidates }
+/**
+ * srcOf - 이미지 src 계산 (http/https는 그대로, 그 외는 후보 배열 생성)
+ *
+ * @description
+ * 이미지 경로를 정규화하고 폴백 후보 배열을 생성합니다.
+ * 외부 URL은 그대로 사용하고, 로컬 경로는 buildImageCandidates로 후보 생성.
+ *
+ * @param {string|Object} imgOrProduct - 이미지 경로 문자열 또는 상품 객체
+ * @returns {{src: string, candidates: string[]}} 첫 번째 후보 경로와 나머지 후보 배열
+ *
+ * @example
+ * srcOf("https://cdn.example.com/product.jpg")
+ * // → { src: "https://cdn.example.com/product.jpg", candidates: [] }
+ *
+ * @example
+ * srcOf("/images/상품1.jpg")
+ * // → { src: "http://localhost:3000/images/%EC%83%81%ED%92%881.jpg", candidates: [...] }
+ *
+ * @example
+ * srcOf({ img: "/images/product.jpg" })
+ * // → { src: "http://localhost:3000/images/product.jpg", candidates: [...] }
  */
 const srcOf = (imgOrProduct) => {
   const raw =
@@ -262,6 +351,38 @@ const sampleProducts = [
   },
 ];
 
+/**
+ * ProductList 함수형 컴포넌트
+ *
+ * @description
+ * 카테고리별 상품 목록과 검색 결과를 통합 처리하는 메인 페이지 컴포넌트.
+ *
+ * 【처리 흐름】
+ * 1. **경로 파싱**: location.pathname에서 카테고리/서브카테고리 추출
+ * 2. **검색 모드 감지**: /search로 시작하면 검색 모드, 아니면 카테고리 모드
+ * 3. **데이터 로드**: 카테고리 모드는 localByCategory에서, 검색 모드는 전체 상품에서
+ * 4. **필터링**: 검색어가 있으면 name/desc 필터링 (스코어링 방식)
+ * 5. **정렬**: sortBy에 따라 가격/할인율/리뷰 정렬
+ * 6. **렌더링**: 상품 그리드 + 위시리스트 버튼 + 이미지 폴백
+ *
+ * 【주요 State】
+ * - activeTab: 현재 활성 탭 ("전체", "코트", "점퍼" 등)
+ * - sortBy: 정렬 기준 ("인기상품순", "낮은가격순", "높은가격순" 등)
+ * - refresh: 위시리스트 토글 시 화면 갱신용 카운터
+ *
+ * 【주요 함수】
+ * - handleProductClick: 상품 클릭 시 상세 페이지 이동 (localStorage 저장)
+ * - toggleWishlist: 위시리스트 추가/제거 (StorageEvent 발행)
+ * - sortProducts: 정렬 로직 (가격/할인율/리뷰)
+ * - handleImgError: 이미지 로드 실패 시 후보 경로 순차 시도
+ *
+ * 【경로 파싱 예시】
+ * - /women/outer → category: "women", subcategory: "outer"
+ * - /search/자켓 → isSearchMode: true, searchKeyword: "자켓"
+ * - /search?q=티셔츠 → isSearchMode: true, searchKeyword: "티셔츠"
+ *
+ * @returns {JSX.Element} 상품 목록 페이지 UI
+ */
 export default function ProductList() {
   const location = useLocation();
   const navigate = useNavigate();
