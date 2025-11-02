@@ -491,6 +491,138 @@ const local_luxury_women = [
   { id: "luxury-women-106", brand: "LUXURY BRAND", name: "럭셔리 여성 상품 6", img: "/images/luxury/women/luxury_women6.webp", desc: "프리미엄 럭셔리", price: "495000", originalPrice: 590000, discountRate: 16, rating: 4.6, reviewCount: 26, wishCount: 235, colors: ["navy"] },
 ];
 
+// ===== 추가된 상품 데이터 (집 프로젝트에서 통합) =====
+
+// 여성 ▸ 라운지웨어
+const local_women_loungewear = [
+  { id: "women-loungewear-101", brand: "SIE", name: "홈웨어 세트", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_loungewear1.webp", desc: "편안한 홈웨어 상하 세트", price: "79000", originalPrice: 109000, discountRate: 28, rating: 4.3, reviewCount: 39, wishCount: 114, colors: ["default"] },
+  { id: "women-loungewear-102", brand: "VICTORIA", name: "레이스 속옷 세트", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_loungewear2.webp", desc: "우아한 레이스 언더웨어", price: "59000", originalPrice: 89000, discountRate: 34, rating: 4.6, reviewCount: 31, wishCount: 70, colors: ["default"] },
+  { id: "women-loungewear-103", brand: "EBLIN", name: "실크 파자마", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_loungewear3.webp", desc: "부드러운 실크 잠옷", price: "129000", originalPrice: 179000, discountRate: 28, rating: 4.4, reviewCount: 39, wishCount: 156, colors: ["default"] },
+  { id: "women-loungewear-104", brand: "UNIQLO", name: "코튼 브라렛", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_loungewear4.webp", desc: "편안한 무와이어 브라", price: "35000", originalPrice: 49000, discountRate: 29, rating: 4.2, reviewCount: 56, wishCount: 291, colors: ["default"] },
+  { id: "women-loungewear-105", brand: "SIE", name: "라운지 가디건", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_loungewear5.webp", desc: "부드러운 라운지 가디건", price: "89000", originalPrice: 119000, discountRate: 25, rating: 4.6, reviewCount: 32, wishCount: 198, colors: ["default"] },
+  { id: "women-loungewear-106", brand: "SYSTEM", name: "레깅스 세트", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_loungewear6.webp", desc: "활동적인 홈 레깅스", price: "45000", originalPrice: 65000, discountRate: 31, rating: 4.4, reviewCount: 33, wishCount: 251, colors: ["default"] },
+];
+
+// 여성 ▸ 비치웨어
+const local_women_beachwear = [
+  { id: "women-beachwear-101", brand: "ROXY", name: "비키니 세트", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_beachwear1.webp", desc: "트렌디한 비키니", price: "89000", originalPrice: 119000, discountRate: 25, rating: 4.4, reviewCount: 37, wishCount: 297, colors: ["default"] },
+  { id: "women-beachwear-102", brand: "ARENA", name: "원피스 수영복", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_beachwear2.webp", desc: "우아한 원피스 스타일", price: "109000", originalPrice: 149000, discountRate: 27, rating: 4.6, reviewCount: 12, wishCount: 277, colors: ["default"] },
+  { id: "women-beachwear-103", brand: "ROXY", name: "래쉬가드 세트", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_beachwear3.webp", desc: "UV 차단 래쉬가드", price: "79000", originalPrice: 109000, discountRate: 28, rating: 4.7, reviewCount: 27, wishCount: 122, colors: ["default"] },
+  { id: "women-beachwear-104", brand: "BILLABONG", name: "비치 드레스", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_beachwear4.webp", desc: "시원한 비치 커버업", price: "69000", originalPrice: 95000, discountRate: 27, rating: 4.5, reviewCount: 13, wishCount: 263, colors: ["default"] },
+  { id: "women-beachwear-105", brand: "QUIKSILVER", name: "서프 팬츠", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_beachwear5.webp", desc: "활동적인 서핑 팬츠", price: "59000", originalPrice: 79000, discountRate: 25, rating: 4, reviewCount: 20, wishCount: 155, colors: ["default"] },
+  { id: "women-beachwear-106", brand: "ROXY", name: "비치 모자", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_beachwear6.webp", desc: "넓은 챙의 비치 모자", price: "45000", originalPrice: 65000, discountRate: 31, rating: 4.6, reviewCount: 28, wishCount: 286, colors: ["default"] },
+];
+
+// 여성 ▸ 패션잡화
+const local_women_accessories = [
+  { id: "women-accessories-101", brand: "SIE", name: "가죽 벨트", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_accessories1.webp", desc: "심플한 가죽 벨트", price: "59000", originalPrice: 79000, discountRate: 25, rating: 4.1, reviewCount: 37, wishCount: 341, colors: ["default"] },
+  { id: "women-accessories-102", brand: "CHARLES&KEITH", name: "숄더백", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_accessories2.webp", desc: "데일리 숄더백", price: "129000", originalPrice: 179000, discountRate: 28, rating: 4.1, reviewCount: 37, wishCount: 90, colors: ["default"] },
+  { id: "women-accessories-103", brand: "HERMES", name: "스카프", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_accessories3.webp", desc: "실크 스카프", price: "49000", originalPrice: 69000, discountRate: 29, rating: 4.2, reviewCount: 56, wishCount: 107, colors: ["default"] },
+  { id: "women-accessories-104", brand: "RAYBAN", name: "선글라스", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_accessories4.webp", desc: "UV 차단 선글라스", price: "89000", originalPrice: 129000, discountRate: 31, rating: 4.1, reviewCount: 33, wishCount: 221, colors: ["default"] },
+  { id: "women-accessories-105", brand: "COACH", name: "크로스백", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_accessories5.webp", desc: "가벼운 크로스백", price: "99000", originalPrice: 139000, discountRate: 29, rating: 4.6, reviewCount: 39, wishCount: 61, colors: ["default"] },
+  { id: "women-accessories-106", brand: "MLB", name: "모자", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_accessories6.webp", desc: "베이직 볼캡", price: "35000", originalPrice: 49000, discountRate: 29, rating: 4.6, reviewCount: 10, wishCount: 60, colors: ["default"] },
+];
+
+// 여성 ▸ 주얼리
+const local_women_jewelry = [
+  { id: "women-jewelry-101", brand: "AGATHA", name: "실버 목걸이", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_jewelry1.webp", desc: "심플한 실버 목걸이", price: "89000", originalPrice: 129000, discountRate: 31, rating: 4.7, reviewCount: 36, wishCount: 107, colors: ["default"] },
+  { id: "women-jewelry-102", brand: "LLOYD", name: "진주 귀걸이", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_jewelry2.webp", desc: "우아한 진주 귀걸이", price: "69000", originalPrice: 99000, discountRate: 30, rating: 4.3, reviewCount: 56, wishCount: 112, colors: ["default"] },
+  { id: "women-jewelry-103", brand: "TIFFANY", name: "팔찌", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_jewelry3.webp", desc: "골드 체인 팔찌", price: "79000", originalPrice: 109000, discountRate: 28, rating: 4.6, reviewCount: 40, wishCount: 76, colors: ["default"] },
+  { id: "women-jewelry-104", brand: "SWAROVSKI", name: "반지", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_jewelry4.webp", desc: "큐빅 반지", price: "59000", originalPrice: 85000, discountRate: 31, rating: 4.1, reviewCount: 12, wishCount: 69, colors: ["default"] },
+  { id: "women-jewelry-105", brand: "DANIEL WELLINGTON", name: "손목시계", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_jewelry5.webp", desc: "미니멀 손목시계", price: "159000", originalPrice: 219000, discountRate: 27, rating: 4.2, reviewCount: 32, wishCount: 308, colors: ["default"] },
+  { id: "women-jewelry-106", brand: "LLOYD", name: "헤어핀 세트", img: "https://desfigne.synology.me/data/image/thejoeun/products/women_jewelry6.webp", desc: "진주 헤어핀 세트", price: "29000", originalPrice: 39000, discountRate: 26, rating: 4.5, reviewCount: 20, wishCount: 76, colors: ["default"] },
+];
+
+// 남성 ▸ 니트
+const local_men_knit = [
+  { id: "men-knit-101", brand: "TNGT", name: "라운드넥 니트", img: "https://desfigne.synology.me/data/image/thejoeun/products/men_knit1.webp", desc: "베이직 라운드넥 스웨터", price: "129000", originalPrice: 179000, discountRate: 28, rating: 4.3, reviewCount: 19, wishCount: 271, colors: ["default"] },
+  { id: "men-knit-102", brand: "KUHO", name: "터틀넥 니트", img: "https://desfigne.synology.me/data/image/thejoeun/products/men_knit2.webp", desc: "세련된 터틀넥 스웨터", price: "149000", originalPrice: 199000, discountRate: 25, rating: 4.3, reviewCount: 35, wishCount: 170, colors: ["default"] },
+  { id: "men-knit-103", brand: "SYSTEM", name: "카디건", img: "https://desfigne.synology.me/data/image/thejoeun/products/men_knit3.webp", desc: "심플한 가디건", price: "139000", originalPrice: 189000, discountRate: 26, rating: 4.7, reviewCount: 21, wishCount: 141, colors: ["default"] },
+  { id: "men-knit-104", brand: "KUHO", name: "캐시미어 니트", img: "https://desfigne.synology.me/data/image/thejoeun/products/men_knit4.webp", desc: "고급스러운 캐시미어 스웨터", price: "259000", originalPrice: 349000, discountRate: 26, rating: 4.1, reviewCount: 58, wishCount: 238, colors: ["default"] },
+  { id: "men-knit-105", brand: "TNGT", name: "케이블 니트", img: "https://desfigne.synology.me/data/image/thejoeun/products/men_knit5.webp", desc: "클래식한 케이블 패턴", price: "159000", originalPrice: 219000, discountRate: 27, rating: 4.5, reviewCount: 21, wishCount: 137, colors: ["default"] },
+  { id: "men-knit-106", brand: "SYSTEM", name: "집업 니트", img: "https://desfigne.synology.me/data/image/thejoeun/products/men_knit6.webp", desc: "실용적인 집업 스웨터", price: "149000", originalPrice: 199000, discountRate: 25, rating: 4.1, reviewCount: 32, wishCount: 307, colors: ["default"] },
+];
+
+// 남성 ▸ 티셔츠
+const local_men_tshirt = [
+  { id: "men-tshirt-101", brand: "SIE", name: "베이직 티셔츠", img: "https://desfigne.synology.me/data/image/thejoeun/products/men_tshirt1.webp", desc: "데일리 필수 반팔 티셔츠", price: "29000", originalPrice: 39000, discountRate: 26, rating: 4.2, reviewCount: 34, wishCount: 342, colors: ["default"] },
+  { id: "men-tshirt-102", brand: "8SECONDS", name: "오버핏 티셔츠", img: "https://desfigne.synology.me/data/image/thejoeun/products/men_tshirt2.webp", desc: "편안한 오버사이즈 티셔츠", price: "39000", originalPrice: 49000, discountRate: 20, rating: 4.6, reviewCount: 24, wishCount: 150, colors: ["default"] },
+  { id: "men-tshirt-103", brand: "SIE", name: "스트라이프 티셔츠", img: "https://desfigne.synology.me/data/image/thejoeun/products/men_tshirt3.webp", desc: "산뜻한 스트라이프 패턴", price: "35000", originalPrice: 49000, discountRate: 29, rating: 4.2, reviewCount: 44, wishCount: 71, colors: ["default"] },
+  { id: "men-tshirt-104", brand: "8SECONDS", name: "프린팅 티셔츠", img: "https://desfigne.synology.me/data/image/thejoeun/products/men_tshirt4.webp", desc: "개성있는 그래픽 프린팅", price: "45000", originalPrice: 59000, discountRate: 24, rating: 4.5, reviewCount: 21, wishCount: 295, colors: ["default"] },
+  { id: "men-tshirt-105", brand: "SYSTEM", name: "롱 티셔츠", img: "https://desfigne.synology.me/data/image/thejoeun/products/men_tshirt5.webp", desc: "트렌디한 롱 기장 티셔츠", price: "42000", originalPrice: 55000, discountRate: 24, rating: 4.5, reviewCount: 21, wishCount: 66, colors: ["default"] },
+  { id: "men-tshirt-106", brand: "SIE", name: "브이넥 티셔츠", img: "https://desfigne.synology.me/data/image/thejoeun/products/men_tshirt6.webp", desc: "심플한 브이넥 티셔츠", price: "32000", originalPrice: 45000, discountRate: 29, rating: 4.5, reviewCount: 59, wishCount: 133, colors: ["default"] },
+];
+
+// 남성 ▸ 팬츠
+const local_men_pants = [
+  { id: "men-pants-101", brand: "TNGT", name: "슬랙스", img: "https://desfigne.synology.me/data/image/thejoeun/products/men_pants1.webp", desc: "클래식 슬랙스 팬츠", price: "99000", originalPrice: 139000, discountRate: 29, rating: 4.5, reviewCount: 12, wishCount: 107, colors: ["default"] },
+  { id: "men-pants-102", brand: "SIE", name: "청바지", img: "https://desfigne.synology.me/data/image/thejoeun/products/men_pants2.webp", desc: "베이직 슬림 데님", price: "89000", originalPrice: 119000, discountRate: 25, rating: 4.3, reviewCount: 20, wishCount: 109, colors: ["default"] },
+  { id: "men-pants-103", brand: "8SECONDS", name: "치노 팬츠", img: "https://desfigne.synology.me/data/image/thejoeun/products/men_pants3.webp", desc: "캐주얼 치노 팬츠", price: "79000", originalPrice: 109000, discountRate: 28, rating: 4.4, reviewCount: 22, wishCount: 63, colors: ["default"] },
+  { id: "men-pants-104", brand: "SYSTEM", name: "카고 팬츠", img: "https://desfigne.synology.me/data/image/thejoeun/products/men_pants4.webp", desc: "유틸리티 카고 팬츠", price: "119000", originalPrice: 159000, discountRate: 25, rating: 4.2, reviewCount: 27, wishCount: 329, colors: ["default"] },
+  { id: "men-pants-105", brand: "SIE", name: "와이드 팬츠", img: "https://desfigne.synology.me/data/image/thejoeun/products/men_pants5.webp", desc: "편안한 와이드 핏", price: "109000", originalPrice: 149000, discountRate: 27, rating: 4.2, reviewCount: 21, wishCount: 131, colors: ["default"] },
+  { id: "men-pants-106", brand: "SYSTEM", name: "조거 팬츠", img: "https://desfigne.synology.me/data/image/thejoeun/products/men_pants6.webp", desc: "활동적인 조거 팬츠", price: "69000", originalPrice: 99000, discountRate: 30, rating: 4.5, reviewCount: 38, wishCount: 322, colors: ["default"] },
+];
+
+// 키즈 ▸ 베이비
+const local_kids_baby = [
+  { id: "kids-baby-101", brand: "SIE", name: "베이비 우주복", img: "https://desfigne.synology.me/data/image/thejoeun/products/kids_baby1.webp", desc: "따뜻한 베이비 우주복", price: "49000", originalPrice: 69000, discountRate: 29, rating: 4.7, reviewCount: 55, wishCount: 233, colors: ["default"] },
+  { id: "kids-baby-102", brand: "SYSTEM", name: "베이비 바디슈트", img: "https://desfigne.synology.me/data/image/thejoeun/products/kids_baby2.webp", desc: "편안한 바디슈트", price: "29000", originalPrice: 39000, discountRate: 26, rating: 4, reviewCount: 15, wishCount: 253, colors: ["default"] },
+  { id: "kids-baby-103", brand: "SIE", name: "베이비 레깅스", img: "https://desfigne.synology.me/data/image/thejoeun/products/kids_baby3.webp", desc: "부드러운 레깅스", price: "25000", originalPrice: 35000, discountRate: 29, rating: 4.5, reviewCount: 34, wishCount: 72, colors: ["default"] },
+  { id: "kids-baby-104", brand: "8SECONDS", name: "베이비 모자", img: "https://desfigne.synology.me/data/image/thejoeun/products/kids_baby4.webp", desc: "귀여운 모자", price: "19000", originalPrice: 29000, discountRate: 34, rating: 4.4, reviewCount: 53, wishCount: 260, colors: ["default"] },
+  { id: "kids-baby-105", brand: "SYSTEM", name: "베이비 점퍼", img: "https://desfigne.synology.me/data/image/thejoeun/products/kids_baby5.webp", desc: "사랑스러운 점퍼", price: "59000", originalPrice: 79000, discountRate: 25, rating: 4.3, reviewCount: 29, wishCount: 199, colors: ["default"] },
+  { id: "kids-baby-106", brand: "SIE", name: "베이비 세트", img: "https://desfigne.synology.me/data/image/thejoeun/products/kids_baby6.webp", desc: "실용적인 의류 세트", price: "69000", originalPrice: 89000, discountRate: 22, rating: 4.7, reviewCount: 48, wishCount: 327, colors: ["default"] },
+];
+
+// 스포츠 ▸ 요가
+const local_sports_yoga = [
+  { id: "sports-yoga-101", brand: "LULULEMON", name: "요가 매트", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_yoga1.webp", desc: "미끄럼 방지 요가 매트", price: "69000", originalPrice: 89000, discountRate: 22, rating: 4.6, reviewCount: 41, wishCount: 186, colors: ["default"] },
+  { id: "sports-yoga-102", brand: "LULULEMON", name: "요가 레깅스", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_yoga2.webp", desc: "신축성 좋은 요가 레깅스", price: "89000", originalPrice: 119000, discountRate: 25, rating: 4.3, reviewCount: 26, wishCount: 299, colors: ["default"] },
+  { id: "sports-yoga-103", brand: "ALO YOGA", name: "요가 탑", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_yoga3.webp", desc: "편안한 요가 탑", price: "59000", originalPrice: 79000, discountRate: 25, rating: 4.6, reviewCount: 12, wishCount: 316, colors: ["default"] },
+  { id: "sports-yoga-104", brand: "LULULEMON", name: "스포츠 브라", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_yoga4.webp", desc: "서포트력 좋은 스포츠 브라", price: "49000", originalPrice: 69000, discountRate: 29, rating: 4.2, reviewCount: 48, wishCount: 185, colors: ["default"] },
+  { id: "sports-yoga-105", brand: "MANDUKA", name: "요가 블록", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_yoga5.webp", desc: "요가 보조 블록", price: "25000", originalPrice: 35000, discountRate: 29, rating: 4.2, reviewCount: 58, wishCount: 336, colors: ["default"] },
+  { id: "sports-yoga-106", brand: "GAIAM", name: "요가 스트랩", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_yoga6.webp", desc: "스트레칭용 스트랩", price: "19000", originalPrice: 29000, discountRate: 34, rating: 4.2, reviewCount: 37, wishCount: 95, colors: ["default"] },
+];
+
+// 스포츠 ▸ 피트니스
+const local_sports_fitness = [
+  { id: "sports-fitness-101", brand: "HARBINGER", name: "트레이닝 글러브", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_fitness1.webp", desc: "그립감 좋은 트레이닝 글러브", price: "29000", originalPrice: 39000, discountRate: 26, rating: 4.4, reviewCount: 42, wishCount: 198, colors: ["default"] },
+  { id: "sports-fitness-102", brand: "UNDER ARMOUR", name: "피트니스 레깅스", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_fitness2.webp", desc: "압박감 있는 레깅스", price: "79000", originalPrice: 109000, discountRate: 28, rating: 4.4, reviewCount: 51, wishCount: 140, colors: ["default"] },
+  { id: "sports-fitness-103", brand: "NIKE", name: "트레이닝 탱크", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_fitness3.webp", desc: "흡한속건 트레이닝 탱크", price: "45000", originalPrice: 59000, discountRate: 24, rating: 4.1, reviewCount: 39, wishCount: 316, colors: ["default"] },
+  { id: "sports-fitness-104", brand: "ADIDAS", name: "트레이닝 쇼츠", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_fitness4.webp", desc: "활동성 좋은 쇼츠", price: "49000", originalPrice: 69000, discountRate: 29, rating: 4.4, reviewCount: 21, wishCount: 304, colors: ["default"] },
+  { id: "sports-fitness-105", brand: "HARBINGER", name: "리프팅 벨트", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_fitness5.webp", desc: "허리 보호 벨트", price: "59000", originalPrice: 79000, discountRate: 25, rating: 4.4, reviewCount: 52, wishCount: 141, colors: ["default"] },
+  { id: "sports-fitness-106", brand: "REEBOK", name: "헬스 신발", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_fitness6.webp", desc: "안정감 있는 트레이닝 신발", price: "129000", originalPrice: 179000, discountRate: 28, rating: 4.3, reviewCount: 16, wishCount: 301, colors: ["default"] },
+];
+
+// 스포츠 ▸ 테니스
+const local_sports_tennis = [
+  { id: "sports-tennis-101", brand: "WILSON", name: "테니스 라켓", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_tennis1.webp", desc: "초급자용 테니스 라켓", price: "189000", originalPrice: 259000, discountRate: 27, rating: 4.3, reviewCount: 37, wishCount: 182, colors: ["default"] },
+  { id: "sports-tennis-102", brand: "NIKE", name: "테니스 신발", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_tennis2.webp", desc: "그립감 좋은 테니스화", price: "149000", originalPrice: 199000, discountRate: 25, rating: 4.4, reviewCount: 32, wishCount: 233, colors: ["default"] },
+  { id: "sports-tennis-103", brand: "ADIDAS", name: "테니스 스커트", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_tennis3.webp", desc: "활동적인 테니스 스커트", price: "69000", originalPrice: 89000, discountRate: 22, rating: 4.6, reviewCount: 44, wishCount: 96, colors: ["default"] },
+  { id: "sports-tennis-104", brand: "LACOSTE", name: "테니스 폴로", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_tennis4.webp", desc: "흡한속건 폴로 셔츠", price: "79000", originalPrice: 109000, discountRate: 28, rating: 4.2, reviewCount: 12, wishCount: 80, colors: ["default"] },
+  { id: "sports-tennis-105", brand: "WILSON", name: "테니스 백", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_tennis5.webp", desc: "라켓 수납 백", price: "89000", originalPrice: 119000, discountRate: 25, rating: 4.5, reviewCount: 44, wishCount: 115, colors: ["default"] },
+  { id: "sports-tennis-106", brand: "NIKE", name: "테니스 모자", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_tennis6.webp", desc: "햇빛 차단 모자", price: "35000", originalPrice: 49000, discountRate: 29, rating: 4.7, reviewCount: 37, wishCount: 51, colors: ["default"] },
+];
+
+// 스포츠 ▸ 수영
+const local_sports_swim = [
+  { id: "sports-swim-101", brand: "SPEEDO", name: "수영복", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_swim1.webp", desc: "클로린 저항성 수영복", price: "89000", originalPrice: 119000, discountRate: 25, rating: 4.5, reviewCount: 32, wishCount: 145, colors: ["default"] },
+  { id: "sports-swim-102", brand: "SPEEDO", name: "수영 고글", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_swim2.webp", desc: "김서림 방지 고글", price: "35000", originalPrice: 49000, discountRate: 29, rating: 4.2, reviewCount: 51, wishCount: 230, colors: ["default"] },
+  { id: "sports-swim-103", brand: "ARENA", name: "수영 모자", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_swim3.webp", desc: "실리콘 수영 모자", price: "15000", originalPrice: 25000, discountRate: 40, rating: 4.6, reviewCount: 53, wishCount: 238, colors: ["default"] },
+  { id: "sports-swim-104", brand: "ROXY", name: "래쉬가드", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_swim4.webp", desc: "UV 차단 래쉬가드", price: "69000", originalPrice: 89000, discountRate: 22, rating: 4.1, reviewCount: 53, wishCount: 193, colors: ["default"] },
+  { id: "sports-swim-105", brand: "QUIKSILVER", name: "비치 타올", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_swim5.webp", desc: "대형 흡수 타올", price: "45000", originalPrice: 59000, discountRate: 24, rating: 4.3, reviewCount: 29, wishCount: 240, colors: ["default"] },
+  { id: "sports-swim-106", brand: "SPEEDO", name: "수영 가방", img: "https://desfigne.synology.me/data/image/thejoeun/products/sports_swim6.webp", desc: "방수 수영 가방", price: "55000", originalPrice: 75000, discountRate: 27, rating: 4.4, reviewCount: 40, wishCount: 270, colors: ["default"] },
+];
+
+// 뷰티 ▸ 향수
+const local_beauty_perfume = [
+  { id: "beauty-perfume-101", brand: "CHANEL", name: "플로럴 향수", img: "https://desfigne.synology.me/data/image/thejoeun/products/beauty_perfume1.webp", desc: "우아한 플로럴 노트", price: "125000", originalPrice: 175000, discountRate: 29, rating: 4.1, reviewCount: 47, wishCount: 238, colors: ["default"] },
+  { id: "beauty-perfume-102", brand: "JO MALONE", name: "시트러스 향수", img: "https://desfigne.synology.me/data/image/thejoeun/products/beauty_perfume2.webp", desc: "상큼한 시트러스 향", price: "98000", originalPrice: 138000, discountRate: 29, rating: 4, reviewCount: 23, wishCount: 165, colors: ["default"] },
+  { id: "beauty-perfume-103", brand: "TOM FORD", name: "우디 향수", img: "https://desfigne.synology.me/data/image/thejoeun/products/beauty_perfume3.webp", desc: "깊은 우디 노트", price: "145000", originalPrice: 195000, discountRate: 26, rating: 4.6, reviewCount: 56, wishCount: 143, colors: ["default"] },
+  { id: "beauty-perfume-104", brand: "DIPTYQUE", name: "머스크 향수", img: "https://desfigne.synology.me/data/image/thejoeun/products/beauty_perfume4.webp", desc: "부드러운 머스크 향", price: "88000", originalPrice: 125000, discountRate: 30, rating: 4.3, reviewCount: 40, wishCount: 205, colors: ["default"] },
+  { id: "beauty-perfume-105", brand: "MARC JACOBS", name: "프루티 향수", img: "https://desfigne.synology.me/data/image/thejoeun/products/beauty_perfume5.webp", desc: "달콤한 프루티 향", price: "92000", originalPrice: 128000, discountRate: 28, rating: 4.6, reviewCount: 30, wishCount: 189, colors: ["default"] },
+  { id: "beauty-perfume-106", brand: "YVES SAINT LAURENT", name: "오리엔탈 향수", img: "https://desfigne.synology.me/data/image/thejoeun/products/beauty_perfume6.webp", desc: "신비로운 오리엔탈 향", price: "158000", originalPrice: 215000, discountRate: 27, rating: 4.1, reviewCount: 49, wishCount: 346, colors: ["default"] },
+];
+
 // (옵션) 외부 샘플
 const sampleProducts = [
   {
@@ -585,7 +717,7 @@ export default function ProductList() {
         { name: "스커트", key: "skirt" },
         { name: "라운지/언더웨어", key: "loungewear" },
         { name: "비치웨어", key: "beachwear" },
-        { name: "패션잡화", key: "accessory" },
+        { name: "패션잡화", key: "accessories" },
         { name: "쥬얼리/시계", key: "jewelry" },
       ]
     },
@@ -631,16 +763,9 @@ export default function ProductList() {
         { name: "메인", key: "" },
         { name: "신상품", key: "new" },
         { name: "전체 상품", key: "all" },
-        { name: "스킨케어", key: "skincare" },
+        { name: "스킨케어", key: "skin" },
         { name: "메이크업", key: "makeup" },
-        { name: "핸드 & 바디케어", key: "body" },
-        { name: "헤어케어", key: "hair" },
-        { name: "맨즈케어", key: "mens" },
         { name: "향수", key: "perfume" },
-        { name: "뷰티소품 & 도구", key: "tools" },
-        { name: "이너뷰티", key: "inner" },
-        { name: "비건/클린뷰티", key: "vegan-clean" },
-        { name: "기프트", key: "gift" },
       ]
     },
     sports: {
@@ -650,13 +775,12 @@ export default function ProductList() {
         { name: "메인", key: "" },
         { name: "신상품", key: "new" },
         { name: "전체 상품", key: "all" },
-        { name: "남성의류", key: "men-apparel" },
-        { name: "여성의류", key: "women-apparel" },
-        { name: "슈즈", key: "shoes" },
-        { name: "가방", key: "bag" },
-        { name: "스포츠용품", key: "gear" },
-        { name: "캠핑용품", key: "camping" },
-        { name: "스윔/비치웨어", key: "swim" },
+        { name: "러닝", key: "running" },
+        { name: "아웃도어", key: "outdoor" },
+        { name: "요가", key: "yoga" },
+        { name: "피트니스", key: "fitness" },
+        { name: "테니스", key: "tennis" },
+        { name: "수영", key: "swim" },
       ]
     },
     golf: {
@@ -855,19 +979,28 @@ export default function ProductList() {
       onepiece: local_women_onepiece,
       pants: local_women_pants,
       skirt: local_women_skirt,
+      loungewear: local_women_loungewear,    // 추가
+      beachwear: local_women_beachwear,      // 추가
+      accessories: local_women_accessories,  // 추가
+      jewelry: local_women_jewelry,          // 추가
     },
     men: {
       suit: local_men_suit,
       jacket: local_men_jacket,
       shirt: local_men_shirt,
+      knit: local_men_knit,      // 추가
+      tshirt: local_men_tshirt,  // 추가
+      pants: local_men_pants,    // 추가
     },
     kids: {
       boy: local_kids_boy,
       girl: local_kids_girl,
+      baby: local_kids_baby,  // 추가
     },
     beauty: {
       skin: local_beauty_skin,
       makeup: local_beauty_makeup,
+      perfume: local_beauty_perfume,  // 추가
     },
     golf: {
       women: local_golf_women,
@@ -875,6 +1008,10 @@ export default function ProductList() {
     sports: {
       running: local_sports_running,
       outdoor: local_sports_outdoor,
+      yoga: local_sports_yoga,        // 추가
+      fitness: local_sports_fitness,  // 추가
+      tennis: local_sports_tennis,    // 추가
+      swim: local_sports_swim,        // 추가
     },
     luxury: {
       women: local_luxury_women,
