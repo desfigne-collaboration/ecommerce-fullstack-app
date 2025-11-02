@@ -562,6 +562,7 @@ export default function ProductList() {
 
   // 상태
   const [activeTab, setActiveTab] = useState("전체");
+  const [activeSubcategoryTab, setActiveSubcategoryTab] = useState("전체"); // 전체 페이지용 서브카테고리 탭
   const [sortBy, setSortBy] = useState("인기상품순(전체)");
   const [refresh, setRefresh] = useState(0); // 위시 토글 반영용
 
@@ -571,15 +572,15 @@ export default function ProductList() {
       name: "여성",
       nameEn: "WOMEN",
       subcategories: [
-        { name: "전체", path: "/women" },
-        { name: "아우터", path: "/women/outer" },
-        { name: "재킷/베스트", path: "/women/jacket" },
-        { name: "니트웨어", path: "/women/knit" },
-        { name: "셔츠/블라우스", path: "/women/shirt" },
-        { name: "티셔츠", path: "/women/tshirt" },
-        { name: "원피스", path: "/women/onepiece" },
-        { name: "팬츠", path: "/women/pants" },
-        { name: "스커트", path: "/women/skirt" },
+        { name: "전체", key: "" },
+        { name: "아우터", key: "outer" },
+        { name: "재킷/베스트", key: "jacket" },
+        { name: "니트웨어", key: "knit" },
+        { name: "셔츠/블라우스", key: "shirt" },
+        { name: "티셔츠", key: "tshirt" },
+        { name: "원피스", key: "onepiece" },
+        { name: "팬츠", key: "pants" },
+        { name: "스커트", key: "skirt" },
       ]
     },
     men: { name: "남성", nameEn: "MEN", subcategories: [] },
@@ -653,6 +654,16 @@ export default function ProductList() {
 
   // 카테고리 페이지용 데이터
   const getProductsByCategory = () => {
+    // 전체 페이지이고 특정 서브카테고리 탭이 선택된 경우
+    if ((!subcategory || subcategory === "all") && activeSubcategoryTab !== "전체") {
+      const currentCat = categoryInfo[category];
+      const selectedSubcat = currentCat?.subcategories?.find(s => s.name === activeSubcategoryTab);
+      if (selectedSubcat && selectedSubcat.key) {
+        const locals = (localByCategory[category] && localByCategory[category][selectedSubcat.key]) || [];
+        return [...sampleProducts, ...locals];
+      }
+    }
+
     // subcategory가 없거나 "all" 또는 "new"인 경우: 해당 카테고리의 모든 상품 반환
     if (!subcategory || subcategory === "all" || subcategory === "new") {
       if (!localByCategory[category]) return [...sampleProducts];
@@ -753,7 +764,7 @@ export default function ProductList() {
   // ===== 최종 리스트 =====
   const baseProducts = useMemo(() => {
     return isSearchMode ? getAllProductsForSearch() : getProductsByCategory();
-  }, [isSearchMode, category, subcategory, refresh]); // eslint-disable-line
+  }, [isSearchMode, category, subcategory, activeSubcategoryTab, refresh]); // eslint-disable-line
 
   const normalizeText = (s) => (s || "").toLowerCase().replace(/\s+/g, "");
   const filteredProducts = useMemo(() => {
@@ -836,19 +847,19 @@ export default function ProductList() {
           )}
         </div>
 
-        {/* Tabs / Subcategory Links */}
+        {/* Tabs / Subcategory Filters */}
         {!isSearchMode && (
           <div className="category-tabs">
             {(!subcategory || subcategory === "" || subcategory === "all") ? (
-              // 전체 페이지: 서브카테고리 링크 표시
+              // 전체 페이지: 서브카테고리 탭 버튼으로 필터링
               (currentCategory.subcategories || []).map((sub) => (
-                <Link
+                <button
                   key={sub.name}
-                  to={sub.path}
-                  className="tab"
+                  className={`tab ${activeSubcategoryTab === sub.name ? "active" : ""}`}
+                  onClick={() => setActiveSubcategoryTab(sub.name)}
                 >
                   {sub.name}
-                </Link>
+                </button>
               ))
             ) : (
               // 특정 서브카테고리 페이지: 탭 버튼 표시 (subcategory !== "new"일 때만)
