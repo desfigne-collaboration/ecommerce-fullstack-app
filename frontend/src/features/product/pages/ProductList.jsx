@@ -326,12 +326,170 @@ const local_women_jacket = [
   },
 ];
 
-const local_women_knit = [];
-const local_women_shirt = [];
-const local_women_tshirt = [];
-const local_women_onepiece = [];
-const local_women_pants = [];
-const local_women_skirt = [];
+// 여성 ▸ 니트
+const local_women_knit = [
+  { id: "women-knit-301", brand: "SSF SHOP", name: "니트 상품 1", img: "/images/women/knit/women_knit1.webp", desc: "스타일리시한 니트", price: "89000", originalPrice: 109000, discountRate: 18, rating: 4.4, reviewCount: 15, wishCount: 95, colors: ["beige", "black"] },
+  { id: "women-knit-302", brand: "SSF SHOP", name: "니트 상품 2", img: "/images/women/knit/women_knit2.webp", desc: "스타일리시한 니트", price: "95000", originalPrice: 115000, discountRate: 17, rating: 4.5, reviewCount: 22, wishCount: 110, colors: ["grey", "white"] },
+  { id: "women-knit-303", brand: "SSF SHOP", name: "니트 상품 3", img: "/images/women/knit/women_knit3.webp", desc: "스타일리시한 니트", price: "99000", originalPrice: 119000, discountRate: 17, rating: 4.3, reviewCount: 18, wishCount: 88, colors: ["navy", "beige"] },
+  { id: "women-knit-304", brand: "SSF SHOP", name: "니트 상품 4", img: "/images/women/knit/women_knit4.webp", desc: "스타일리시한 니트", price: "105000", originalPrice: 129000, discountRate: 19, rating: 4.6, reviewCount: 31, wishCount: 142, colors: ["black", "grey"] },
+  { id: "women-knit-305", brand: "SSF SHOP", name: "니트 상품 5", img: "/images/women/knit/women_knit5.webp", desc: "스타일리시한 니트", price: "92000", originalPrice: 112000, discountRate: 18, rating: 4.4, reviewCount: 20, wishCount: 103, colors: ["white", "cream"] },
+  { id: "women-knit-306", brand: "SSF SHOP", name: "니트 상품 6", img: "/images/women/knit/women_knit6.webp", desc: "스타일리시한 니트", price: "88000", originalPrice: 108000, discountRate: 19, rating: 4.5, reviewCount: 26, wishCount: 118, colors: ["brown", "beige"] },
+];
+
+// 여성 ▸ 셔츠/블라우스
+const local_women_shirt = [
+  { id: "women-shirt-401", brand: "SSF SHOP", name: "셔츠 상품 1", img: "/images/women/shirt/women_shirt1.webp", desc: "스타일리시한 셔츠", price: "69000", originalPrice: 85000, discountRate: 19, rating: 4.5, reviewCount: 28, wishCount: 135, colors: ["white", "black"] },
+  { id: "women-shirt-402", brand: "SSF SHOP", name: "셔츠 상품 2", img: "/images/women/shirt/women_shirt2.webp", desc: "스타일리시한 셔츠", price: "72000", originalPrice: 88000, discountRate: 18, rating: 4.4, reviewCount: 24, wishCount: 112, colors: ["blue", "white"] },
+  { id: "women-shirt-403", brand: "SSF SHOP", name: "셔츠 상품 3", img: "/images/women/shirt/women_shirt3.webp", desc: "스타일리시한 셔츠", price: "75000", originalPrice: 91000, discountRate: 18, rating: 4.6, reviewCount: 34, wishCount: 156, colors: ["pink", "white"] },
+  { id: "women-shirt-404", brand: "SSF SHOP", name: "셔츠 상품 4", img: "/images/women/shirt/women_shirt4.webp", desc: "스타일리시한 셔츠", price: "78000", originalPrice: 94000, discountRate: 17, rating: 4.5, reviewCount: 29, wishCount: 128, colors: ["grey", "black"] },
+  { id: "women-shirt-405", brand: "SSF SHOP", name: "셔츠 상품 5", img: "/images/women/shirt/women_shirt5.webp", desc: "스타일리시한 셔츠", price: "81000", originalPrice: 97000, discountRate: 16, rating: 4.7, reviewCount: 41, wishCount: 178, colors: ["white", "cream"] },
+  { id: "women-shirt-406", brand: "SSF SHOP", name: "셔츠 상품 6", img: "/images/women/shirt/women_shirt6.webp", desc: "스타일리시한 셔츠", price: "68000", originalPrice: 84000, discountRate: 19, rating: 4.4, reviewCount: 22, wishCount: 105, colors: ["black", "navy"] },
+];
+
+// 여성 ▸ 티셔츠
+const local_women_tshirt = [
+  { id: "women-tshirt-501", brand: "SSF SHOP", name: "티셔츠 상품 1", img: "/images/women/tshirt/women_tshirt1.webp", desc: "스타일리시한 티셔츠", price: "39000", originalPrice: 49000, discountRate: 20, rating: 4.6, reviewCount: 52, wishCount: 210, colors: ["white", "black"] },
+  { id: "women-tshirt-502", brand: "SSF SHOP", name: "티셔츠 상품 2", img: "/images/women/tshirt/women_tshirt2.webp", desc: "스타일리시한 티셔츠", price: "42000", originalPrice: 52000, discountRate: 19, rating: 4.5, reviewCount: 48, wishCount: 195, colors: ["grey", "white"] },
+  { id: "women-tshirt-503", brand: "SSF SHOP", name: "티셔츠 상품 3", img: "/images/women/tshirt/women_tshirt3.webp", desc: "스타일리시한 티셔츠", price: "38000", originalPrice: 48000, discountRate: 21, rating: 4.7, reviewCount: 63, wishCount: 245, colors: ["navy", "white"] },
+  { id: "women-tshirt-504", brand: "SSF SHOP", name: "티셔츠 상품 4", img: "/images/women/tshirt/women_tshirt4.webp", desc: "스타일리시한 티셔츠", price: "45000", originalPrice: 55000, discountRate: 18, rating: 4.4, reviewCount: 39, wishCount: 172, colors: ["pink", "white"] },
+  { id: "women-tshirt-505", brand: "SSF SHOP", name: "티셔츠 상품 5", img: "/images/women/tshirt/women_tshirt5.webp", desc: "스타일리시한 티셔츠", price: "41000", originalPrice: 51000, discountRate: 20, rating: 4.6, reviewCount: 55, wishCount: 218, colors: ["black", "grey"] },
+  { id: "women-tshirt-506", brand: "SSF SHOP", name: "티셔츠 상품 6", img: "/images/women/tshirt/women_tshirt6.webp", desc: "스타일리시한 티셔츠", price: "40000", originalPrice: 50000, discountRate: 20, rating: 4.5, reviewCount: 46, wishCount: 188, colors: ["white", "cream"] },
+];
+
+// 여성 ▸ 원피스
+const local_women_onepiece = [
+  { id: "women-onepiece-601", brand: "SSF SHOP", name: "원피스 상품 1", img: "/images/women/onepiece/women_onepiece1.webp", desc: "스타일리시한 원피스", price: "125000", originalPrice: 155000, discountRate: 19, rating: 4.7, reviewCount: 38, wishCount: 245, colors: ["black", "navy"] },
+  { id: "women-onepiece-602", brand: "SSF SHOP", name: "원피스 상품 2", img: "/images/women/onepiece/women_onepiece2.webp", desc: "스타일리시한 원피스", price: "132000", originalPrice: 162000, discountRate: 19, rating: 4.6, reviewCount: 42, wishCount: 268, colors: ["beige", "white"] },
+  { id: "women-onepiece-603", brand: "SSF SHOP", name: "원피스 상품 3", img: "/images/women/onepiece/women_onepiece3.webp", desc: "스타일리시한 원피스", price: "118000", originalPrice: 148000, discountRate: 20, rating: 4.5, reviewCount: 31, wishCount: 215, colors: ["grey", "black"] },
+  { id: "women-onepiece-604", brand: "SSF SHOP", name: "원피스 상품 4", img: "/images/women/onepiece/women_onepiece4.webp", desc: "스타일리시한 원피스", price: "145000", originalPrice: 175000, discountRate: 17, rating: 4.8, reviewCount: 52, wishCount: 312, colors: ["navy", "black"] },
+  { id: "women-onepiece-605", brand: "SSF SHOP", name: "원피스 상품 5", img: "/images/women/onepiece/women_onepiece5.webp", desc: "스타일리시한 원피스", price: "128000", originalPrice: 158000, discountRate: 19, rating: 4.6, reviewCount: 36, wishCount: 235, colors: ["pink", "white"] },
+  { id: "women-onepiece-606", brand: "SSF SHOP", name: "원피스 상품 6", img: "/images/women/onepiece/women_onepiece6.webp", desc: "스타일리시한 원피스", price: "135000", originalPrice: 165000, discountRate: 18, rating: 4.7, reviewCount: 45, wishCount: 278, colors: ["brown", "beige"] },
+];
+
+// 여성 ▸ 팬츠
+const local_women_pants = [
+  { id: "women-pants-701", brand: "SSF SHOP", name: "팬츠 상품 1", img: "/images/women/pants/women_pants1.webp", desc: "스타일리시한 팬츠", price: "85000", originalPrice: 105000, discountRate: 19, rating: 4.5, reviewCount: 45, wishCount: 188, colors: ["black", "navy"] },
+  { id: "women-pants-702", brand: "SSF SHOP", name: "팬츠 상품 2", img: "/images/women/pants/women_pants2.webp", desc: "스타일리시한 팬츠", price: "92000", originalPrice: 112000, discountRate: 18, rating: 4.6, reviewCount: 51, wishCount: 205, colors: ["grey", "black"] },
+  { id: "women-pants-703", brand: "SSF SHOP", name: "팬츠 상품 3", img: "/images/women/pants/women_pants3.webp", desc: "스타일리시한 팬츠", price: "88000", originalPrice: 108000, discountRate: 19, rating: 4.4, reviewCount: 38, wishCount: 172, colors: ["beige", "brown"] },
+  { id: "women-pants-704", brand: "SSF SHOP", name: "팬츠 상품 4", img: "/images/women/pants/women_pants4.webp", desc: "스타일리시한 팬츠", price: "95000", originalPrice: 115000, discountRate: 17, rating: 4.7, reviewCount: 58, wishCount: 235, colors: ["navy", "black"] },
+  { id: "women-pants-705", brand: "SSF SHOP", name: "팬츠 상품 5", img: "/images/women/pants/women_pants5.webp", desc: "스타일리시한 팬츠", price: "90000", originalPrice: 110000, discountRate: 18, rating: 4.5, reviewCount: 42, wishCount: 195, colors: ["khaki", "beige"] },
+  { id: "women-pants-706", brand: "SSF SHOP", name: "팬츠 상품 6", img: "/images/women/pants/women_pants6.webp", desc: "스타일리시한 팬츠", price: "86000", originalPrice: 106000, discountRate: 19, rating: 4.6, reviewCount: 48, wishCount: 210, colors: ["black", "grey"] },
+];
+
+// 여성 ▸ 스커트
+const local_women_skirt = [
+  { id: "women-skirt-801", brand: "SSF SHOP", name: "스커트 상품 1", img: "/images/women/skirt/women_skirt1.webp", desc: "스타일리시한 스커트", price: "65000", originalPrice: 81000, discountRate: 20, rating: 4.5, reviewCount: 32, wishCount: 145, colors: ["black", "navy"] },
+  { id: "women-skirt-802", brand: "SSF SHOP", name: "스커트 상품 2", img: "/images/women/skirt/women_skirt2.webp", desc: "스타일리시한 스커트", price: "68000", originalPrice: 84000, discountRate: 19, rating: 4.6, reviewCount: 38, wishCount: 165, colors: ["grey", "black"] },
+  { id: "women-skirt-803", brand: "SSF SHOP", name: "스커트 상품 3", img: "/images/women/skirt/women_skirt3.webp", desc: "스타일리시한 스커트", price: "72000", originalPrice: 88000, discountRate: 18, rating: 4.4, reviewCount: 28, wishCount: 132, colors: ["beige", "brown"] },
+  { id: "women-skirt-804", brand: "SSF SHOP", name: "스커트 상품 4", img: "/images/women/skirt/women_skirt4.webp", desc: "스타일리시한 스커트", price: "75000", originalPrice: 91000, discountRate: 18, rating: 4.7, reviewCount: 45, wishCount: 198, colors: ["navy", "black"] },
+  { id: "women-skirt-805", brand: "SSF SHOP", name: "스커트 상품 5", img: "/images/women/skirt/women_skirt5.webp", desc: "스타일리시한 스커트", price: "70000", originalPrice: 86000, discountRate: 19, rating: 4.5, reviewCount: 34, wishCount: 152, colors: ["pink", "white"] },
+  { id: "women-skirt-806", brand: "SSF SHOP", name: "스커트 상품 6", img: "/images/women/skirt/women_skirt6.webp", desc: "스타일리시한 스커트", price: "66000", originalPrice: 82000, discountRate: 20, rating: 4.6, reviewCount: 40, wishCount: 178, colors: ["black", "grey"] },
+];
+
+// ===== 남성 카테고리 데이터 =====
+const local_men_suit = [
+  { id: "men-suit-101", brand: "SSF SHOP", name: "정장 상품 1", img: "/images/men/suit/men_suit1.webp", desc: "스타일리시한 정장", price: "259000", originalPrice: 319000, discountRate: 19, rating: 4.6, reviewCount: 28, wishCount: 145, colors: ["black", "navy"] },
+  { id: "men-suit-102", brand: "SSF SHOP", name: "정장 상품 2", img: "/images/men/suit/men_suit2.webp", desc: "스타일리시한 정장", price: "279000", originalPrice: 339000, discountRate: 18, rating: 4.5, reviewCount: 24, wishCount: 132, colors: ["grey", "charcoal"] },
+  { id: "men-suit-103", brand: "SSF SHOP", name: "정장 상품 3", img: "/images/men/suit/men_suit3.webp", desc: "스타일리시한 정장", price: "269000", originalPrice: 329000, discountRate: 18, rating: 4.7, reviewCount: 35, wishCount: 168, colors: ["navy", "black"] },
+  { id: "men-suit-104", brand: "SSF SHOP", name: "정장 상품 4", img: "/images/men/suit/men_suit4.webp", desc: "스타일리시한 정장", price: "289000", originalPrice: 349000, discountRate: 17, rating: 4.6, reviewCount: 31, wishCount: 152, colors: ["black", "grey"] },
+  { id: "men-suit-105", brand: "SSF SHOP", name: "정장 상품 5", img: "/images/men/suit/men_suit5.webp", desc: "스타일리시한 정장", price: "275000", originalPrice: 335000, discountRate: 18, rating: 4.5, reviewCount: 26, wishCount: 138, colors: ["charcoal", "navy"] },
+  { id: "men-suit-106", brand: "SSF SHOP", name: "정장 상품 6", img: "/images/men/suit/men_suit6.webp", desc: "스타일리시한 정장", price: "265000", originalPrice: 325000, discountRate: 18, rating: 4.6, reviewCount: 29, wishCount: 142, colors: ["black", "grey"] },
+];
+
+const local_men_jacket = [
+  { id: "men-jacket-201", brand: "SSF SHOP", name: "재킷 상품 1", img: "/images/men/jacket/men_jacket1.webp", desc: "스타일리시한 재킷", price: "159000", originalPrice: 195000, discountRate: 18, rating: 4.5, reviewCount: 42, wishCount: 185, colors: ["black", "navy"] },
+  { id: "men-jacket-202", brand: "SSF SHOP", name: "재킷 상품 2", img: "/images/men/jacket/men_jacket2.webp", desc: "스타일리시한 재킷", price: "169000", originalPrice: 205000, discountRate: 18, rating: 4.6, reviewCount: 38, wishCount: 172, colors: ["grey", "black"] },
+  { id: "men-jacket-203", brand: "SSF SHOP", name: "재킷 상품 3", img: "/images/men/jacket/men_jacket3.webp", desc: "스타일리시한 재킷", price: "175000", originalPrice: 211000, discountRate: 17, rating: 4.4, reviewCount: 34, wishCount: 158, colors: ["navy", "charcoal"] },
+  { id: "men-jacket-204", brand: "SSF SHOP", name: "재킷 상품 4", img: "/images/men/jacket/men_jacket4.webp", desc: "스타일리시한 재킷", price: "179000", originalPrice: 215000, discountRate: 17, rating: 4.7, reviewCount: 48, wishCount: 205, colors: ["black", "grey"] },
+  { id: "men-jacket-205", brand: "SSF SHOP", name: "재킷 상품 5", img: "/images/men/jacket/men_jacket5.webp", desc: "스타일리시한 재킷", price: "165000", originalPrice: 201000, discountRate: 18, rating: 4.5, reviewCount: 40, wishCount: 178, colors: ["khaki", "beige"] },
+  { id: "men-jacket-206", brand: "SSF SHOP", name: "재킷 상품 6", img: "/images/men/jacket/men_jacket6.webp", desc: "스타일리시한 재킷", price: "172000", originalPrice: 208000, discountRate: 17, rating: 4.6, reviewCount: 45, wishCount: 192, colors: ["navy", "black"] },
+];
+
+const local_men_shirt = [
+  { id: "men-shirt-301", brand: "SSF SHOP", name: "셔츠 상품 1", img: "/images/men_shirt/men_shirt1.webp", desc: "스타일리시한 셔츠", price: "65000", originalPrice: 81000, discountRate: 20, rating: 4.5, reviewCount: 35, wishCount: 148, colors: ["white", "blue"] },
+  { id: "men-shirt-302", brand: "SSF SHOP", name: "셔츠 상품 2", img: "/images/men_shirt/men_shirt2.webp", desc: "스타일리시한 셔츠", price: "68000", originalPrice: 84000, discountRate: 19, rating: 4.6, reviewCount: 42, wishCount: 165, colors: ["pink", "white"] },
+  { id: "men-shirt-303", brand: "SSF SHOP", name: "셔츠 상품 3", img: "/images/men_shirt/men_shirt3.webp", desc: "스타일리시한 셔츠", price: "72000", originalPrice: 88000, discountRate: 18, rating: 4.4, reviewCount: 31, wishCount: 138, colors: ["grey", "black"] },
+  { id: "men-shirt-304", brand: "SSF SHOP", name: "셔츠 상품 4", img: "/images/men_shirt/men_shirt4.webp", desc: "스타일리시한 셔츠", price: "70000", originalPrice: 86000, discountRate: 19, rating: 4.7, reviewCount: 48, wishCount: 185, colors: ["white", "blue"] },
+  { id: "men-shirt-305", brand: "SSF SHOP", name: "셔츠 상품 5", img: "/images/men_shirt/men_shirt5.webp", desc: "스타일리시한 셔츠", price: "66000", originalPrice: 82000, discountRate: 20, rating: 4.5, reviewCount: 38, wishCount: 152, colors: ["navy", "white"] },
+  { id: "men-shirt-306", brand: "SSF SHOP", name: "셔츠 상품 6", img: "/images/men_shirt/men_shirt6.webp", desc: "스타일리시한 셔츠", price: "69000", originalPrice: 85000, discountRate: 19, rating: 4.6, reviewCount: 44, wishCount: 172, colors: ["black", "grey"] },
+];
+
+// ===== 키즈 카테고리 데이터 =====
+const local_kids_boy = [
+  { id: "kids-boy-101", brand: "SSF SHOP", name: "남아 상품 1", img: "/images/kids/boy/kids_boy1.webp", desc: "스타일리시한 키즈 의류", price: "45000", originalPrice: 56000, discountRate: 20, rating: 4.6, reviewCount: 28, wishCount: 122, colors: ["blue", "grey"] },
+  { id: "kids-boy-102", brand: "SSF SHOP", name: "남아 상품 2", img: "/images/kids/boy/kids_boy2.webp", desc: "스타일리시한 키즈 의류", price: "48000", originalPrice: 59000, discountRate: 19, rating: 4.5, reviewCount: 24, wishCount: 108, colors: ["navy", "black"] },
+  { id: "kids-boy-103", brand: "SSF SHOP", name: "남아 상품 3", img: "/images/kids/boy/kids_boy3.webp", desc: "스타일리시한 키즈 의류", price: "52000", originalPrice: 63000, discountRate: 17, rating: 4.7, reviewCount: 32, wishCount: 145, colors: ["grey", "white"] },
+  { id: "kids-boy-104", brand: "SSF SHOP", name: "남아 상품 4", img: "/images/kids/boy/kids_boy4.webp", desc: "스타일리시한 키즈 의류", price: "50000", originalPrice: 61000, discountRate: 18, rating: 4.5, reviewCount: 26, wishCount: 115, colors: ["black", "navy"] },
+  { id: "kids-boy-105", brand: "SSF SHOP", name: "남아 상품 5", img: "/images/kids/boy/kids_boy5.webp", desc: "스타일리시한 키즈 의류", price: "46000", originalPrice: 57000, discountRate: 19, rating: 4.6, reviewCount: 30, wishCount: 128, colors: ["blue", "grey"] },
+  { id: "kids-boy-106", brand: "SSF SHOP", name: "남아 상품 6", img: "/images/kids/boy/kids_boy6.webp", desc: "스타일리시한 키즈 의류", price: "49000", originalPrice: 60000, discountRate: 18, rating: 4.4, reviewCount: 22, wishCount: 102, colors: ["grey", "black"] },
+];
+
+const local_kids_girl = [
+  { id: "kids-girl-101", brand: "SSF SHOP", name: "여아 상품 1", img: "/images/kids/girl/kids_girl1.webp", desc: "스타일리시한 키즈 의류", price: "48000", originalPrice: 59000, discountRate: 19, rating: 4.7, reviewCount: 35, wishCount: 152, colors: ["pink", "white"] },
+  { id: "kids-girl-102", brand: "SSF SHOP", name: "여아 상품 2", img: "/images/kids/girl/kids_girl2.webp", desc: "스타일리시한 키즈 의류", price: "52000", originalPrice: 63000, discountRate: 17, rating: 4.6, reviewCount: 42, wishCount: 168, colors: ["beige", "pink"] },
+  { id: "kids-girl-103", brand: "SSF SHOP", name: "여아 상품 3", img: "/images/kids/girl/kids_girl3.webp", desc: "스타일리시한 키즈 의류", price: "50000", originalPrice: 61000, discountRate: 18, rating: 4.5, reviewCount: 38, wishCount: 145, colors: ["white", "cream"] },
+  { id: "kids-girl-104", brand: "SSF SHOP", name: "여아 상품 4", img: "/images/kids/girl/kids_girl4.webp", desc: "스타일리시한 키즈 의류", price: "55000", originalPrice: 66000, discountRate: 17, rating: 4.8, reviewCount: 48, wishCount: 185, colors: ["pink", "white"] },
+  { id: "kids-girl-105", brand: "SSF SHOP", name: "여아 상품 5", img: "/images/kids/girl/kids_girl5.webp", desc: "스타일리시한 키즈 의류", price: "49000", originalPrice: 60000, discountRate: 18, rating: 4.6, reviewCount: 40, wishCount: 158, colors: ["beige", "white"] },
+  { id: "kids-girl-106", brand: "SSF SHOP", name: "여아 상품 6", img: "/images/kids/girl/kids_girl6.webp", desc: "스타일리시한 키즈 의류", price: "51000", originalPrice: 62000, discountRate: 18, rating: 4.5, reviewCount: 32, wishCount: 138, colors: ["pink", "cream"] },
+];
+
+// ===== 뷰티 카테고리 데이터 =====
+const local_beauty_skin = [
+  { id: "beauty-skin-101", brand: "BEAUTY SHOP", name: "스킨케어 상품 1", img: "/images/beauty/Skin/beauty_skin1.webp", desc: "프리미엄 스킨케어", price: "55000", originalPrice: 68000, discountRate: 19, rating: 4.7, reviewCount: 62, wishCount: 245, colors: [] },
+  { id: "beauty-skin-102", brand: "BEAUTY SHOP", name: "스킨케어 상품 2", img: "/images/beauty/Skin/beauty_skin2.webp", desc: "프리미엄 스킨케어", price: "62000", originalPrice: 75000, discountRate: 17, rating: 4.6, reviewCount: 58, wishCount: 228, colors: [] },
+  { id: "beauty-skin-103", brand: "BEAUTY SHOP", name: "스킨케어 상품 3", img: "/images/beauty/Skin/beauty_skin3.webp", desc: "프리미엄 스킨케어", price: "58000", originalPrice: 71000, discountRate: 18, rating: 4.5, reviewCount: 52, wishCount: 212, colors: [] },
+  { id: "beauty-skin-104", brand: "BEAUTY SHOP", name: "스킨케어 상품 4", img: "/images/beauty/Skin/beauty_skin4.webp", desc: "프리미엄 스킨케어", price: "65000", originalPrice: 78000, discountRate: 17, rating: 4.8, reviewCount: 72, wishCount: 278, colors: [] },
+  { id: "beauty-skin-105", brand: "BEAUTY SHOP", name: "스킨케어 상품 5", img: "/images/beauty/Skin/beauty_skin5.webp", desc: "프리미엄 스킨케어", price: "60000", originalPrice: 73000, discountRate: 18, rating: 4.6, reviewCount: 65, wishCount: 252, colors: [] },
+  { id: "beauty-skin-106", brand: "BEAUTY SHOP", name: "스킨케어 상품 6", img: "/images/beauty/Skin/beauty_skin6.webp", desc: "프리미엄 스킨케어", price: "56000", originalPrice: 69000, discountRate: 19, rating: 4.5, reviewCount: 48, wishCount: 198, colors: [] },
+];
+
+const local_beauty_makeup = [
+  { id: "beauty-makeup-201", brand: "BEAUTY SHOP", name: "메이크업 상품 1", img: "/images/Beauty/Makeup/beauty_makeup1.webp", desc: "프리미엄 메이크업", price: "42000", originalPrice: 52000, discountRate: 19, rating: 4.6, reviewCount: 48, wishCount: 195, colors: [] },
+  { id: "beauty-makeup-202", brand: "BEAUTY SHOP", name: "메이크업 상품 2", img: "/images/Beauty/Makeup/beauty_makeup2.webp", desc: "프리미엄 메이크업", price: "48000", originalPrice: 58000, discountRate: 17, rating: 4.7, reviewCount: 55, wishCount: 218, colors: [] },
+  { id: "beauty-makeup-203", brand: "BEAUTY SHOP", name: "메이크업 상품 3", img: "/images/Beauty/Makeup/beauty_makeup3.webp", desc: "프리미엄 메이크업", price: "45000", originalPrice: 55000, discountRate: 18, rating: 4.5, reviewCount: 42, wishCount: 178, colors: [] },
+  { id: "beauty-makeup-204", brand: "BEAUTY SHOP", name: "메이크업 상품 4", img: "/images/Beauty/Makeup/beauty_makeup4.webp", desc: "프리미엄 메이크업", price: "52000", originalPrice: 62000, discountRate: 16, rating: 4.8, reviewCount: 68, wishCount: 245, colors: [] },
+  { id: "beauty-makeup-205", brand: "BEAUTY SHOP", name: "메이크업 상품 5", img: "/images/Beauty/Makeup/beauty_makeup5.webp", desc: "프리미엄 메이크업", price: "46000", originalPrice: 56000, discountRate: 18, rating: 4.6, reviewCount: 52, wishCount: 205, colors: [] },
+  { id: "beauty-makeup-206", brand: "BEAUTY SHOP", name: "메이크업 상품 6", img: "/images/Beauty/Makeup/beauty_makeup6.webp", desc: "프리미엄 메이크업", price: "44000", originalPrice: 54000, discountRate: 19, rating: 4.5, reviewCount: 38, wishCount: 165, colors: [] },
+];
+
+// ===== 골프 카테고리 데이터 =====
+const local_golf_women = [
+  { id: "golf-women-101", brand: "GOLF SHOP", name: "골프 여성 상품 1", img: "/images/Golf/women/golf_women1.webp", desc: "프리미엄 골프웨어", price: "89000", originalPrice: 109000, discountRate: 18, rating: 4.6, reviewCount: 32, wishCount: 152, colors: ["white", "pink"] },
+  { id: "golf-women-102", brand: "GOLF SHOP", name: "골프 여성 상품 2", img: "/images/Golf/women/golf_women2.webp", desc: "프리미엄 골프웨어", price: "95000", originalPrice: 115000, discountRate: 17, rating: 4.7, reviewCount: 38, wishCount: 168, colors: ["navy", "white"] },
+  { id: "golf-women-103", brand: "GOLF SHOP", name: "골프 여성 상품 3", img: "/images/Golf/women/golf_women3.webp", desc: "프리미엄 골프웨어", price: "92000", originalPrice: 112000, discountRate: 18, rating: 4.5, reviewCount: 28, wishCount: 135, colors: ["beige", "white"] },
+  { id: "golf-women-104", brand: "GOLF SHOP", name: "골프 여성 상품 4", img: "/images/Golf/women/golf_women4.webp", desc: "프리미엄 골프웨어", price: "99000", originalPrice: 119000, discountRate: 17, rating: 4.8, reviewCount: 45, wishCount: 192, colors: ["pink", "white"] },
+  { id: "golf-women-105", brand: "GOLF SHOP", name: "골프 여성 상품 5", img: "/images/Golf/women/golf_women5.webp", desc: "프리미엄 골프웨어", price: "88000", originalPrice: 108000, discountRate: 19, rating: 4.6, reviewCount: 35, wishCount: 158, colors: ["white", "navy"] },
+  { id: "golf-women-106", brand: "GOLF SHOP", name: "골프 여성 상품 6", img: "/images/Golf/women/golf_women6.webp", desc: "프리미엄 골프웨어", price: "94000", originalPrice: 114000, discountRate: 18, rating: 4.5, reviewCount: 30, wishCount: 142, colors: ["beige", "pink"] },
+];
+
+// ===== 스포츠 카테고리 데이터 =====
+const local_sports_running = [
+  { id: "sports-running-101", brand: "SPORTS SHOP", name: "러닝 상품 1", img: "/images/sports/running/sports_running1.webp", desc: "프리미엄 러닝웨어", price: "65000", originalPrice: 81000, discountRate: 20, rating: 4.7, reviewCount: 58, wishCount: 235, colors: ["black", "white"] },
+  { id: "sports-running-102", brand: "SPORTS SHOP", name: "러닝 상품 2", img: "/images/sports/running/sports_running2.webp", desc: "프리미엄 러닝웨어", price: "68000", originalPrice: 84000, discountRate: 19, rating: 4.6, reviewCount: 52, wishCount: 215, colors: ["navy", "grey"] },
+  { id: "sports-running-103", brand: "SPORTS SHOP", name: "러닝 상품 3", img: "/images/sports/running/sports_running3.webp", desc: "프리미엄 러닝웨어", price: "72000", originalPrice: 88000, discountRate: 18, rating: 4.5, reviewCount: 45, wishCount: 192, colors: ["grey", "black"] },
+  { id: "sports-running-104", brand: "SPORTS SHOP", name: "러닝 상품 4", img: "/images/sports/running/sports_running4.webp", desc: "프리미엄 러닝웨어", price: "70000", originalPrice: 86000, discountRate: 19, rating: 4.8, reviewCount: 68, wishCount: 268, colors: ["black", "white"] },
+  { id: "sports-running-105", brand: "SPORTS SHOP", name: "러닝 상품 5", img: "/images/sports/running/sports_running5.webp", desc: "프리미엄 러닝웨어", price: "66000", originalPrice: 82000, discountRate: 20, rating: 4.6, reviewCount: 55, wishCount: 228, colors: ["navy", "white"] },
+  { id: "sports-running-106", brand: "SPORTS SHOP", name: "러닝 상품 6", img: "/images/sports/running/sports_running6.webp", desc: "프리미엄 러닝웨어", price: "69000", originalPrice: 85000, discountRate: 19, rating: 4.5, reviewCount: 48, wishCount: 205, colors: ["grey", "black"] },
+];
+
+const local_sports_outdoor = [
+  { id: "sports-outdoor-201", brand: "SPORTS SHOP", name: "아웃도어 상품 1", img: "/images/sprots/outdoor/sports_outdoor1.webp", desc: "프리미엄 아웃도어", price: "125000", originalPrice: 155000, discountRate: 19, rating: 4.6, reviewCount: 42, wishCount: 188, colors: ["black", "navy"] },
+  { id: "sports-outdoor-202", brand: "SPORTS SHOP", name: "아웃도어 상품 2", img: "/images/sprots/outdoor/sports_outdoor2.webp", desc: "프리미엄 아웃도어", price: "135000", originalPrice: 165000, discountRate: 18, rating: 4.7, reviewCount: 48, wishCount: 205, colors: ["khaki", "black"] },
+  { id: "sports-outdoor-203", brand: "SPORTS SHOP", name: "아웃도어 상품 3", img: "/images/sprots/outdoor/sports_outdoor3.webp", desc: "프리미엄 아웃도어", price: "130000", originalPrice: 160000, discountRate: 19, rating: 4.5, reviewCount: 38, wishCount: 172, colors: ["navy", "grey"] },
+  { id: "sports-outdoor-204", brand: "SPORTS SHOP", name: "아웃도어 상품 4", img: "/images/sprots/outdoor/sports_outdoor4.webp", desc: "프리미엄 아웃도어", price: "145000", originalPrice: 175000, discountRate: 17, rating: 4.8, reviewCount: 55, wishCount: 235, colors: ["black", "khaki"] },
+  { id: "sports-outdoor-205", brand: "SPORTS SHOP", name: "아웃도어 상품 5", img: "/images/sprots/outdoor/sports_outdoor5.webp", desc: "프리미엄 아웃도어", price: "128000", originalPrice: 158000, discountRate: 19, rating: 4.6, reviewCount: 45, wishCount: 198, colors: ["navy", "black"] },
+  { id: "sports-outdoor-206", brand: "SPORTS SHOP", name: "아웃도어 상품 6", img: "/images/sprots/outdoor/sports_outdoor6.webp", desc: "프리미엄 아웃도어", price: "132000", originalPrice: 162000, discountRate: 19, rating: 4.5, reviewCount: 40, wishCount: 182, colors: ["grey", "black"] },
+];
+
+// ===== 럭셔리 카테고리 데이터 =====
+const local_luxury_women = [
+  { id: "luxury-women-101", brand: "LUXURY BRAND", name: "럭셔리 여성 상품 1", img: "/images/luxury/women/luxury_women1.webp", desc: "프리미엄 럭셔리", price: "458000", originalPrice: 550000, discountRate: 17, rating: 4.8, reviewCount: 28, wishCount: 245, colors: ["black"] },
+  { id: "luxury-women-102", brand: "LUXURY BRAND", name: "럭셔리 여성 상품 2", img: "/images/luxury/women/luxury_women2.webp", desc: "프리미엄 럭셔리", price: "485000", originalPrice: 580000, discountRate: 16, rating: 4.7, reviewCount: 32, wishCount: 268, colors: ["beige"] },
+  { id: "luxury-women-103", brand: "LUXURY BRAND", name: "럭셔리 여성 상품 3", img: "/images/luxury/women/luxury_women3.webp", desc: "프리미엄 럭셔리", price: "472000", originalPrice: 565000, discountRate: 16, rating: 4.6, reviewCount: 25, wishCount: 228, colors: ["navy"] },
+  { id: "luxury-women-104", brand: "LUXURY BRAND", name: "럭셔리 여성 상품 4", img: "/images/luxury/women/luxury_women4.webp", desc: "프리미엄 럭셔리", price: "510000", originalPrice: 610000, discountRate: 16, rating: 4.9, reviewCount: 38, wishCount: 312, colors: ["black"] },
+  { id: "luxury-women-105", brand: "LUXURY BRAND", name: "럭셔리 여성 상품 5", img: "/images/luxury/women/luxury_women5.webp", desc: "프리미엄 럭셔리", price: "465000", originalPrice: 558000, discountRate: 17, rating: 4.7, reviewCount: 30, wishCount: 252, colors: ["beige"] },
+  { id: "luxury-women-106", brand: "LUXURY BRAND", name: "럭셔리 여성 상품 6", img: "/images/luxury/women/luxury_women6.webp", desc: "프리미엄 럭셔리", price: "495000", originalPrice: 590000, discountRate: 16, rating: 4.6, reviewCount: 26, wishCount: 235, colors: ["navy"] },
+];
 
 // (옵션) 외부 샘플
 const sampleProducts = [
@@ -460,6 +618,29 @@ export default function ProductList() {
       pants: local_women_pants,
       skirt: local_women_skirt,
     },
+    men: {
+      suit: local_men_suit,
+      jacket: local_men_jacket,
+      shirt: local_men_shirt,
+    },
+    kids: {
+      boy: local_kids_boy,
+      girl: local_kids_girl,
+    },
+    beauty: {
+      skin: local_beauty_skin,
+      makeup: local_beauty_makeup,
+    },
+    golf: {
+      women: local_golf_women,
+    },
+    sports: {
+      running: local_sports_running,
+      outdoor: local_sports_outdoor,
+    },
+    luxury: {
+      women: local_luxury_women,
+    },
   };
 
   // 카테고리 페이지용 데이터
@@ -470,10 +651,15 @@ export default function ProductList() {
     return [...sampleProducts, ...locals];
   };
 
-  // 검색 전체 집합(여성 전부 + 샘플)
+  // 검색 전체 집합(모든 카테고리 + 샘플)
   const getAllProductsForSearch = () => {
-    const allLocalWomen = Object.values(localByCategory.women || {}).flat();
-    return [...sampleProducts, ...allLocalWomen];
+    const allProducts = [];
+    Object.values(localByCategory).forEach(categoryObj => {
+      Object.values(categoryObj).forEach(subcategoryArray => {
+        allProducts.push(...subcategoryArray);
+      });
+    });
+    return [...sampleProducts, ...allProducts];
   };
 
   // 가격 포맷
@@ -634,8 +820,8 @@ export default function ProductList() {
           )}
         </div>
 
-        {/* Brand Logos - 임시 비활성화 (이미지 파일 없음) */}
-        {/* {!isSearchMode && (
+        {/* Brand Logos */}
+        {!isSearchMode && (
           <div className="brand-logos-section">
             {brandLogos.map((brand, idx) => {
               const { src, candidates } = srcOf(brand.img);
@@ -652,7 +838,7 @@ export default function ProductList() {
               );
             })}
           </div>
-        )} */}
+        )}
 
         {/* Tabs */}
         {!isSearchMode && (
