@@ -1,4 +1,64 @@
+/**
+ * ============================================================================
+ * productData.js - 상품 데이터 저장소 (Mock Data)
+ * ============================================================================
+ *
+ * 【목적】
+ * - 백엔드 API 없이 프론트엔드 개발/테스트를 위한 Mock 상품 데이터 제공
+ * - 카테고리별, 서브카테고리별로 구조화된 상품 정보
+ * - 상품 목록 페이지, 상세 페이지, 검색 기능 등에서 사용
+ *
+ * 【데이터 구조】
+ * PRODUCT_DATA = {
+ *   카테고리: {
+ *     서브카테고리: [
+ *       { id, name, desc, price, image },
+ *       ...
+ *     ]
+ *   }
+ * }
+ *
+ * 【카테고리 구조】
+ * 1. women (여성) : main, new, outer, jacket, knit, shirt, tshirt, onepiece, pants, skirt
+ * 2. men (남성) : main, new, suit, pants, jacket, shirt, knit, tshirt
+ * 3. kids (키즈) : main, new, boy, girl, baby
+ * 4. sports (스포츠) : main, new, outdoor, running, yoga, fitness, tennis, swim
+ * 5. beauty (뷰티) : main, new, skincare, makeup, fragrance, haircare
+ * 6. golf (골프) : main, new, women, men, clubs, bags, acc
+ * 7. luxury (럭셔리) : main, new, women, men, bags, jewelry
+ * 8. shoes (백&슈즈) : main, new, womenBag, menBag, womenShoes, menShoes
+ * 9. life (라이프) : main, new, furniture, deco, pet, food
+ * 10. outlet (아울렛) : main, all, women, men, kids
+ *
+ * 【상품 객체 필드】
+ * - id: 고유 ID (예: "women_new_1", "men_suit_3")
+ * - name: 상품명
+ * - desc: 상품 설명
+ * - price: 가격 (문자열, 예: "89000")
+ * - image: 이미지 URL (Synology NAS 서버 경로)
+ *
+ * 【이미지 서버】
+ * - 기본 경로: https://desfigne.synology.me/data/image/thejoeun/products/
+ * - 파일명 규칙: {category}_{subcategory}{number}.webp
+ * - 예: women_new1.webp, beauty_main2.webp
+ *
+ * 【사용 예시】
+ * import { PRODUCT_DATA } from 'features/product/data/productData';
+ *
+ * // 여성 신상품 목록 가져오기
+ * const womenNewProducts = PRODUCT_DATA.women.new;
+ *
+ * // 특정 상품 찾기
+ * const product = womenNewProducts.find(p => p.id === "women_new_1");
+ *
+ * @module productData
+ * @author Claude Code
+ * @since 2025-11-02
+ */
+
+// ============================================================================
 // 카테고리별 상품 데이터
+// ============================================================================
 export const PRODUCT_DATA = {
   women: {
     main: [], // 메인은 샘플 이미지 사용

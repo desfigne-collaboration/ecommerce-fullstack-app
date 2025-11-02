@@ -1,23 +1,89 @@
-// src/pages/ProductDetail.jsx
+/**
+ * ============================================================================
+ * ProductDetail.jsx - 상품 상세 페이지 컴포넌트
+ * ============================================================================
+ *
+ * 【목적】
+ * - 개별 상품의 상세 정보 표시 (이미지, 이름, 가격, 설명)
+ * - 사이즈/수량 선택 및 장바구니 담기 기능
+ * - 찜하기(위시리스트) 토글 기능
+ * - 즉시 구매 기능 (결제 페이지로 이동)
+ *
+ * 【주요 기능】
+ * 1. **상품 데이터 로드**: location.state 또는 localStorage에서 복원
+ * 2. **찜하기 토글**: 하트 버튼 클릭 → 위시리스트 추가/제거
+ * 3. **장바구니 담기**: 사이즈 선택 필수, localStorage에 저장
+ * 4. **즉시 구매**: 사이즈/수량 선택 후 결제 페이지로 바로 이동
+ * 5. **수량 조절**: 최소 1개, 최대 99개 제한
+ *
+ * 【상품 데이터 로드 전략】
+ * 우선순위 1: location.state.product (ProductCard에서 navigate로 전달)
+ * 우선순위 2: localStorage의 lastProduct (새로고침 대비)
+ * 이유: URL 파라미터만으로는 전체 상품 정보를 알 수 없음
+ *
+ * 【localStorage 동기화】
+ * - 장바구니/찜하기 변경 시 StorageEvent 발생
+ * - Header의 뱃지 카운트가 실시간 업데이트됨
+ *
+ * 【라우팅】
+ * - 경로: /products/:id
+ * - 장바구니 담기 후 → /cart 페이지로 이동
+ * - 즉시 구매 클릭 → /checkout 페이지로 이동
+ *
+ * @component
+ * @author Claude Code
+ * @since 2025-11-02
+ */
+
 import React, { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useLocation, useParams } from "react-router-dom";
 import storage from "../../../utils/storage.js";
 import "./ProductDetail.css";
 
+/**
+ * ProductDetail 함수형 컴포넌트
+ *
+ * @returns {JSX.Element} 상품 상세 페이지 UI
+ */
 export default function ProductDetail() {
+  // ============================================================================
+  // Hooks & State
+  // ============================================================================
   const navigate = useNavigate();
   const location = useLocation();
   // eslint-disable-next-line no-unused-vars
-  const { id } = useParams();
+  const { id } = useParams(); // URL 파라미터 (현재 미사용, 상품 데이터는 state로 전달됨)
+
+  /** fromState - navigate()로 전달된 상품 데이터 */
   const fromState = location.state?.product || null;
 
+  /** size - 선택된 사이즈 (필수 선택) */
   const [size, setSize] = useState("");
+
+  /** qty - 선택된 수량 (1~99) */
   const [qty, setQty] = useState(1);
+
+  /** isWished - 찜 여부 (위시리스트에 포함되어 있는지) */
   const [isWished, setIsWished] = useState(false);
 
-  // 현재 상품
+  // ============================================================================
+  // Product Data (상품 데이터 로드)
+  // ============================================================================
+  /**
+   * product - 현재 상품 정보 (useMemo로 캐싱)
+   *
+   * @description
+   * 우선순위에 따라 상품 데이터를 로드합니다:
+   * 1. location.state.product (ProductCard에서 navigate로 전달)
+   * 2. localStorage의 lastProduct (새로고침 대비)
+   *
+   * @type {Object|null}
+   */
   const product = useMemo(() => {
+    // 1순위: navigate state로 전달된 데이터
     if (fromState && fromState.id) return fromState;
+
+    // 2순위: localStorage에 저장된 마지막 조회 상품
     try {
       return storage.get("lastProduct", null);
     } catch {
