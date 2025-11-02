@@ -1,12 +1,69 @@
-// src/pages/order/Checkout.jsx
+/**
+ * ============================================================================
+ * Checkout.jsx - 주문/결제 페이지 컴포넌트
+ * ============================================================================
+ *
+ * 【목적】
+ * - 주문 정보 입력 및 확인 (배송지, 연락처, 요청사항)
+ * - 쿠폰 선택 및 할인 적용 (정액/정률 쿠폰 지원)
+ * - 결제 수단 선택 및 최종 결제 금액 계산
+ * - 결제 페이지로 주문 데이터 전달
+ *
+ * 【주요 기능】
+ * 1. **상품 목록 표시**: 장바구니 또는 즉시구매 상품 불러오기
+ * 2. **쿠폰 할인 계산**:
+ *    - 정액 쿠폰: amount/value/name 필드에서 금액 추출
+ *    - 정률 쿠폰: rate(%) × subtotal, max 상한 적용
+ *    - 최소 주문금액(min) 조건 체크
+ * 3. **배송비 계산**: 50,000원 이상 무료, 미만 시 3,000원
+ * 4. **결제 금액**: 상품금액 - 쿠폰할인 + 배송비
+ * 5. **주문 데이터 생성**: 결제 페이지로 전달할 주문 객체 구성
+ *
+ * 【쿠폰 타입 처리】
+ * - Fixed/Flat: 정액 할인 (예: 10,000원)
+ * - Percent/Percentage/Rate: 정률 할인 (예: 15%, 최대 5,000원)
+ * - Flexible parsing: "15%", "15 %", 숫자 15 모두 처리 가능
+ *
+ * 【데이터 흐름】
+ * 1. CartPage/ProductDetail → Checkout (장바구니 또는 즉시구매)
+ * 2. Checkout → PaySelect (결제 수단 선택)
+ * 3. PaySelect → PaymentGateway (PG사 연동)
+ * 4. PaymentGateway → OrderSuccess (주문 완료)
+ *
+ * 【localStorage 사용】
+ * - cartCheckout: 장바구니에서 선택한 상품
+ * - directBuy: 즉시 구매 상품
+ * - coupons: 사용 가능한 쿠폰 목록
+ * - lastOrder: 최근 주문 정보 (주문 완료 시 저장)
+ *
+ * @component
+ * @author Claude Code
+ * @since 2025-11-02
+ */
+
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import storage from "../../../utils/storage.js";
 import "./Checkout.css";
 
-/* ===========================
-   1) 안전한 숫자 변환 / 통화 포맷
-   =========================== */
+// ============================================================================
+// Utility Functions (숫자 변환 및 통화 포맷)
+// ============================================================================
+/**
+ * toNumber - 안전한 숫자 변환
+ *
+ * @description
+ * 문자열 형태의 가격("₩50,000")을 숫자(50000)로 변환합니다.
+ * 숫자가 아닌 모든 문자를 제거하고 Number로 파싱합니다.
+ *
+ * @param {string|number} v - 변환할 값
+ * @returns {number} 파싱된 숫자
+ *
+ * @example
+ * toNumber("₩50,000") // → 50000
+ * toNumber(50000) // → 50000
+ * toNumber("invalid") // → 0
+ */
 const toNumber = (v) =>
   typeof v === "number" ? v : Number(String(v ?? "").replace(/[^\d]/g, "")) || 0;
 
