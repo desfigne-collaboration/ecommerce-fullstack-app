@@ -42,8 +42,8 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { listOrders, updateOrderStatus, deleteOrder } from "../../order/api/orders";
 import storage from "../../../utils/storage.js";
-import "../../../styles/AdminDashboard.css";
-import "../../../styles/AdminOrders.css"; // 버튼/배지 등 스타일
+import "./AdminDashboard.css";
+import "./AdminOrders.css"; // 버튼/배지 등 스타일
 
 /**
  * AdminOrders - 관리자 주문 관리 컴포넌트

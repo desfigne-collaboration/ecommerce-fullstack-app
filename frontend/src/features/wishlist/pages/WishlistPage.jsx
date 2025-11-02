@@ -41,7 +41,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import storage from "../../../utils/storage.js";
-import "../../../styles/Wishlist.css";
+import "./Wishlist.css";
 
 /** localStorage 키 상수 */
 const KEY = "wishlist";

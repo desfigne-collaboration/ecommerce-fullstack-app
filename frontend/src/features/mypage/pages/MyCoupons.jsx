@@ -39,7 +39,7 @@
 // src/pages/mypage/MyCoupons.jsx
 import React, { useEffect, useState } from "react";
 import storage from "../../../utils/storage.js";
-import "../../../styles/MyCoupons.css";
+import "./MyCoupons.css";
 
 /**
  * MyCoupons 함수형 컴포넌트

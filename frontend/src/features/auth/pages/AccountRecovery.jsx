@@ -37,7 +37,7 @@
 
 import React, { useEffect, useState } from "react";
 import storage from "../../../utils/storage.js";
-import "../../../styles/Auth.css";
+import "./Auth.css";
 
 /**
  * AccountRecovery 함수형 컴포넌트

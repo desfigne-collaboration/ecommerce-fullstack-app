@@ -42,7 +42,7 @@
 import React, { useMemo, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import storage from "../../../utils/storage.js";
-import "../../../styles/CategoryPage.css";
+import "./CategoryPage.css";
 import "../components/ProductCard.css";
 
 /**

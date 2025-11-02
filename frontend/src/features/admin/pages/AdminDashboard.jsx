@@ -35,7 +35,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import storage from "../../../utils/storage.js";
-import "../../../styles/AdminDashboard.css";
+import "./AdminDashboard.css";
 
 /**
  * AdminDashboard - 관리자 대시보드 컴포넌트

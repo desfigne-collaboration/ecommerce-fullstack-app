@@ -31,7 +31,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import storage from "../../../utils/storage.js";
-import "../../../styles/MyPage.css";
+import "./MyPage.css";
 
 /**
  * MyPage 함수형 컴포넌트

@@ -35,7 +35,7 @@
  * @since 2025-11-02
  */
 
-import "../../../styles/Auth.css";
+import "./Auth.css";
 import { useState, useRef, useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import { Link, useLocation, useNavigate } from "react-router-dom";
